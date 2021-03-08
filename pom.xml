@@ -9,12 +9,12 @@
 		<version>2.2.7.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.brightcoding.app.ws</groupId>
-	<artifactId>my.app.ws</artifactId>
+	<groupId>fr.mistral</groupId>
+	<artifactId>mistral-event</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>my.app.ws</name>
+	<name>mistral-event</name>
 	<packaging>war</packaging>
-	<description>Demo project for Spring Boot</description>
+	<description>Application for the Events management</description>
 
 	<properties>
 		<java.version>11</java.version>
