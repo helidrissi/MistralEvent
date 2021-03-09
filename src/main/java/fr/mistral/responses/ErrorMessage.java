@@ -3,7 +3,7 @@ package fr.mistral.responses;
 import java.util.Date;
 
 /**
- * Created by hel on 06/03/2021.
+ * Created by hel on 27/02/2021.
  */
 public class ErrorMessage {
 

@@ -1,5 +1,9 @@
 package fr.mistral.responses;
 
+
+/**
+ * Created by hel on 27/02/2021.
+ */
 public enum ErrorMessages {
 	
 	MISSING_REQUIRED_FIELD("Missing required field."),

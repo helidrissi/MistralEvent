@@ -5,6 +5,9 @@ import fr.mistral.entities.UserEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+/**
+ * Created by hel on 06/03/2021.
+ */
 @Repository
 public interface UserRepository extends CrudRepository<UserEntity, Long> {
 
