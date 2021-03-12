@@ -1,7 +1,7 @@
 package fr.mistral.services.impl;
 
 
-import fr.mistral.entities.UserEntity;
+import fr.mistral.domain.UserEntity;
 import fr.mistral.repositories.UserRepository;
 import fr.mistral.services.UserService;
 import fr.mistral.shared.Utils;

@@ -1,7 +1,7 @@
 package fr.mistral.repositories;
 
 
-import fr.mistral.entities.UserEntity;
+import fr.mistral.domain.UserEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
 package fr.mistral.services;
 
-import fr.mistral.entities.UserEntity;
+import fr.mistral.domain.UserEntity;
 import fr.mistral.shared.dto.UserDto;
 import org.springframework.security.core.userdetails.UserDetailsService;
 

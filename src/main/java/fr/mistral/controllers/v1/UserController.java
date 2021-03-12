@@ -1,6 +1,6 @@
-package fr.mistral.controllers;
+package fr.mistral.controllers.v1;
 
-import fr.mistral.entities.UserEntity;
+import fr.mistral.domain.UserEntity;
 import fr.mistral.exceptions.UserException;
 import fr.mistral.requests.UserRequest;
 import fr.mistral.responses.ErrorMessages;
@@ -23,9 +23,9 @@ import java.util.List;
  */
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/users")
+@RequestMapping(UserController.BASE_URL)
 public class UserController {
-
+    public static final String BASE_URL = "/api/v1/users";
     @Autowired
     UserService userService;
 

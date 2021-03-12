@@ -1,7 +1,7 @@
 package fr.mistral.services;
 
 
-import fr.mistral.entities.Group;
+import fr.mistral.domain.Group;
 
 import java.util.List;
 
@@ -11,4 +11,15 @@ import java.util.List;
 public interface GroupService {
 
     List<Group> getAllGroups();
+
+
+    Group getGroupById(Long id);
+
+    Group createNewGroup(Group group);
+
+    Group saveGroup(Long id, Group group);
+
+    Group patchGroup(Long id, Group group);
+
+    void deleteGroupById(Long id);
 }

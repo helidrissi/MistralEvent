@@ -1,6 +1,7 @@
 package fr.mistral.services;
 
-import fr.mistral.entities.Location;
+import fr.mistral.domain.Event;
+import fr.mistral.domain.Location;
 
 import java.util.List;
 
@@ -11,4 +12,15 @@ import java.util.List;
 public interface LocationService {
 
     List<Location> getAllLocations();
+
+
+    Location getLocationById(Long id);
+
+    Location createNewLocation(Location location);
+
+    Location saveLocation(Long id, Location location);
+
+    Location patchLocation(Long id, Location location);
+
+    void deleteLocationById(Long id);
 }

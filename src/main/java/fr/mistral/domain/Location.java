@@ -1,5 +1,4 @@
-package fr.mistral.entities;
-
+package fr.mistral.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,15 +17,13 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Group {
-
+public class Location {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @ManyToMany
-    private Set<UserEntity> users;
-    @ManyToMany
+    private String adress;
+    @OneToMany
     private Set<Event> events;
 }
