@@ -2,11 +2,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Evenenement } from '../models/evenement';
 import { of } from 'rxjs';
+import { DeleteResponse, RequestService } from './request.service';
+import { HttpClient } from '@angular/common/http';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
-export class EvenementService {
+export class EvenementService extends RequestService {
   eventsTest: Evenenement[] = [
     {
       id: 1,
@@ -42,9 +45,47 @@ export class EvenementService {
     },
   ];
 
-  constructor() {}
+  constructor(private http: HttpClient) {
+    super();
+  }
 
   getEvenements(): Observable<Evenenement[]> {
+    // return this.http.get<Evenenement[]>(this.serverUrl + 'events').pipe(
+    //   map((res: Evenenement[]) => res),
+    //   catchError( this.handleError('evenements', []))
+    // );
     return of(this.eventsTest);
+  }
+
+  getEvenementById(evenementId: number): Observable<Evenenement | null | undefined> {
+    // return this.http.get<Evenenement>(this.serverUrl + 'events/' + evenementId).pipe(
+    //   map((res: Evenenement) => res),
+    //   catchError(this.handleError('evenement', null))
+    // );
+    const evenement = this.eventsTest.find((value) => value.id === evenementId);
+    return of(evenement);
+  }
+
+  addEvenement(evenement: Evenenement): Observable<Evenenement | null> {
+    // return this.http.post(this.serverUrl + 'events', evenement, this.httpOptions).pipe(
+    //   map((res: any) => res),
+    //   catchError(this.handleError('postevenement', null))
+    // );
+    this.eventsTest.push(evenement);
+    return of(evenement);
+  }
+
+  updateEvenementById(evenement :Evenenement): Observable<Evenenement | null> {
+    return this.http.put<Evenenement>(this.serverUrl + 'events/' + evenement.id, evenement, this.httpOptions).pipe(
+      map((res)=> res),
+      catchError(this.handleError('update evenement', null))
+    )
+  }
+
+  deleteEvenementById(evenementId: Evenenement): Observable<DeleteResponse> {
+    return this.http.delete(this.serverUrl + 'events/' + evenementId, this.httpOptions).pipe(
+      map(() => this.deleteSuccess),
+      catchError(this.handleError('delete evenement', this.deleteError))
+    )
   }
 }
