@@ -11,6 +11,8 @@ export class UploadService {
 
     public upload(formData, type: number) {
         if (type == 1) {
+            
+
             return this.httpClient.post<any>(this.SERVER_URL + "avatar", formData, {
                 reportProgress: true,
                 observe: 'events'
