@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -18,6 +19,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "groups")
 public class Group {
 
 
@@ -25,8 +27,8 @@ public class Group {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @ManyToMany
-    private Set<UserEntity> users;
-    @ManyToMany
-    private Set<Event> events;
+    @ManyToMany(mappedBy = "groups")
+    private Set<UserEntity> users=new HashSet<>();
+    @ManyToMany(mappedBy = "groups")
+    private Set<Event> events=new HashSet<>();
 }

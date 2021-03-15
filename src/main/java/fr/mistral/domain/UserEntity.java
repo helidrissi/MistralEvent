@@ -6,12 +6,10 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by hel on 27/02/2021.
@@ -44,7 +42,17 @@ public class UserEntity implements Serializable {
 	private String email;
 
 	@Column(nullable=false)
-	private String encryptedPassword;
+	private String password;
+	@ManyToMany
+	@JoinTable(name = "users_group",
+			joinColumns = @JoinColumn(name = "users_id"),
+			inverseJoinColumns = @JoinColumn(name = "group_id"))
+	private Set<Group> groups = new HashSet<>();
+	@ManyToMany
+	@JoinTable(name = "users_event",
+			joinColumns = @JoinColumn(name = "users_id"),
+			inverseJoinColumns = @JoinColumn(name = "event_id"))
+	private Set<Event> events = new HashSet<>();
 
 
 	

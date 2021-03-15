@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -26,10 +27,13 @@ public class Event {
     private String name;
     private Date date;
     private String type;
+    @ManyToMany(mappedBy = "events")
+    private Set<UserEntity> users=new HashSet<>();
     @ManyToMany
-    private Set<UserEntity> users;
-    @ManyToMany
-    private Set<Group> groups;
+    @JoinTable(name = "event_groups",
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id"))
+    private Set<Group> groups=new HashSet<>();
     @ManyToOne
     private Location Location;
 }

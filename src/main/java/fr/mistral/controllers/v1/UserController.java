@@ -1,5 +1,6 @@
 package fr.mistral.controllers.v1;
 
+import fr.mistral.domain.Location;
 import fr.mistral.domain.UserEntity;
 import fr.mistral.exceptions.UserException;
 import fr.mistral.requests.UserRequest;
@@ -30,15 +31,15 @@ public class UserController {
     UserService userService;
 
     @GetMapping(path = "/{id}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<UserResponse> getUser(@PathVariable String id) {
+    public ResponseEntity<UserEntity> getUser(@PathVariable String id) {
 
-        UserDto userDto = userService.getUserByUserId(id);
+        UserEntity user = userService.getUserByUserId(id);
 
-        UserResponse userResponse = new UserResponse();
+        /*UserResponse userResponse = new UserResponse();
 
-        BeanUtils.copyProperties(userDto, userResponse);
+        BeanUtils.copyProperties(userDto, userResponse);*/
 
-        return new ResponseEntity<UserResponse>(userResponse, HttpStatus.OK);
+        return new ResponseEntity<UserEntity>(user, HttpStatus.OK);
     }
 
 
@@ -46,6 +47,7 @@ public class UserController {
     public List<UserEntity> getAllUsers() {
 
         List<UserEntity> userEntities = userService.getUsers();
+
 
         return userEntities;
     }
@@ -73,6 +75,10 @@ public class UserController {
 
 
     }
-
+    @PatchMapping({"/{id}"})
+    @ResponseStatus(HttpStatus.OK)
+    public UserEntity patchLocation(@PathVariable Long id, @RequestBody UserEntity userEntity) {
+        return userService.patchUser(id, userEntity);
+    }
 
 }

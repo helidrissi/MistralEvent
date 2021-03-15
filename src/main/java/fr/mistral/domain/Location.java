@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -24,6 +25,6 @@ public class Location {
     private Long id;
     private String name;
     private String adress;
-    @OneToMany
-    private Set<Event> events;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "Location")
+    private Set<Event> events=new HashSet<>();
 }

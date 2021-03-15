@@ -1,6 +1,7 @@
 package fr.mistral.services.impl;
 
 
+import fr.mistral.domain.Event;
 import fr.mistral.domain.UserEntity;
 import fr.mistral.repositories.UserRepository;
 import fr.mistral.services.UserService;
@@ -47,7 +48,7 @@ public class UserSeviceImpl implements UserService {
         UserEntity userEntity = modelMapper.map(user, UserEntity.class);
 
 
-        userEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userEntity.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
         userEntity.setUserId(util.generateStringId(32));
 
@@ -66,7 +67,7 @@ public class UserSeviceImpl implements UserService {
 
         if (userEntity == null) throw new UsernameNotFoundException(email);
 
-        return new User(userEntity.getEmail(), userEntity.getEncryptedPassword(), new ArrayList<>());
+        return new User(userEntity.getEmail(), userEntity.getPassword(), new ArrayList<>());
     }
 
 
@@ -86,17 +87,42 @@ public class UserSeviceImpl implements UserService {
 
 
     @Override
-    public UserDto getUserByUserId(String userId) {
+    public UserEntity getUserByUserId(String userId) {
 
         UserEntity userEntity = userRepository.findByUserId(userId);
 
         if (userEntity == null) throw new UsernameNotFoundException(userId);
 
-        UserDto userDto = new UserDto();
+        /*UserDto userDto = new UserDto();
 
-        BeanUtils.copyProperties(userEntity, userDto);
+        BeanUtils.copyProperties(userEntity, userDto);*/
+        //userEntity.setPassword(bCryptPasswordEncoder.encode(userEntity.getPassword()));
+        return userEntity;
+    }
 
-        return userDto;
+    @Override
+    public UserEntity patchUser(Long id, UserEntity user) {
+        return userRepository.findById(id).map(us -> {
+
+            if (user.getFirstName() != null) {
+                us.setFirstName(user.getFirstName());
+            }
+
+            if (user.getLastName() != null) {
+                us.setLastName(user.getLastName());
+            }
+            if (user.getEmail() != null) {
+                us.setEmail(user.getEmail());
+            }
+            if (user.getPassword() != null) {
+                us.setPassword(user.getPassword());
+            }
+            UserEntity userUpdated = userRepository.save(us);
+
+
+            return userUpdated;
+
+        }).orElseThrow(ResourceNotFoundException::new);
     }
 
 

@@ -1,5 +1,6 @@
 package fr.mistral.services;
 
+import fr.mistral.domain.Event;
 import fr.mistral.domain.UserEntity;
 import fr.mistral.shared.dto.UserDto;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,8 +16,10 @@ public interface UserService extends UserDetailsService {
 
     UserDto getUser(String email);
 
-    UserDto getUserByUserId(String userId);
+    UserEntity getUserByUserId(String userId);
 
+
+    UserEntity patchUser(Long id, UserEntity user);
 
     List<UserEntity> getUsers();
 
