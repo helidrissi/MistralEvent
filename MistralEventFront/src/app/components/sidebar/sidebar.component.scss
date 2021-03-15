@@ -69,10 +69,14 @@
 .sidebar-heading {
   display: flex;
   justify-content: space-around;
+  align-items: center;
   font-size: 1.5rem;
   height: 36px;
   img {
-    margin: 5px 15px;
+    margin: 5px 0;
+    max-width: 20px;
+    max-height: 20px;
+    align-items: center;
   }
 }
 
