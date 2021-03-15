@@ -1,3 +1,34 @@
+@media screen and (max-width: 576px) {
+    .main-screen {
+      padding-right: 25px;
+      padding-left: 25px;
+    }
+}
+@media screen and (min-width: 576px) and (max-width: 767px) {
+    .main-screen {
+        padding-right: 50px;
+        padding-left: 50px;
+    }
+}
+@media screen and (min-width: 768px) and (max-width: 992px) {
+    .main-screen {
+        padding-right: 30px;
+        padding-left: 30px;
+    }
+}
+@media screen and (min-width: 992px) {
+  .main-screen {
+      padding-right: 30px;
+      padding-left: 30px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .main-screen {
+      padding-right: 30px;
+      padding-left: 30px;
+  }
+}
+
 .col-credit {
     padding:20px;
 }
@@ -70,8 +101,8 @@
   .col-credit:nth-child(4n) > .card-credit{
     transform:rotate(-6deg);
     position:relative;
-    background:#5bc5f1;
-    border: 1px solid #49b8ed;
+    background:#f06292;
+    border: 1px solid #e91e63;
     top:-5px;
   }
   .col-credit:nth-child(4n) > .card-credit:hover,.card-credit:focus{
@@ -89,6 +120,20 @@
   top:-10px;
 }
 .col-credit:nth-child(5n) > .card-credit:hover,.card-credit:focus{
+    box-shadow:10px 10px 7px rgba(0,0,0,.7);
+    transform: scale(1.25);
+    position:relative;
+    z-index:5;
+  }
+
+.col-credit:nth-child(7n) > .card-credit{
+  transform:rotate(-3deg);
+  background:#8bc34a;
+  border: 1px solid #689F38;
+  position:relative;
+  top:-10px;
+}
+.col-credit:nth-child(7n) > .card-credit:hover,.card-credit:focus{
     box-shadow:10px 10px 7px rgba(0,0,0,.7);
     transform: scale(1.25);
     position:relative;

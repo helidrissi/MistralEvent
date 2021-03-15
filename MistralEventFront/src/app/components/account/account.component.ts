@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { faAt, faSave } from '@fortawesome/free-solid-svg-icons';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { FileUploadComponent } from '../fileupload/fileupload.component';
 
 @Component({
@@ -14,7 +14,7 @@ export class AccountComponent implements OnInit {
   atIcon = faAt;
   saveIcon = faSave;
 
-  constructor(public matDialog: MatDialog) { }
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
   }
@@ -24,14 +24,17 @@ export class AccountComponent implements OnInit {
   }
 
   openAvatarUpload() {
-    const dialogConfig = new MatDialogConfig();
+    /*const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
     dialogConfig.id = "modal-component";
     dialogConfig.height = "350px";
     dialogConfig.width = "600px";
     
-    const modalDialog = this.matDialog.open(FileUploadComponent, dialogConfig);
+    const modalDialog = this.matDialog.open(FileUploadComponent, dialogConfig);*/
+
+    const modalRef = this.modalService.open(FileUploadComponent);
+    modalRef.componentInstance.name = 'World';
   }
 
 }
