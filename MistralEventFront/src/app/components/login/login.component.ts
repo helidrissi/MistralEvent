@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 //import { UsersService } from '../../services/users.service';
 //import { EnvService } from '../../env.service';
-//import { AccountService } from '../../services/account.service';
+import { AccountService } from '../../services/account.service';
 import { TokenService } from '../../services/token.service';
 import { AuthService } from '../../services/auth.service';
-import { AccountService } from '../../services/auth.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 
@@ -20,22 +19,22 @@ import { FormBuilder } from '@angular/forms';
 export class LoginComponent implements OnInit {
 
   errorMessage: any;
-  lgn = window.localStorage.getItem('lang');
 
   env: any;
   class: any;
   users: any;
+  fieldTextType: boolean;
 
 
   formLogin = this.fb.group({
 
     email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)])
     //envir: ['prod', [Validators.required]],
   })
 
   constructor(private authService: AuthService, private token: TokenService, private router: Router, private account: AccountService,
-     public app: AppComponent, public fb: FormBuilder, /*private envservice: EnvService, private userservice: UsersService*/) {
+     public app: AppComponent, public fb: FormBuilder /*private envservice: EnvService, private userservice: UsersService*/) {
 
   }
 
@@ -62,6 +61,10 @@ export class LoginComponent implements OnInit {
     this.account.changeStatus(true);
 
     this.router.navigateByUrl("/");
+  }
+
+  toggleFieldTextType(): void {
+    this.fieldTextType = !this.fieldTextType;
   }
 
 }
