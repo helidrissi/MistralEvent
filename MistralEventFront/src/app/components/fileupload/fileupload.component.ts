@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { faCloudUploadAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
 
-import { MatDialogRef } from '@angular/material/dialog';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-fileupload',
@@ -14,7 +14,10 @@ export class FileUploadComponent implements OnInit {
   uploadIcon = faCloudUploadAlt;
   closeIcon = faTimes;
 
-  constructor(public dialogRef: MatDialogRef<FileUploadComponent>) { }
+  fileuplaod_title = "Avatar";
+  fileuplaod_text = "Sélectionner une image pour votre avatar";
+
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
   }
@@ -28,7 +31,7 @@ export class FileUploadComponent implements OnInit {
   // If the user clicks the cancel button a.k.a. the go back button, then\
   // just close the modal
   closeModal() {
-    this.dialogRef.close();
+    this.modalService.dismissAll();
   }
 
 }
