@@ -12,14 +12,17 @@ import { CreateLocationComponent } from './components/create-location/create-loc
 import { CreateEventComponent } from './components/create-event/create-event.component'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { LoginComponent } from './components/login/login.component';
+
 @NgModule({
-  declarations: [AppComponent, CreateLocationComponent, CreateEventComponent],
+  declarations: [AppComponent, CreateLocationComponent, CreateEventComponent,
+    LoginComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
     BrowserAnimationsModule,
-    NgbModule
+    NgbModule,
     FormsModule,
     ReactiveFormsModule
   ],

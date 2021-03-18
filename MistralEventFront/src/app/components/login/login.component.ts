@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 
 import { AppComponent } from '../../app.component';
 import { typeofExpr } from '@angular/compiler/src/output/output_ast';
-import { FormBuilder } from '@angular/forms';
+import { FormsModule, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -26,16 +26,17 @@ export class LoginComponent implements OnInit {
   fieldTextType: boolean;
 
 
-  formLogin = this.fb.group({
-
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(6)])
-    //envir: ['prod', [Validators.required]],
-  })
+  formLogin: FormGroup;
 
   constructor(private authService: AuthService, private token: TokenService, private router: Router, private account: AccountService,
      public app: AppComponent, public fb: FormBuilder /*private envservice: EnvService, private userservice: UsersService*/) {
 
+      this.formLogin = this.fb.group({
+
+        email: new FormControl('', [Validators.required, Validators.email]),
+        password: new FormControl('', [Validators.required, Validators.minLength(6)])
+        //envir: ['prod', [Validators.required]],
+      })
   }
 
   ngOnInit(): void {

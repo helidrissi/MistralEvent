@@ -18,6 +18,43 @@
 
         <div class="m-5"></div>
 
+        <!-- Form pour sélectionner les groupes auquel on appartient -->
+        <div class="card">
+            <form id="selectGroups" role="form" (ngSubmit)="selectGroups()">
+                <div class="card-header">
+                    S'inscrire aux groupes
+                </div>
+                
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6  col-md-4 col-lg-4 col-xl-3 col-xxl-3">
+                            <div class="mb-3">
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                    <label class="form-check-label" for="exampleCheck1">S@PHIR Team</label>
+                                  </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12  col-md-6 col-lg-6 col-xl-4 col-xxl-4">
+                            <div class="mb-3">
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                    <label class="form-check-label" for="exampleCheck1">Mobilité Team</label>
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary"><fa-icon [icon]="saveIcon"></fa-icon>&nbsp;Enregistrer</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="m-5"></div>
+
         <!-- Form pour changer le mot de passe -->
         <div class="card">
             <form id="changePasswordform" role="form" (ngSubmit)="changePassword()">

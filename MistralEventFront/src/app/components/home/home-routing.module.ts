@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { AccountComponent } from '../account/account.component';
 import { CreditComponent } from '../credit/credit.component';
 import { AgendaComponent } from '../agenda/agenda.component';
-import { LoginComponent } from '../login/login.component';
 import { HomeComponent } from './home.component';
 import { UpcomingEventsComponent } from '../upcomingEvents/upcomingEvents.component';
 
@@ -16,7 +16,6 @@ const routes: Routes = [
       { path: 'credit', component: CreditComponent },
       { path: 'agenda', component: AgendaComponent },
       { path: 'upcommingEvent', component: UpcomingEventsComponent },
-      { path: 'login', component: LoginComponent },
     ],
   },
 ];
