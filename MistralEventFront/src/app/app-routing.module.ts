@@ -6,6 +6,7 @@ import { CreateEventComponent } from './components/create-event/create-event.com
 import { AuthGuard } from './guards/auth.guard';
 import { AfterAuthGuard } from './guards/after-auth.guard';
 import { LoginComponent } from './components/login/login.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -18,7 +19,8 @@ const routes: Routes = [
   },
   { path: 'create-location', component: CreateLocationComponent },
   { path: 'create-event', component: CreateEventComponent},
-  //{ path: '**', redirectTo: 'home' },
+  { path: 'page-not-found', component: PageNotFoundComponent},
+  { path: '**', component: PageNotFoundComponent},
 ];
 
 @NgModule({
