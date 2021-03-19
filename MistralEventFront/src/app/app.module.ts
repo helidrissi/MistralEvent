@@ -14,9 +14,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { LoginComponent } from './components/login/login.component';
 
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+
 @NgModule({
   declarations: [AppComponent, CreateLocationComponent, CreateEventComponent,
-    LoginComponent],
+    LoginComponent,
+    PageNotFoundComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -24,7 +28,8 @@ import { LoginComponent } from './components/login/login.component';
     BrowserAnimationsModule,
     NgbModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],
