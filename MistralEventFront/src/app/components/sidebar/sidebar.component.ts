@@ -15,7 +15,6 @@ export class SidebarComponent implements OnInit {
   cogIcon = faCog;
   creditIcon = faBeer;
   exitIcon = faDoorOpen;
-
   constructor() { }
   ngOnInit(): void {
   }
