@@ -1,0 +1,62 @@
+<div class="main-screen">
+    <div class="container">
+
+        <!-- Affichage avatar + possibilité d'uploader une nouvelle image -->
+        <div class="row">
+            <div class="col-xs-12 col-sm-6  col-md-4 col-lg-4 col-xl-3 col-xl-3" style="text-align: center;">
+                <div class="profilSidebar">
+                    <img src="../../../assets/images/8030242949697342-Male_16.jpg" alt="Photo de profil">
+                  </div>
+                <!--<img src="https://uifaces.co/our-content/donated/yn7PKqTT.jpg" alt="Avatar" class="avatar profile-avatar" />-->
+                <button type="button" class="btn btn-link change-avatar-btn" (click)="openAvatarUpload()">Changer votre avatar</button>
+            </div>
+            <div class="col-xs-12 col-sm-6  col-md-8 col-lg-8 col-xl-9 col-xl-9" style="text-align: right;">
+                <label class="profile-title">Anthony PFEIFER</label><br>
+                <label class="profile-mail"><fa-icon [icon]="atIcon"></fa-icon>&nbsp;anthony.pfeifer@mistral.fr</label><br>
+            </div>
+        </div>
+
+        <div class="m-5"></div>
+
+        <!-- Form pour changer le mot de passe -->
+        <div class="card">
+            <div class="card-header">
+            Changer votre mot de passe
+            </div>
+            <div class="card-body">
+                <form id="changePasswordform" role="form" (ngSubmit)="changePassword()">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12  col-md-6 col-lg-6 col-xl-6 col-xl-6">
+                            <div class="mb-3">
+                                <label for="old-password" class="form-label">Votre mot de passe actuel</label>
+                                <input id="old-password" formControlName="old-password" type="password" class="form-control" name="old-password">
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12  col-md-6 col-lg-6 col-xl-6 col-xl-6">
+                            
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12  col-md-6 col-lg-6 col-xl-6 col-xl-6">
+                            <div class="mb-3">
+                                <label for="new-password" class="form-label">Votre nouveau mot de passe</label>
+                                <input id="new-password" formControlName="new-password" type="password" class="form-control" name="new-password">
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12  col-md-6 col-lg-6 col-xl-6 col-xl-6">
+                            <div class="mb-3">
+                                <label for="new-password-2" class="form-label">Répéter votre nouveau mot de passe</label>
+                                <input id="new-password-2" formControlName="new-password-2" type="password" class="form-control" name="new-password-2">
+                            </div>
+                        </div>
+
+                        <div class="col-12 end-card">
+                            <button type="submit" class="btn btn-primary"><fa-icon [icon]="saveIcon"></fa-icon>&nbsp;Enregistrer</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

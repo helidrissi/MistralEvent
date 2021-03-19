@@ -1,0 +1,8 @@
+<div class="main-screen">
+  <h3>Cette semaine</h3>
+  <div class="card-list row row-cols-auto">
+    <div class="col" *ngFor="let event of agenda">
+      <app-eventCard [evenement]=event></app-eventCard>
+    </div>
+  </div>
+</div>

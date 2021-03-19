@@ -1,0 +1,17 @@
+<div id="modal-content-wrapper">
+    <header id="modal-header">
+        <h1 id="modal-title">Charger un fichier</h1>
+    </header>
+    <section id="modal-body">
+        <form>
+            <div class="mb-3">
+                <label for="formFileSm" class="form-label">Small file input example</label>
+                <input class="form-control form-control-sm" id="formFileSm" type="file">
+            </div>
+        </form>
+    </section>
+    <footer id="modal-footer">
+        <button mat-raised-button id="modal-action-button" (click)="actionFunction()" class="btn btn-primary"><fa-icon [icon]="uploadIcon"></fa-icon>&nbsp;Charger</button>
+        <button mat-raised-button id="modal-cancel-button" (click)="closeModal()" class="btn btn-primary"><fa-icon [icon]="closeIcon"></fa-icon>&nbsp;Annuler</button>
+    </footer>
+</div>
