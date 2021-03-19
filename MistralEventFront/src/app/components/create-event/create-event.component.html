@@ -1,0 +1,37 @@
+<form class="mt-5 mx-auto" [formGroup]="form" (submit)="onSubmit()">
+    <h1 >Créer un événement</h1>
+    <div class="form-group">
+        <label for="event-name">Nom</label>
+        <input name="event-name" formControlName="eventName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="location">Lieu</label>
+        <select name="location" formControlName="location" class="form-control"
+         [class.font-weight-bold]="this.locationControl.value === 'new'" list="location-list">
+        <option value="new" class="font-weight-bold"> &lt; --nouveau lieu-- &gt;</option>
+         <option *ngFor="let location of locations
+         " [value]="location.id">{{location.name}}</option>
+        </select>
+    </div>
+     <div class="form-group">
+        <label for="location-name">Nom du lieu</label>
+        <input  name="location-name" formControlName="locationName"  class="form-control"  />
+    </div>
+    <div class="form-group">
+        <label for="street-address">Adresse</label>
+        <input  name="street-address" formControlName="streetAddress"  class="form-control"  />
+    </div>
+    <div class="form-group">
+        <label for="city">Ville</label>
+        <input  name="city" formControlName="city" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="datetime">Heure</label>
+        <input type="datetime-local" name="datetime" min="{{now}}" formControlName="datetime" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea name="description" maxlength="200"  formControlName="description" class="form-control"></textarea>
+    </div>
+    <input type="submit" [disabled]="!form.valid" class="btn btn-primary" />
+</form>

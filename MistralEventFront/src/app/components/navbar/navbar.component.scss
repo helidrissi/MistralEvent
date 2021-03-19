@@ -1,6 +1,6 @@
 * {
   margin: 0;
-  padding: 0;
+  padding: 5px 0;
   box-sizing: border-box;
 }
 .menu-accueil {
@@ -12,6 +12,7 @@
 .header-accueil a {
   background-color: #154194;
   color: white;
+  cursor: pointer;
 }
 a:hover {
   color: #5bc5f1 !important ;
@@ -52,4 +53,7 @@ a:hover {
   a {
     font-size: 1.5rem;
   }
+}
+.navbar {
+  padding: 10px 0;
 }

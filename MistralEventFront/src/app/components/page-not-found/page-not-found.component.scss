@@ -1,0 +1,14 @@
+* {
+  background-color: rgb(237, 237, 237);
+  height: 100%;
+}
+div {
+  margin: -20px;
+  display: flex;
+  justify-content: center;
+
+  img {
+    width: 50%;
+    height: auto;
+  }
+}

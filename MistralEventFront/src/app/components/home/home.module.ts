@@ -16,15 +16,16 @@ import { HomeComponent } from './home.component';
 import { EventCardComponent } from '../EventCard/eventCard.component';
 import { UpcomingEventsComponent } from '../upcomingEvents/upcomingEvents.component';
 import { FileUploadComponent, FileUploadComponent as ModalComponent } from '../fileupload/fileupload.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
     HomeComponent,
-    NavbarComponent,
-    SidebarComponent,
     AccountComponent,
     CreditComponent,
+    NavbarComponent,
+    SidebarComponent,
     FooterComponent,
     AgendaComponent,
     EventCardComponent,
@@ -36,8 +37,10 @@ import { FileUploadComponent, FileUploadComponent as ModalComponent } from '../f
     HomeRoutingModule,
     FontAwesomeModule,
     MatButtonModule,
-    MatDialogModule
+    MatDialogModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
 })
-export class HomeModule {}
+export class HomeModule { }

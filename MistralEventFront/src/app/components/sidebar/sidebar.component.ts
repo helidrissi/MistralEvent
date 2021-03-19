@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { faCalendarAlt } from '@fortawesome/free-regular-svg-icons';
-import { faCalendar, faCog, faDoorOpen, faFilm, faGlassCheers, faMapSigns, faBug } from '@fortawesome/free-solid-svg-icons';
+import { faCalendar, faCog, faDoorOpen, faFilm, faGlassCheers, faMapSigns, faBeer } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-sidebar',
@@ -13,9 +13,8 @@ export class SidebarComponent implements OnInit {
   glassCheersIcon = faGlassCheers;
   mapSignsIcon = faMapSigns;
   cogIcon = faCog;
-  creditIcon = faBug;
+  creditIcon = faBeer;
   exitIcon = faDoorOpen;
-
   constructor() { }
   ngOnInit(): void {
   }
