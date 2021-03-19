@@ -16,6 +16,7 @@ import { LoginComponent } from './components/login/login.component';
 
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [AppComponent, CreateLocationComponent, CreateEventComponent,
@@ -29,7 +30,8 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -22,10 +22,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     HomeComponent,
-    NavbarComponent,
-    SidebarComponent,
     AccountComponent,
     CreditComponent,
+    NavbarComponent,
+    SidebarComponent,
     FooterComponent,
     AgendaComponent,
     EventCardComponent,
