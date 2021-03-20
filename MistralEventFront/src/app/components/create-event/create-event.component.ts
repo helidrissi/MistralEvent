@@ -38,42 +38,51 @@ export class CreateEventComponent implements OnInit {
     description: this.descriptionControl
   });
 
-  getLocationById(id: number) {
-    const location = this.locations.filter(location => location.id === id)[0]
+  getLocationById(id: string) {
+    const location = this.locations.filter(location => location.id === parseInt(id))[0]
     return location
   }
 
   onSubmit() {
 
     const eventName = this.eventNameControl.value
-    const location = this.locationControl.value
+    const locationId = this.locationControl.value
     const locationName = this.locationNameControl.value
     const streetAddress = this.streetAddressControl.value
     const city = this.cityControl.value
     const datetimeString = this.datetimeControl.value + ":00"
     const description = this.descriptionControl.value
 
+
+    let location: Location;
     if (this.locationControl.value === "new") {
-      const locationMessage = "Lieu créé, " + locationName + ", " + streetAddress + ", " + city
-      alert(locationMessage)
+
+      location = {
+
+        name: locationName,
+
+        address: streetAddress,
+      }
+      this.locationService.addLocation(location)
+    }
+    else {
+      location = this.getLocationById(locationId);
     }
 
     // const eventMessage = "Evenement créé, " +
     //   eventName + ", " + locationName + ", " + streetAddress + ", " + city + ", " + datetime
     // alert(eventMessage)
     let evenement: Evenement = {
-
-
       name: eventName,
       date: new Date(datetimeString),
       description: description,
       type: 'resto',
+      location: location
     }
 
     this.evenementService.addEvenement(evenement);
 
-    alert("evenement " + evenement.name +
-      ", date" + evenement.date)
+    alert(JSON.stringify(evenement))
     this.displayNumberOfEvents()
 
   }
@@ -120,12 +129,13 @@ export class CreateEventComponent implements OnInit {
 
       }
       else {
-        const newLocation = this.getLocationById(parseInt(this.locationControl.value))
+        const location = this.getLocationById(this.locationControl.value)
         this.disableLocationControls()
-        this.locationNameControl.setValue(newLocation.name)
-        this.streetAddressControl.setValue(newLocation.address)
+        this.locationNameControl.setValue(location.name)
+        this.streetAddressControl.setValue(location.address)
         //this.cityControl.setValue(newLocation.city)
         this.cityControl.setValue('Clermont-Ferrand')
+
       }
 
     })

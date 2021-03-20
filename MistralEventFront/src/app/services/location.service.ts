@@ -61,6 +61,8 @@ export class LocationService extends RequestService {
     //   map((res: any) => res),
     //   catchError(this.handleError('postLocation', null))
     // );
+
+
     this.locationsTest.push(Location);
     return of(Location);
   }
