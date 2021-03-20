@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {HttpClientModule, HTTP_INTERCEPTORS, HttpClient} from '@angular/common/http'
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -14,9 +15,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { LoginComponent } from './components/login/login.component';
 
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { RouterModule } from '@angular/router';
+import { JwtInterceptor } from './services/jwt.interceptor';
 
 @NgModule({
   declarations: [AppComponent, CreateLocationComponent, CreateEventComponent,
@@ -33,7 +34,11 @@ import { RouterModule } from '@angular/router';
     HttpClientModule,
     RouterModule
   ],
-  providers: [],
+  providers: [{
+    provide:HTTP_INTERCEPTORS,
+    useClass:JwtInterceptor,
+    multi:true,
+  }],
   bootstrap: [AppComponent],
 })
 

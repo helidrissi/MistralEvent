@@ -5,14 +5,14 @@
         <div class="row">
             <div class="col-xs-12 col-sm-6  col-md-4 col-lg-4 col-xl-3 col-xxl-3" style="text-align: center;">
                 <div class="profilSidebar">
-                    <img src="../../../assets/images/8030242949697342-Male_16.jpg" alt="Photo de profil">
+                    <img src="{{account.getAvatar()}}" alt="Photo de profil">
                   </div>
                 <!--<img src="https://uifaces.co/our-content/donated/yn7PKqTT.jpg" alt="Avatar" class="avatar profile-avatar" />-->
                 <button type="button" class="btn btn-link change-avatar-btn" (click)="openAvatarUpload()">Changer votre avatar</button>
             </div>
             <div class="col-xs-12 col-sm-6  col-md-8 col-lg-8 col-xl-9 col-xxl-9" style="text-align: right;">
-                <label class="profile-title">Anthony PFEIFER</label><br>
-                <label class="profile-mail"><fa-icon [icon]="atIcon"></fa-icon>&nbsp;anthony.pfeifer@mistral.fr</label><br>
+                <label class="profile-title">{{account.firstname}} {{account.lastname}}</label><br>
+                <label class="profile-mail"><fa-icon [icon]="atIcon"></fa-icon>&nbsp;{{account.email}}</label><br>
             </div>
         </div>
 
@@ -20,7 +20,7 @@
 
         <!-- Form pour sélectionner les groupes auquel on appartient -->
         <div class="card">
-            <form id="selectGroups" role="form" (ngSubmit)="selectGroups()">
+            <form id="selectGroups" role="form" (ngSubmit)="selectGroups()" [formGroup]="selectGroupsForm">
                 <div class="card-header">
                     S'inscrire aux groupes
                 </div>
@@ -30,7 +30,7 @@
                         <div class="col-xs-12 col-sm-6  col-md-4 col-lg-4 col-xl-3 col-xxl-3">
                             <div class="mb-3">
                                 <div class="form-check form-check-inline">
-                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                    <input type="checkbox" class="form-check-input" id="exampleCheck1" formControlName="exampleCheck1">
                                     <label class="form-check-label" for="exampleCheck1">S@PHIR Team</label>
                                   </div>
                             </div>
@@ -39,8 +39,8 @@
                         <div class="col-xs-12 col-sm-12  col-md-6 col-lg-6 col-xl-4 col-xxl-4">
                             <div class="mb-3">
                                 <div class="form-check form-check-inline">
-                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                    <label class="form-check-label" for="exampleCheck1">Mobilité Team</label>
+                                    <input type="checkbox" class="form-check-input" id="exampleCheck2" formControlName="exampleCheck2">
+                                    <label class="form-check-label" for="exampleCheck2">Mobilité Team</label>
                                   </div>
                             </div>
                         </div>
@@ -57,7 +57,7 @@
 
         <!-- Form pour changer le mot de passe -->
         <div class="card">
-            <form id="changePasswordform" role="form" (ngSubmit)="changePassword()">
+            <form id="changePasswordform" role="form" (ngSubmit)="changePassword()" [formGroup]="changePasswordForm">
                 <div class="card-header">
                     Changer votre mot de passe
                 </div>

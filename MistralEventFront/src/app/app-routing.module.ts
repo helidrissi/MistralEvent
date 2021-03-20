@@ -10,10 +10,10 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent/* , canActivate: [AfterAuthGuard] */ },
+  { path: 'login', component: LoginComponent , canActivate: [AfterAuthGuard]  },
   {
     path: 'home',
-    /* canActivate: [AuthGuard], */
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./components/home/home.module').then((m) => m.HomeModule),
   },

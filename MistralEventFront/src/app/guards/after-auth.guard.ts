@@ -13,9 +13,9 @@ export class AfterAuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean  {
       
-      if(this.token.loggedIn()){
-
+    if(this.token.loggedIn()){
       
+      console.log("AfterAuthGuard + logged");
       this.account.changeStatus(true);
       this.router.navigateByUrl("/");
       return false;

@@ -6,13 +6,10 @@ export class TokenService  {
 
   constructor() { }
   
-
   set(data: any) {
     localStorage.setItem('token', data.token);
     localStorage.setItem('id', data.id);
     localStorage.setItem('roles',data.roles)
-   
-    
   }
 
   handle(data:{}) {
@@ -22,18 +19,7 @@ export class TokenService  {
   getToken() {
     return localStorage.getItem('token');
   }
-
-  getEnv() {
-    return localStorage.getItem('envir');
-  }
-
-  getCompany() {
-    return localStorage.getItem('company');
-  }
  
-  
- 
-
   getId() {
     return localStorage.getItem('id');
   }
@@ -41,20 +27,18 @@ export class TokenService  {
   remove() {
     localStorage.removeItem('token');
     localStorage.removeItem('id');
-    //localStorage.removeItem('envir');
-    
+    localStorage.removeItem('roles');
   }
 
   decode(payload:string) {
-
     return JSON.parse(this.b64_to_utf8(payload));
-    
   }
 
   payload(token:string) {
     const payload = token.split('.')[1];
     return this.decode(payload);
   }
+
   b64_to_utf8( str:string ) {
     return decodeURIComponent(escape(window.atob( str )));
   }
@@ -73,7 +57,6 @@ export class TokenService  {
   }
 
   getInfos() {
-
     const token = this.getToken();
     if (token) {
       const payload = this.payload(token);
