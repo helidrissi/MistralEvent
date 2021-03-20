@@ -109,6 +109,7 @@
     </div>
 
     <div class="addButtonDiv">
-      <a href="#" class="btn btn-success addButton"> <fa-icon [icon]="plusIcon" class="mx-auto"></fa-icon> </a>
+      <a [routerLink]="['/home', 'create-event']" routerLinkActive="active-link" class="btn btn-success addButton"> 
+        <fa-icon [icon]="plusIcon" class="mx-auto plusIcon"></fa-icon> </a>
     </div>
 </div>

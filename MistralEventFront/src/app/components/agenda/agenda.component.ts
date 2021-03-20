@@ -9,7 +9,7 @@ import { faCalendar, faCog, faDoorOpen, faFilm, faGlassCheers, faMapSigns, faPlu
 })
 export class AgendaComponent implements OnInit {
   calendarAltIcon = faCalendarAlt;
-  plusIcon = faPlusCircle
+  plusIcon = faPlus
   constructor() { }
 
   ngOnInit(): void {

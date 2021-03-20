@@ -17,11 +17,13 @@ import { LoginComponent } from './components/login/login.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { RouterModule } from '@angular/router';
+import { LocationsComponent } from './components/locations/locations.component';
 
 @NgModule({
   declarations: [AppComponent, CreateLocationComponent, CreateEventComponent,
     LoginComponent,
-    PageNotFoundComponent],
+    PageNotFoundComponent,
+    LocationsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
