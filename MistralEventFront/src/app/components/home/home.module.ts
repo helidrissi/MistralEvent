@@ -21,6 +21,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CreateEventComponent } from '../create-event/create-event.component';
 import { CreateLocationComponent } from '../create-location/create-location.component';
 import { EvenementService } from 'src/app/services/evenement.service';
+import { LocationService } from 'src/app/services/location.service';
 
 
 @NgModule({
@@ -49,6 +50,6 @@ import { EvenementService } from 'src/app/services/evenement.service';
     HttpClientModule,
 
   ],
-  providers: [HttpClientModule, EvenementService],
+  providers: [HttpClientModule, EvenementService, LocationService],
 })
 export class HomeModule { }

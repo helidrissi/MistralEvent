@@ -3,7 +3,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { EvenementService } from '../../services/evenement.service';
 import { Evenement } from '../../models/evenement';
-
+import { Location } from '../../models/location';
+import { LocationService } from 'src/app/services/location.service';
 @Component({
   selector: 'app-create-event',
   templateUrl: './create-event.component.html',
@@ -20,10 +21,11 @@ export class CreateEventComponent implements OnInit {
   descriptionControl = new FormControl('', Validators.required)
   now = new Date().toISOString().substring(0, 16)
 
-  locations = [
-    { id: "1", name: "Brasserie de Clermont", address: "78 Boulevard François Mitterand", city: "Clermont-Ferrand" },
-    { id: "2", name: "Brasserie du Théâtre", address: "6 Rue Nestor Perret", city: "Clermont-Ferrand" }
-  ]
+  locations: Location[] = []
+  // locations = [
+  //   { id: "1", name: "Brasserie de Clermont", address: "78 Boulevard François Mitterand", city: "Clermont-Ferrand" },
+  //   { id: "2", name: "Brasserie du Théâtre", address: "6 Rue Nestor Perret", city: "Clermont-Ferrand" }
+  // ]
 
 
   form: FormGroup = new FormGroup({
@@ -36,7 +38,7 @@ export class CreateEventComponent implements OnInit {
     description: this.descriptionControl
   });
 
-  getLocationById(id: string) {
+  getLocationById(id: number) {
     const location = this.locations.filter(location => location.id === id)[0]
     return location
   }
@@ -98,11 +100,13 @@ export class CreateEventComponent implements OnInit {
   }
 
 
-  constructor(private evenementService: EvenementService) {
+  constructor(private evenementService: EvenementService, private locationService: LocationService) {
+    this.locationService.getLocations().subscribe(result => this.locations = result)
+    alert(JSON.stringify(this.locations))
   }
 
   ngOnInit(): void {
-    this.displayNumberOfEvents()
+    //this.displayNumberOfEvents()
 
 
     this.disableLocationControls()
@@ -116,11 +120,12 @@ export class CreateEventComponent implements OnInit {
 
       }
       else {
-        const newLocation = this.getLocationById(this.locationControl.value)
+        const newLocation = this.getLocationById(parseInt(this.locationControl.value))
         this.disableLocationControls()
         this.locationNameControl.setValue(newLocation.name)
         this.streetAddressControl.setValue(newLocation.address)
-        this.cityControl.setValue(newLocation.city)
+        //this.cityControl.setValue(newLocation.city)
+        this.cityControl.setValue('Clermont-Ferrand')
       }
 
     })

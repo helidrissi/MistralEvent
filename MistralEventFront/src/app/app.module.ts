@@ -25,6 +25,7 @@ import { EvenementService } from './services/evenement.service';
   ],
   providers: [EvenementService],
   bootstrap: [AppComponent],
+
 })
 
 export class AppModule { }
