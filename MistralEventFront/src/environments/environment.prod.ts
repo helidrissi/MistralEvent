@@ -4,5 +4,5 @@ export const environment = {
 
 export const BASE_URL_API = {
   // TO DO
-  // url_api: "http://localhost:8080/"
+  // url_api: "http://mistral.fr/mistralEvent/......"
 }

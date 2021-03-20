@@ -7,7 +7,8 @@
     </div>
     {{evenement.description.length > 200 ? (evenement.description | slice:0:200)+'...' : evenement.description }}
     <div class="btn-card-agenda">
-      <a href="#" class="btn btn-primary">Afficher</a>
+      <a *ngIf="type === 'upCommingCard' " href="#" class="btn btn-success">Je viens !</a>
+      <a *ngIf="type === 'agendaCard' " href="#" class="btn btn-primary">Afficher</a>
       <a href="#" class="btn btn-danger">J'annule</a>
     </div>
   </div>
