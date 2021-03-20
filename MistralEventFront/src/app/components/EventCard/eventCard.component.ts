@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Evenenement } from 'src/app/models/evenement';
+import { Evenement } from 'src/app/models/evenement';
 
 @Component({
   selector: 'app-eventCard',
@@ -7,7 +7,7 @@ import { Evenenement } from 'src/app/models/evenement';
   styleUrls: ['./eventCard.component.scss']
 })
 export class EventCardComponent implements OnInit {
-  @Input() evenement: Evenenement = {
+  @Input() evenement: Evenement = {
     id: 0,
     name: '',
     date: new Date,

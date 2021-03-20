@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Evenenement } from '../models/evenement';
+import { Evenement } from '../models/evenement';
 import { of } from 'rxjs';
 import { DeleteResponse, RequestService } from './request.service';
 import { HttpClient } from '@angular/common/http';
@@ -10,7 +10,7 @@ import { map, catchError } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class EvenementService extends RequestService {
-  eventsTest: Evenenement[] = [
+  eventsTest: Evenement[] = [
     {
       id: 1,
       name: 'test1',
@@ -49,24 +49,24 @@ export class EvenementService extends RequestService {
     super();
   }
 
-  getEvenements(): Observable<Evenenement[]> {
-    // return this.http.get<Evenenement[]>(this.serverUrl + 'events').pipe(
-    //   map((res: Evenenement[]) => res),
+  getEvenements(): Observable<Evenement[]> {
+    // return this.http.get<Evenement[]>(this.serverUrl + 'events').pipe(
+    //   map((res: Evenement[]) => res),
     //   catchError( this.handleError('evenements', []))
     // );
     return of(this.eventsTest);
   }
 
-  getEvenementById(evenementId: number): Observable<Evenenement | null | undefined> {
-    // return this.http.get<Evenenement>(this.serverUrl + 'events/' + evenementId).pipe(
-    //   map((res: Evenenement) => res),
+  getEvenementById(evenementId: number): Observable<Evenement | null | undefined> {
+    // return this.http.get<Evenement>(this.serverUrl + 'events/' + evenementId).pipe(
+    //   map((res: Evenement) => res),
     //   catchError(this.handleError('evenement', null))
     // );
     const evenement = this.eventsTest.find((value) => value.id === evenementId);
     return of(evenement);
   }
 
-  addEvenement(evenement: Evenenement): Observable<Evenenement | null> {
+  addEvenement(evenement: Evenement): Observable<Evenement | null> {
     // return this.http.post(this.serverUrl + 'events', evenement, this.httpOptions).pipe(
     //   map((res: any) => res),
     //   catchError(this.handleError('postevenement', null))
@@ -75,14 +75,14 @@ export class EvenementService extends RequestService {
     return of(evenement);
   }
 
-  updateEvenementById(evenement :Evenenement): Observable<Evenenement | null> {
-    return this.http.put<Evenenement>(this.serverUrl + 'events/' + evenement.id, evenement, this.httpOptions).pipe(
-      map((res)=> res),
+  updateEvenementById(evenement: Evenement): Observable<Evenement | null> {
+    return this.http.put<Evenement>(this.serverUrl + 'events/' + evenement.id, evenement, this.httpOptions).pipe(
+      map((res) => res),
       catchError(this.handleError('update evenement', null))
     )
   }
 
-  deleteEvenementById(evenementId: Evenenement): Observable<DeleteResponse> {
+  deleteEvenementById(evenementId: Evenement): Observable<DeleteResponse> {
     return this.http.delete(this.serverUrl + 'events/' + evenementId, this.httpOptions).pipe(
       map(() => this.deleteSuccess),
       catchError(this.handleError('delete evenement', this.deleteError))

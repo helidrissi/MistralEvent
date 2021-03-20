@@ -17,6 +17,10 @@ import { EventCardComponent } from '../EventCard/eventCard.component';
 import { UpcomingEventsComponent } from '../upcomingEvents/upcomingEvents.component';
 import { FileUploadComponent, FileUploadComponent as ModalComponent } from '../fileupload/fileupload.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { CreateEventComponent } from '../create-event/create-event.component';
+import { CreateLocationComponent } from '../create-location/create-location.component';
+import { EvenementService } from 'src/app/services/evenement.service';
 
 
 @NgModule({
@@ -30,7 +34,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AgendaComponent,
     EventCardComponent,
     UpcomingEventsComponent,
-    FileUploadComponent
+    FileUploadComponent,
+    CreateEventComponent,
+    CreateLocationComponent
   ],
   imports: [
     CommonModule,
@@ -39,8 +45,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatButtonModule,
     MatDialogModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+
   ],
-  providers: [],
+  providers: [HttpClientModule, EvenementService],
 })
 export class HomeModule { }

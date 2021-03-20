@@ -1,5 +1,5 @@
-export interface Evenenement {
-    id ?: number,
+export interface Evenement {
+    id?: number,
     name: string,
     date: Date,
     description: string,

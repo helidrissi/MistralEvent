@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
+import { EvenementService } from '../../services/evenement.service'
 
 @Component({
   selector: 'app-create-location',
@@ -27,6 +28,7 @@ export class CreateLocationComponent implements OnInit {
     const message = "Lieu créé " + ", " +
       eventName + ", " + streetAddress + ", " + city
     alert(message)
+
   }
 
 

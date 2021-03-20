@@ -5,6 +5,8 @@ import { CreditComponent } from '../credit/credit.component';
 import { AgendaComponent } from '../agenda/agenda.component';
 import { HomeComponent } from './home.component';
 import { UpcomingEventsComponent } from '../upcomingEvents/upcomingEvents.component';
+import { CreateEventComponent } from '../create-event/create-event.component';
+import { CreateLocationComponent } from '../create-location/create-location.component';
 
 const routes: Routes = [
   {
@@ -15,6 +17,8 @@ const routes: Routes = [
       { path: 'credit', component: CreditComponent },
       { path: 'agenda', component: AgendaComponent },
       { path: 'upcommingEvent', component: UpcomingEventsComponent },
+      { path: 'create-location', component: CreateLocationComponent },
+      { path: 'create-event', component: CreateEventComponent }
     ],
   },
 ];
@@ -24,4 +28,4 @@ const routes: Routes = [
   exports: [RouterModule],
   declarations: [],
 })
-export class HomeRoutingModule {}
+export class HomeRoutingModule { }

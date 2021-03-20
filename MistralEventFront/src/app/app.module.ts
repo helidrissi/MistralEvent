@@ -10,9 +10,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { CreateLocationComponent } from './components/create-location/create-location.component';
 import { CreateEventComponent } from './components/create-event/create-event.component'
+import { HttpClientModule } from '@angular/common/http'
+import { EvenementService } from './services/evenement.service';
 
 @NgModule({
-  declarations: [AppComponent, CreateLocationComponent, CreateEventComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -21,7 +23,7 @@ import { CreateEventComponent } from './components/create-event/create-event.com
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [EvenementService],
   bootstrap: [AppComponent],
 })
 
