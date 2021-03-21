@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {HttpClientModule, HTTP_INTERCEPTORS, HttpClient} from '@angular/common/http'
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,10 +17,6 @@ import { EventCardComponent } from '../EventCard/eventCard.component';
 import { UpcomingEventsComponent } from '../upcomingEvents/upcomingEvents.component';
 import { FileUploadComponent, FileUploadComponent as ModalComponent } from '../fileupload/fileupload.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-//import {JwtInterceptor} from '../../services/jwt.interceptor';
-
-
-
 
 @NgModule({
   declarations: [

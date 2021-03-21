@@ -3,22 +3,20 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 // Models
-import { User } from '../models/user';
+import { File } from '../models/file';
 
 
 @Injectable({
     providedIn: 'root'
   })
-  export class UsersService {
+  export class FilesService {
   
-    baseUrl="http://localhost:8080/api/v1/users/";
-
-    user: User = null;
+    baseUrl="http://localhost:8080/api/v1/image/get/";
 
     constructor(private http:HttpClient) { }
 
-    getUser(userId: string) {  
-      return this.http.get<User>(`${this.baseUrl}${userId}`); 
+    getFile(name: string) {  
+        return this.http.get<File>(`${this.baseUrl}${name}`); 
     }  
     
 }

@@ -27,6 +27,8 @@ export class AccountComponent implements OnInit {
   selectGroupsForm: FormGroup;
   changePasswordForm: FormGroup;
 
+  newPwdSave: boolean;
+
   constructor(private users: UsersService, public account: AccountService, private modalService: NgbModal, public fb: FormBuilder) {
 
     this.account.loadUser();
@@ -50,19 +52,14 @@ export class AccountComponent implements OnInit {
   }
 
   changePassword() {
-    
+
+    this.changePasswordForm.get('oldpassword').setValue("");
+    this.changePasswordForm.get('newpassword').setValue("");
+    this.changePasswordForm.get('newpassword2').setValue("");
+    this.newPwdSave = true;
   }
 
   openAvatarUpload() {
-    /*const dialogConfig = new MatDialogConfig();
-    // The user can't close the dialog by clicking outside its body
-    dialogConfig.disableClose = true;
-    dialogConfig.id = "modal-component";
-    dialogConfig.height = "350px";
-    dialogConfig.width = "600px";
-    
-    const modalDialog = this.matDialog.open(FileUploadComponent, dialogConfig);*/
-
     const modalRef = this.modalService.open(FileUploadComponent);
     modalRef.componentInstance.name = 'World';
   }

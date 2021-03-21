@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-xs-12 col-sm-6  col-md-4 col-lg-4 col-xl-3 col-xxl-3" style="text-align: center;">
                 <div class="profilSidebar">
-                    <img src="{{account.getAvatar()}}" alt="Photo de profil">
+                    <img  [src]='account.avatar64' alt="Photo de profil">
                   </div>
                 <!--<img src="https://uifaces.co/our-content/donated/yn7PKqTT.jpg" alt="Avatar" class="avatar profile-avatar" />-->
                 <button type="button" class="btn btn-link change-avatar-btn" (click)="openAvatarUpload()">Changer votre avatar</button>
@@ -88,6 +88,30 @@
                                 <input id="newpassword2" formControlName="newpassword2" type="password" class="form-control" name="newpassword2">
                             </div>
                         </div>
+                    </div>
+                    <div class="alert alert-danger"
+                        *ngIf="changePasswordForm.get('oldpassword').invalid && (changePasswordForm.get('oldpassword').touched || changePasswordForm.get('oldpassword').dirty  )">
+                        <div *ngIf="changePasswordForm.get('oldpassword').getError('required')">Le mot de passe actuel est requis
+                        </div>
+                        <div *ngIf="changePasswordForm.get('oldpassword').getError('minlength')">Le mot de passe actuel n'est pas assez long
+                        </div>
+                    </div>
+                    <div class="alert alert-danger"
+                        *ngIf="changePasswordForm.get('newpassword').invalid && (changePasswordForm.get('newpassword').touched || changePasswordForm.get('newpassword').dirty  )">
+                        <div *ngIf="changePasswordForm.get('newpassword').getError('required')">Le nouveau mot de passe est requis
+                        </div>
+                        <div *ngIf="changePasswordForm.get('newpassword').getError('minlength')">Le nouveau mot de passe n'est pas assez long
+                        </div>
+                    </div>
+                    <div class="alert alert-danger"
+                        *ngIf="changePasswordForm.get('newpassword2').invalid && (changePasswordForm.get('newpassword2').touched || changePasswordForm.get('newpassword2').dirty  )">
+                        <div *ngIf="changePasswordForm.get('newpassword2').getError('required')">Le nouveau mot de passe doit être répété
+                        </div>
+                        <div *ngIf="changePasswordForm.get('newpassword2').getError('minlength')">Le nouveau mot de passe répété n'est pas assez long
+                        </div>
+                    </div>
+                    <div class="alert alert-success" role="alert" *ngIf="newPwdSave">
+                      Le nouveau mot de passe a été enregistré.
                     </div>
                 </div>
 
