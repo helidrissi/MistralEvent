@@ -8,7 +8,8 @@ export const environment = {
 
 
 export const BASE_URL_API = {
-  url_api: "http://localhost:8080/"
+  url_api: "http://localhost:8080/",
+  url_api_v: "http://localhost:8080/api/v1/"
 }
 /*
  * For easier debugging in development mode, you can import the following file

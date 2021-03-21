@@ -5,8 +5,8 @@
           <span id="applicationNameSidebar">Mistral Event</span>
         </div>
         <div class="profilSidebar">
-          <img src="../../../assets/images/8030242949697342-Male_16.jpg" alt="Photo de profil">
-          <h3> Anthony PFEIFER </h3>
+          <img src="{{account.getAvatar()}}" alt="Photo de profil">
+          <h3> {{account.firstname}} {{account.lastname}} </h3>
         </div>
         <div class="list-group list-group-flush">
           <a [routerLink]="['/home', 'agenda']" routerLinkActive="active-link" class="list-group-item list-group-item-action "><fa-icon [icon]="calendarAltIcon"></fa-icon> Mon agenda</a>
@@ -14,7 +14,7 @@
           <a [routerLink]="['/home', 'locations']" routerLinkActive="active-link" class="list-group-item list-group-item-action "><fa-icon [icon]="mapSignsIcon"></fa-icon> Liste des adresses</a>
           <a routerLink="account" routerLinkActive="active-link" class="list-group-item list-group-item-action " routerLinkActive="active-link"><fa-icon [icon]="cogIcon"></fa-icon> Gérer son compte</a>
           <a [routerLink]="['/home', 'credit']" routerLinkActive="active-link" class="list-group-item list-group-item-action " routerLinkActive="active-link"><fa-icon [icon]="creditIcon"></fa-icon> Crédits</a>
-          <a href="#" class="list-group-item list-group-item-action "><fa-icon [icon]="exitIcon"></fa-icon> Déconnexion</a>
+          <a href="#" class="list-group-item list-group-item-action" (click)="logout()" ><fa-icon [icon]="exitIcon" ></fa-icon> Déconnexion</a>
         </div>
     </div>
 
@@ -23,7 +23,7 @@
         <img src="../../../assets/images/MistralEventLogo.png" alt="">
       </div>
       <div class="profilSidebar">
-        <img src="../../../assets/images/8030242949697342-Male_16.jpg" alt="Photo de profil">
+        <img src="{{account.getAvatar()}}" alt="Photo de profil">
       </div>
       <div class="list-group list-group-flush">
         <a routerLink="agenda" routerLinkActive="active-link" class="list-group-item list-group-item-action "><fa-icon [icon]="calendarAltIcon"></fa-icon></a>
@@ -31,6 +31,6 @@
         <a href="#" class="list-group-item list-group-item-action "><fa-icon [icon]="mapSignsIcon"></fa-icon></a>
         <a routerLink="account" routerLinkActive="active-link" class="list-group-item list-group-item-action "><fa-icon [icon]="cogIcon"></fa-icon></a>
         <a routerLink="credit" routerLinkActive="active-link" class="list-group-item list-group-item-action "><fa-icon [icon]="creditIcon"></fa-icon></a>
-        <a href="#" class="list-group-item list-group-item-action "><fa-icon [icon]="exitIcon"></fa-icon></a>
+        <a href="#" class="list-group-item list-group-item-action" (click)="logout()" ><fa-icon [icon]="exitIcon"></fa-icon></a>
       </div>
   </div>
