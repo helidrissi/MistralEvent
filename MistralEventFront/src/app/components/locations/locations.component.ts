@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { Location } from 'src/app/models/location';
+import { LocationService } from '../../services/location.service';
 @Component({
   selector: 'app-locations',
   templateUrl: './locations.component.html',
@@ -8,10 +10,14 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 export class LocationsComponent implements OnInit {
 
   plusIcon = faPlus
+  listLocations: Location[] = [];
 
-  constructor() { }
+  constructor(private locationService: LocationService) { }
 
   ngOnInit(): void {
+    this.locationService.getAllLocations().subscribe((data: Location[]) => {
+      this.listLocations = data;
+    })
   }
 
 }
