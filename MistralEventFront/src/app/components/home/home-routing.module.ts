@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
+import { CreateLocationComponent } from '../create-location/create-location.component';
+import { CreateEventComponent } from '../create-event/create-event.component';
 import { AccountComponent } from '../account/account.component';
 import { CreditComponent } from '../credit/credit.component';
 import { AgendaComponent } from '../agenda/agenda.component';
 import { HomeComponent } from './home.component';
 import { UpcomingEventsComponent } from '../upcomingEvents/upcomingEvents.component';
+import { LocationsComponent } from '../locations/locations.component';
 
 const routes: Routes = [
   {
@@ -15,7 +17,10 @@ const routes: Routes = [
       { path: 'account', component: AccountComponent },
       { path: 'credit', component: CreditComponent },
       { path: 'agenda', component: AgendaComponent },
+      { path: 'locations', component: LocationsComponent },
       { path: 'upcommingEvent', component: UpcomingEventsComponent },
+      { path: 'create-location', component: CreateLocationComponent },
+      { path: 'create-event', component: CreateEventComponent},
     ],
   },
 ];

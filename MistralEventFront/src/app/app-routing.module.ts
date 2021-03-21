@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CreateLocationComponent } from './components/create-location/create-location.component';
-import { CreateEventComponent } from './components/create-event/create-event.component';
 import { CreditComponent } from './components/credit/credit.component';
 import { AuthGuard } from './guards/auth.guard';
 import { AfterAuthGuard } from './guards/after-auth.guard';
@@ -10,15 +8,13 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent/* , canActivate: [AfterAuthGuard] */ },
+  { path: 'login', component: LoginComponent , canActivate: [AfterAuthGuard]  },
   {
     path: 'home',
-    /* canActivate: [AuthGuard], */
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./components/home/home.module').then((m) => m.HomeModule),
   },
-  { path: 'create-location', component: CreateLocationComponent },
-  { path: 'create-event', component: CreateEventComponent},
   { path: 'page-not-found', component: PageNotFoundComponent},
   { path: 'credit', component: CreditComponent },
   { path: '**', component: PageNotFoundComponent},

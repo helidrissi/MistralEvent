@@ -15,6 +15,15 @@ export class EventCardComponent implements OnInit {
     type: ''
   };
 
+  /**
+ * @example
+ * peut prendre en valeur upCommingCard ou agendaCard
+ * permet de changer le bouton afficher en boutton je viens !  
+ * processTarget('yo')
+ *
+ */
+  @Input() type: string;
+
   constructor() { }
 
   ngOnInit() {
