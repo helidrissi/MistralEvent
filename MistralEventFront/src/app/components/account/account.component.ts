@@ -13,6 +13,7 @@ import { User } from '../../models/user';
 
 // Components
 import { FileUploadComponent } from '../fileupload/fileupload.component';
+import { UploadService } from 'src/app/services/upload.service';
 
 @Component({
   selector: 'app-account',
@@ -29,7 +30,7 @@ export class AccountComponent implements OnInit {
 
   newPwdSave: boolean;
 
-  constructor(private users: UsersService, public account: AccountService, private modalService: NgbModal, public fb: FormBuilder) {
+  constructor(private users: UsersService, public account: AccountService, private modalService: NgbModal, public fb: FormBuilder, public uploadService: UploadService) {
 
     this.account.loadUser();
 
@@ -60,8 +61,8 @@ export class AccountComponent implements OnInit {
   }
 
   openAvatarUpload() {
+    this.uploadService.type_file = this.uploadService.TYPE_AVATAR;
     const modalRef = this.modalService.open(FileUploadComponent);
-    modalRef.componentInstance.name = 'World';
   }
 
 }

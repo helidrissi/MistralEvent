@@ -9,7 +9,7 @@ import { BASE_URL_API } from 'src/environments/environment';
 })
 export class AuthService {
 
-  baseUrl= BASE_URL_API.url_api_v + 'login';
+  baseUrl= BASE_URL_API.url_api + 'users/login';
 
   constructor(private http:HttpClient) { }
 

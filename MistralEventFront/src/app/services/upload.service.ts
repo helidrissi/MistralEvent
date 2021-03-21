@@ -6,20 +6,24 @@ import { BASE_URL_API } from 'src/environments/environment';
     providedIn: 'root'
 })
 export class UploadService {
-    SERVER_URL = BASE_URL_API.url_api + 'upload/';
+    type_file:number = 0;
+
+    TYPE_AVATAR = 1;
+    TYPE_ATTACHED_PICTURE_LOCATION = 2;
+
+    SERVER_URL = BASE_URL_API.url_api_v + 'image/upload';
 
     constructor(private httpClient: HttpClient) {}
 
-    public upload(formData, type: number) {
-        if (type == 1) {
-            
-
-            return this.httpClient.post<any>(this.SERVER_URL + "avatar", formData, {
+    public upload(formData) {
+        console.log(this.SERVER_URL);
+        if (this.type_file == this.TYPE_AVATAR) {
+            return this.httpClient.post<any>(this.SERVER_URL, formData, {
                 reportProgress: true,
                 observe: 'events'
             });
-        } else if (type == 2) {
-            return this.httpClient.post<any>(this.SERVER_URL + "place-picture", formData, {
+        } else if (this.type_file == this.TYPE_ATTACHED_PICTURE_LOCATION) {
+            return this.httpClient.post<any>(this.SERVER_URL, formData, {
                 reportProgress: true,
                 observe: 'events'
             });

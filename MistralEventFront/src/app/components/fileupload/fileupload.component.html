@@ -7,11 +7,10 @@
         </button>
     </div>
     <div class="modal-body">
-        <form>
-            <h5> {{fileuplaod_text}} </h5>
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" id="customFile">
-                <label class="custom-file-label" for="customFile"></label>
+        <form id="uploadForm" role="form" [formGroup]="uploadForm">
+            <div class="form-group">
+                <label for="file">{{fileuplaod_text}}</label>
+                <input type="file" id="file" formControlName="file" (change)="onFileChange($event)">
             </div>
         </form>
     </div>
