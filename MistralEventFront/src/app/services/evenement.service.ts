@@ -1,91 +1,54 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { BASE_URL_API } from '../../environments/environment';
 import { Evenenement } from '../models/evenement';
-import { of } from 'rxjs';
-import { DeleteResponse, RequestService } from './request.service';
-import { HttpClient } from '@angular/common/http';
-import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
-export class EvenementService extends RequestService {
-  eventsTest: Evenenement[] = [
-    {
-      id: 1,
-      name: 'test1',
-      date: new Date(),
-      description:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-      type: 'resto',
-    },
-    {
-      id: 2,
-      name: 'test2',
-      date: new Date(),
-      description:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-      type: 'rando',
-    },
-    {
-      id: 3,
-      name: 'test3',
-      date: new Date(),
-      description:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-      type: 'resto',
-    },
-    {
-      id: 4,
-      name: 'test4',
-      date: new Date(),
-      description:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-      type: 'apéro',
-    },
-  ];
+export class EvenementService {
+  SERVER_URL = BASE_URL_API.url_api_v + 'events';
 
   constructor(private http: HttpClient) {
-    super();
   }
 
   getEvenements(): Observable<Evenenement[]> {
-    // return this.http.get<Evenenement[]>(this.serverUrl + 'events').pipe(
-    //   map((res: Evenenement[]) => res),
-    //   catchError( this.handleError('evenements', []))
-    // );
-    return of(this.eventsTest);
+    return this.http.get<Evenenement[]>(this.SERVER_URL).pipe(
+      map((res: Evenenement[]) => res),
+    );
   }
 
   getEvenementById(evenementId: number): Observable<Evenenement | null | undefined> {
-    // return this.http.get<Evenenement>(this.serverUrl + 'events/' + evenementId).pipe(
-    //   map((res: Evenenement) => res),
-    //   catchError(this.handleError('evenement', null))
-    // );
-    const evenement = this.eventsTest.find((value) => value.id === evenementId);
-    return of(evenement);
+    return this.http.get<Evenenement>(this.SERVER_URL + '/' + evenementId).pipe(
+      map((res: Evenenement) => res),
+    );
   }
 
+  getEvenementsByUser(userId: number): Observable<Evenenement[]> {
+    return this.http.get<Evenenement[]>( this.SERVER_URL + '/' + userId).pipe(
+      map((res: Evenenement[]) => res)
+    );
+  } 
+
   addEvenement(evenement: Evenenement): Observable<Evenenement | null> {
-    // return this.http.post(this.serverUrl + 'events', evenement, this.httpOptions).pipe(
-    //   map((res: any) => res),
-    //   catchError(this.handleError('postevenement', null))
-    // );
-    this.eventsTest.push(evenement);
-    return of(evenement);
+    return this.http.post(this.SERVER_URL + 'events', evenement).pipe(
+      map((res: any) => res),
+    );
+    
   }
 
   updateEvenementById(evenement :Evenenement): Observable<Evenenement | null> {
-    return this.http.put<Evenenement>(this.serverUrl + 'events/' + evenement.id, evenement, this.httpOptions).pipe(
+    return this.http.put<Evenenement>(this.SERVER_URL + 'events/' + evenement.id, evenement).pipe(
       map((res)=> res),
-      catchError(this.handleError('update evenement', null))
     )
   }
 
-  deleteEvenementById(evenementId: Evenenement): Observable<DeleteResponse> {
-    return this.http.delete(this.serverUrl + 'events/' + evenementId, this.httpOptions).pipe(
-      map(() => this.deleteSuccess),
-      catchError(this.handleError('delete evenement', this.deleteError))
+  deleteEvenementById(evenement: Evenenement): Observable<any> {
+    return this.http.delete(this.SERVER_URL + 'events/' + evenement.id).pipe(
+      map(() => true),
+      catchError((err)=> err)
     )
   }
 }

@@ -2,6 +2,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+// Environnement
+import { BASE_URL_API } from 'src/environments/environment';
+
 // Models
 import { User } from '../models/user';
 
@@ -11,7 +14,7 @@ import { User } from '../models/user';
   })
   export class UsersService {
   
-    baseUrl="http://localhost:8080/api/v1/users/";
+    baseUrl= BASE_URL_API.url_api_v + 'users/';
 
     user: User = null;
 

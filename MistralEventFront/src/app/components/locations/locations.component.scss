@@ -1,0 +1,28 @@
+thead {
+  background-color: rgb(0, 171, 214);
+}
+
+.tableDiv {
+  display: flex;
+  flex-direction: column;
+  h1 {
+    margin-left: 10%;
+  }
+  table {
+    align-self: center;
+    width: 80%;
+    text-align: center;
+  }
+}
+
+.addButton {
+  bottom: 10%;
+  right: 5%;
+  border-radius: 100%;
+  position: fixed;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  font-size: 2.5rem;
+}

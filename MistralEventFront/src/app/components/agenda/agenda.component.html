@@ -5,23 +5,15 @@
         <h3>
             Aujourd'hui
         </h3>
-        <div class="cardList">
-            <div class="card">
-                <img src="../../../assets/images/restaurant.jpg" class="card-img-top" alt="...">
-                    <div class="card-informations">
-                    <h5 class="card-title">Restau Vendredi</h5>
-                    <p class="card-text">22/09/2021 12h10</p>
-                    <div class="btn-card-agenda">
-                        <a href="#" class="btn btn-primary">Afficher</a>
-                        <a href="#" class="btn btn-danger">J'annule</a>
-                    </div>
-                </div>
-            </div>
+        <div class="card-list row row-cols-auto">
+          <div class="col" *ngFor="let event of listEvents">
+            <app-eventCard [evenement]=event type="agendaCard" ></app-eventCard>
+          </div>
         </div>
     </div>
     <div class="thisWeek">
         <h3>Cette semaine</h3>
-        <div class="cardList">
+        <!-- <div class="cardList">
             <div class="card">
                 <img src="../../../assets/images/restaurant.jpg" class="card-img-top" alt="...">
                 <div class="card-informations">
@@ -44,12 +36,12 @@
                   </div>
                 </div>
               </div>
-        </div>
+        </div> -->
 
     </div>
     <div class="thisMonth">
         <h3>Ce mois-ci</h3>
-        <div class="cardList">
+        <!-- <div class="cardList">
             <div class="card">
                 <img src="../../../assets/images/restaurant.jpg" class="card-img-top" alt="...">
                 <div class="card-informations">
@@ -105,10 +97,11 @@
                   </div>
                 </div>
               </div>
-        </div>
+        </div> -->
     </div>
 
     <div class="addButtonDiv">
-      <a href="#" class="btn btn-success addButton"> <fa-icon [icon]="plusIcon" class="mx-auto"></fa-icon> </a>
+      <a [routerLink]="['/home', 'create-event']" routerLinkActive="active-link" class="btn btn-success addButton"> 
+        <fa-icon [icon]="plusIcon" class="mx-auto plusIcon"></fa-icon> </a>
     </div>
 </div>

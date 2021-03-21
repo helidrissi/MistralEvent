@@ -1,28 +1,32 @@
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {HttpClientModule, HTTP_INTERCEPTORS, HttpClient} from '@angular/common/http'
+
+import { RouterModule } from '@angular/router';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
+import { CreateEventComponent } from './components/create-event/create-event.component';
 import { CreateLocationComponent } from './components/create-location/create-location.component';
-import { CreateEventComponent } from './components/create-event/create-event.component'
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { LocationsComponent } from './components/locations/locations.component';
 import { LoginComponent } from './components/login/login.component';
-
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { RouterModule } from '@angular/router';
+
 import { JwtInterceptor } from './services/jwt.interceptor';
 
 @NgModule({
-  declarations: [AppComponent, CreateLocationComponent, CreateEventComponent,
+  declarations: [
+    AppComponent,
+    CreateLocationComponent,
+    CreateEventComponent,
     LoginComponent,
-    PageNotFoundComponent],
+    PageNotFoundComponent,
+    LocationsComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -32,7 +36,7 @@ import { JwtInterceptor } from './services/jwt.interceptor';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
   ],
   providers: [{
     provide:HTTP_INTERCEPTORS,
@@ -41,5 +45,4 @@ import { JwtInterceptor } from './services/jwt.interceptor';
   }],
   bootstrap: [AppComponent],
 })
-
-export class AppModule { }
+export class AppModule {}
