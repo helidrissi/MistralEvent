@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { BASE_URL_API } from '../../environments/environment';
 import { Evenenement } from '../models/evenement';
 
@@ -9,13 +9,13 @@ import { Evenenement } from '../models/evenement';
   providedIn: 'root',
 })
 export class EvenementService {
-  SERVER_URL = BASE_URL_API.url_api + 'api/v1/events';
+  SERVER_URL = BASE_URL_API.url_api_v + 'events';
 
   constructor(private http: HttpClient) {
   }
 
   getEvenements(): Observable<Evenenement[]> {
-    return this.http.get<Evenenement[]>(this.SERVER_URL  ).pipe(
+    return this.http.get<Evenenement[]>(this.SERVER_URL).pipe(
       map((res: Evenenement[]) => res),
     );
   }
@@ -45,9 +45,10 @@ export class EvenementService {
     )
   }
 
-  deleteEvenementById(evenementId: Evenenement): Observable<any> {
-    return this.http.delete(this.SERVER_URL + 'events/' + evenementId).pipe(
+  deleteEvenementById(evenement: Evenenement): Observable<any> {
+    return this.http.delete(this.SERVER_URL + 'events/' + evenement.id).pipe(
       map(() => true),
+      catchError((err)=> err)
     )
   }
 }
