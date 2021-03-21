@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { faAt, faSave } from '@fortawesome/free-solid-svg-icons';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
+import { FormsModule, FormBuilder } from '@angular/forms';
 
 // Services
 import { AccountService } from '../../services/account.service';
@@ -26,7 +27,19 @@ export class AccountComponent implements OnInit {
   selectGroupsForm: FormGroup;
   changePasswordForm: FormGroup;
 
-  constructor(private users: UsersService, public account: AccountService, private modalService: NgbModal) {
+  constructor(private users: UsersService, public account: AccountService, private modalService: NgbModal, public fb: FormBuilder) {
+
+    this.account.loadUser();
+
+    this.selectGroupsForm = this.fb.group({
+    })
+
+    this.changePasswordForm = this.fb.group({
+
+      oldpassword: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      newpassword: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      newpassword2: new FormControl('', [Validators.required, Validators.minLength(6)])
+    })
   }
 
   ngOnInit(): void {
