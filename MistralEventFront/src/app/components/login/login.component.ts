@@ -51,15 +51,13 @@ export class LoginComponent implements OnInit {
       else {
         this.errorMessage = "Une erreur Serveur est survenue";
       }
-    }
-    )
-
-    //localStorage.setItem('envir', this.formLogin.get('envir').value);
+    })
   }
 
   handleResponse(res:{}) {
     this.token.handle(res);
     this.account.changeStatus(true);
+    this.account.loadUser();
 
     this.router.navigateByUrl("/");
   }

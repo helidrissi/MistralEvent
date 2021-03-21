@@ -1,7 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { faAt, faSave } from '@fortawesome/free-solid-svg-icons';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormGroup, FormControl, Validators } from '@angular/forms'
 
+// Services
+import { AccountService } from '../../services/account.service';
+import { UsersService } from '../../services/users.service';
+
+// Models
+import { User } from '../../models/user';
+
+// Components
 import { FileUploadComponent } from '../fileupload/fileupload.component';
 
 @Component({
@@ -14,7 +23,11 @@ export class AccountComponent implements OnInit {
   atIcon = faAt;
   saveIcon = faSave;
 
-  constructor(private modalService: NgbModal) { }
+  selectGroupsForm: FormGroup;
+  changePasswordForm: FormGroup;
+
+  constructor(private users: UsersService, public account: AccountService, private modalService: NgbModal) {
+  }
 
   ngOnInit(): void {
   }
