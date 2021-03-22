@@ -25,15 +25,15 @@ import { User } from '../models/user';
     }  
 
     saveUser(user: User) {
-      return this.http.post(`${this.baseUrl}${user.userId}`,user,{headers:{skip:"true"}})
+      return this.http.patch(`${this.baseUrl}${user.id}`,user)
     } 
 
     changePassword(userId:string,password:string) {
-      return this.http.post(`${this.baseUrl}${userId}`,{password},{headers:{skip:"true"}})
+      return this.http.patch(`${this.baseUrl}${userId}`,{password})
     } 
 
     changePasswordBis(id:number,password:string) {
-      return this.http.post(`${this.baseUrl}${id}`,{password},{headers:{skip:"true"}})
+      return this.http.patch(`${this.baseUrl}${id}`,{password})
     } 
     
 }

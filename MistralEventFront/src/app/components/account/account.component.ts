@@ -57,7 +57,6 @@ export class AccountComponent implements OnInit {
 
     this.groupsService.getGroups().subscribe((data: Group[]) => {
       this.listGroups = data;
-      console.log(this.listGroups);
     });
   }
 
@@ -65,9 +64,10 @@ export class AccountComponent implements OnInit {
   }
 
   selectGroups() {
-    this.account.saveUser().subscribe(res => {
+    this.account.saveUser().subscribe((userLoaded:User) => {
       this.errorMessage2 = "";
       this.groupsSave = true;
+      this.account.refreshUser(userLoaded);
     }, error => {
       if (error.status === 403) {
         this.errorMessage2 = "Le mot de passe actuel est incorrect";

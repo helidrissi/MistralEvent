@@ -35,12 +35,7 @@ export class AccountService {
   getUser() {
     if (this.user == null) {
       this.usersService.getUser(this.tokenservice.getId()).subscribe((userLoaded:User) => {
-        this.user = userLoaded;
-        this.firstname = this.user.firstName;
-        this.lastname = this.user.lastName;
-        this.email = this.user.email;
-
-        this.loadAvatar();
+        this.refreshUser(userLoaded);
         return this.user;
       });  
     } else {
@@ -51,14 +46,18 @@ export class AccountService {
   loadUser() {
     if (this.user == null && this.tokenservice.getId() != null) {
       this.usersService.getUser(this.tokenservice.getId()).subscribe((userLoaded:User) => {
-        this.user = userLoaded;
-        this.firstname = this.user.firstName;
-        this.lastname = this.user.lastName;
-        this.email = this.user.email;
-
-        this.loadAvatar();
+        this.refreshUser(userLoaded);
       });  
     }
+  }
+
+  refreshUser(user: User) {
+    this.user = user;
+    this.firstname = this.user.firstName;
+    this.lastname = this.user.lastName;
+    this.email = this.user.email;
+
+    this.loadAvatar();
   }
 
   saveUser() {
