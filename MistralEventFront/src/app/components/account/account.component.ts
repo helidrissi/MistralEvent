@@ -7,9 +7,11 @@ import { FormsModule, FormBuilder } from '@angular/forms';
 // Services
 import { AccountService } from '../../services/account.service';
 import { UsersService } from '../../services/users.service';
+import { GroupsService } from '../../services/groups.service';
 
 // Models
 import { User } from '../../models/user';
+import { Group } from 'src/app/models/group';
 
 // Components
 import { FileUploadComponent } from '../fileupload/fileupload.component';
@@ -32,19 +34,28 @@ export class AccountComponent implements OnInit {
   newPwdSave: boolean;
   errorMessage: string;
 
-  constructor(private users: UsersService, public account: AccountService, private modalService: NgbModal, public fb: FormBuilder, public uploadService: UploadService, private authService: AuthService) {
+  listGroups: Group[] = [];
+
+  constructor(private users: UsersService, public account: AccountService, private modalService: NgbModal, 
+    public fb: FormBuilder, public uploadService: UploadService, private authService: AuthService, 
+    private groupsService: GroupsService) {
 
     this.account.loadUser();
 
     this.selectGroupsForm = this.fb.group({
-    })
+    });
 
     this.changePasswordForm = this.fb.group({
 
       oldpassword: new FormControl('', [Validators.required, Validators.minLength(6)]),
       newpassword: new FormControl('', [Validators.required, Validators.minLength(6)]),
       newpassword2: new FormControl('', [Validators.required, Validators.minLength(6)])
-    })
+    });
+
+    this.groupsService.getGroups().subscribe((data: Group[]) => {
+      this.listGroups = data;
+      console.log(this.listGroups);
+    });
   }
 
   ngOnInit(): void {

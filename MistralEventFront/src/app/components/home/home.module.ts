@@ -15,6 +15,7 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { HomeComponent } from './home.component';
 import { EventCardComponent } from '../EventCard/eventCard.component';
+import { CheckGroupComponent } from '../checkgroup/checkgroup.component';
 import { UpcomingEventsComponent } from '../upcomingEvents/upcomingEvents.component';
 import { FileUploadComponent, FileUploadComponent as ModalComponent } from '../fileupload/fileupload.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -32,6 +33,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FooterComponent,
     AgendaComponent,
     EventCardComponent,
+    CheckGroupComponent,
     UpcomingEventsComponent,
     FileUploadComponent
   ],
