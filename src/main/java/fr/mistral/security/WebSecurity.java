@@ -23,6 +23,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
+
+
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -31,7 +35,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .cors().and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, SecurityConstants.SIGN_UP_URL,"/h2-console")
+                .antMatchers(SecurityConstants.SIGN_UP_URL,"/v2/api-docs","/swagger-ui.html","/swagger-resources/**",
+                        "/swagger-ui.html",
+                        "/v2/api-docs",
+                        "/webjars/**")
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()
