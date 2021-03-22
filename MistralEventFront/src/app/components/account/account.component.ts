@@ -14,6 +14,7 @@ import { User } from '../../models/user';
 // Components
 import { FileUploadComponent } from '../fileupload/fileupload.component';
 import { UploadService } from 'src/app/services/upload.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-account',
@@ -29,8 +30,9 @@ export class AccountComponent implements OnInit {
   changePasswordForm: FormGroup;
 
   newPwdSave: boolean;
+  errorMessage: string;
 
-  constructor(private users: UsersService, public account: AccountService, private modalService: NgbModal, public fb: FormBuilder, public uploadService: UploadService) {
+  constructor(private users: UsersService, public account: AccountService, private modalService: NgbModal, public fb: FormBuilder, public uploadService: UploadService, private authService: AuthService) {
 
     this.account.loadUser();
 
@@ -53,11 +55,35 @@ export class AccountComponent implements OnInit {
   }
 
   changePassword() {
+    if (this.changePasswordForm.get('newpassword') !== this.changePasswordForm.get('newpassword2')) {
+      this.authService.login(this.account.email, this.changePasswordForm.get('oldpassword').value).subscribe(res => this.handleResponse(res), error => {
+        if (error.status === 403) {
+          this.errorMessage = "Le mot de passe actuel est incorrect";
+        }
+        else {
+          this.errorMessage = "Une erreur Serveur est survenue";
+        }
+      });
+    } else {
+      this.errorMessage = "Le nouveau mot de passe n'est pas identique dans les 2 champs";
+    }
+  }
 
-    this.changePasswordForm.get('oldpassword').setValue("");
-    this.changePasswordForm.get('newpassword').setValue("");
-    this.changePasswordForm.get('newpassword2').setValue("");
-    this.newPwdSave = true;
+  handleResponse(res:{}) {
+    this.account.changePassword(this.account.user.id, this.changePasswordForm.get('newpassword').value).subscribe(res => {
+      this.changePasswordForm.get('oldpassword').setValue("");
+      this.changePasswordForm.get('newpassword').setValue("");
+      this.changePasswordForm.get('newpassword2').setValue("");
+      this.errorMessage = "";
+      this.newPwdSave = true;
+    }, error => {
+      if (error.status === 403) {
+        this.errorMessage = "Le mot de passe actuel est incorrect";
+      }
+      else {
+        this.errorMessage = "Une erreur Serveur est survenue";
+      }
+    })
   }
 
   openAvatarUpload() {

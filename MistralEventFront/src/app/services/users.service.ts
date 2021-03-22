@@ -23,5 +23,13 @@ import { User } from '../models/user';
     getUser(userId: string) {  
       return this.http.get<User>(`${this.baseUrl}${userId}`); 
     }  
+
+    changePassword(userId:string,password:string) {
+      return this.http.post(`${this.baseUrl}${userId}`,{password},{headers:{skip:"true"}})
+    } 
+
+    changePasswordBis(id:number,password:string) {
+      return this.http.post(`${this.baseUrl}${id}`,{password},{headers:{skip:"true"}})
+    } 
     
 }
