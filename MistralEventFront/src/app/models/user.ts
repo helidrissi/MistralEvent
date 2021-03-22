@@ -1,3 +1,6 @@
+// Models
+import { Group } from '../models/Group';
+
 export interface User {
     id ?: number,
     userId: string,
@@ -5,6 +8,6 @@ export interface User {
     lastName: string,
     email: string,
     password: string,
-    groups: any,
+    groups: Group[],
     events: any
 }

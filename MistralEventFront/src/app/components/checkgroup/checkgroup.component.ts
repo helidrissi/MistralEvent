@@ -13,10 +13,20 @@ export class CheckGroupComponent implements OnInit {
     name: ''
   };
 
+  isChecked: boolean;
+
   constructor(private account: AccountService) {
-    
+    this.isChecked = account.isInGroup(this.group) != null;
   }
 
   ngOnInit() {
+  }
+
+  checkValue(){
+    if (this.isChecked) {
+      this.account.addGroup(this.group);
+    } else {
+      this.account.removeGroup(this.group);
+    }
   }
 }

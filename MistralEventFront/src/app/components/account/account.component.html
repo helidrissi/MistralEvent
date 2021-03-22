@@ -31,6 +31,12 @@
                             <app-checkgroup [group]=group type="agendaCard" ></app-checkgroup>
                         </div>
                     </div>
+                    <div class="alert alert-danger" *ngIf="errorMessage2 != null && errorMessage2 !== ''">
+                        {{errorMessage2}}
+                    </div>
+                    <div class="alert alert-success" role="alert" *ngIf="groupsSave">
+                      La sélection des groupes a été enregistré.
+                    </div>
                 </div>
 
                 <div class="card-footer">

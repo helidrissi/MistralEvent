@@ -34,6 +34,9 @@ export class AccountComponent implements OnInit {
   newPwdSave: boolean;
   errorMessage: string;
 
+  groupsSave: boolean;
+  errorMessage2: string;
+
   listGroups: Group[] = [];
 
   constructor(private users: UsersService, public account: AccountService, private modalService: NgbModal, 
@@ -62,7 +65,17 @@ export class AccountComponent implements OnInit {
   }
 
   selectGroups() {
-    
+    this.account.saveUser().subscribe(res => {
+      this.errorMessage2 = "";
+      this.groupsSave = true;
+    }, error => {
+      if (error.status === 403) {
+        this.errorMessage2 = "Le mot de passe actuel est incorrect";
+      }
+      else {
+        this.errorMessage2 = "Une erreur Serveur est survenue";
+      }
+    })
   }
 
   changePassword() {

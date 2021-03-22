@@ -24,6 +24,10 @@ import { User } from '../models/user';
       return this.http.get<User>(`${this.baseUrl}${userId}`); 
     }  
 
+    saveUser(user: User) {
+      return this.http.post(`${this.baseUrl}${user.userId}`,user,{headers:{skip:"true"}})
+    } 
+
     changePassword(userId:string,password:string) {
       return this.http.post(`${this.baseUrl}${userId}`,{password},{headers:{skip:"true"}})
     } 
