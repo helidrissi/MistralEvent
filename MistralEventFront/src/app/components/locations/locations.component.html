@@ -12,20 +12,18 @@
           </tr>
         </thead>
         <tbody>
-            <tr>
-              <th scope="row">Mistral</th>
-              <td>4 Rue Marx Darmoy</td>
-              <td>63000</td>
-              <td>Clermont-Ferrand</td>
+          <tr>
+            <th scope="row">Mistral</th>
+            <td>4 Rue Marx Darmoy</td>
+            <td>63000</td>
+            <td>Clermont-Ferrand</td>
+          </tr>
+            <tr *ngFor="let location of listLocations">
+              <th scope="row" >{{ location.name}} </th>
+              <td>{{ location.street}}</td>
+              <td>{{ location.zipCode}}</td>
+              <td>{{ location.city}}</td>
             </tr>
-            <tr>
-            <tr>
-                <th scope="row">Chez Rachid</th>
-                <td>420 avenue de l'herbe</td>
-                <td>63000</td>
-                <td>Gnagnagna</td>
-                </tr>
-                <tr>
         </tbody>
       </table>
     <div class="tableDiv">
