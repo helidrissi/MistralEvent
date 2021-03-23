@@ -110,7 +110,7 @@ export class CreateEventComponent implements OnInit {
 
 
   constructor(private evenementService: EvenementService, private locationService: LocationService) {
-    this.locationService.getLocations().subscribe(result => this.locations = result)
+    this.locationService.getAllLocations().subscribe(result => this.locations = result)
     alert(JSON.stringify(this.locations))
   }
 
