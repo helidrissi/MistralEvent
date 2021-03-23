@@ -5,7 +5,7 @@
           <span id="applicationNameSidebar">Mistral Event</span>
         </div>
         <div class="profilSidebar">
-          <img src="{{account.getAvatar()}}" alt="Photo de profil">
+          <img [src]='account.avatar64' alt="Photo de profil">
           <h3> {{account.firstname}} {{account.lastname}} </h3>
         </div>
         <div class="list-group list-group-flush">
@@ -23,7 +23,7 @@
         <img src="../../../assets/images/MistralEventLogo.png" alt="">
       </div>
       <div class="profilSidebar">
-        <img src="{{account.getAvatar()}}" alt="Photo de profil">
+        <img [src]='account.avatar64' alt="Photo de profil">
       </div>
       <div class="list-group list-group-flush">
         <a routerLink="agenda" routerLinkActive="active-link" class="list-group-item list-group-item-action "><fa-icon [icon]="calendarAltIcon"></fa-icon></a>

@@ -23,9 +23,9 @@
                     </div>
                     <div class="alert alert-danger"
                         *ngIf="formLogin.get('password').invalid && (formLogin.get('password').touched || formLogin.get('password').dirty  )">
-                        <div *ngIf="formLogin.get('password').getError('required')">{{"Login.LoginRequis"}}
+                        <div *ngIf="formLogin.get('password').getError('required')">Un mot de passe est requis
                         </div>
-                        <div *ngIf="formLogin.get('password').getError('minlength')">{{"Login.LoginErreur"}}
+                        <div *ngIf="formLogin.get('password').getError('minlength')">Le mot de passe saisie n'est pas assez long
                         </div>
                     </div>
                     <div class="col-lg-12 login-btm login-button" style="text-align: center;">

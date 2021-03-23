@@ -1,24 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 
+// Environnement
+import { BASE_URL_API } from 'src/environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  
+  baseUrl= BASE_URL_API.url_api + 'users/login';
 
-constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient) { }
 
-
-login(email:string,password:string)
-  {
-
-    return this.http.post("http://localhost:8080/users/login",{email,password},{headers:{skip:"true"}})
-
-  }
-
-
-
-   
+  login(email:string,password:string) {
+    return this.http.post(`${this.baseUrl}`,{email,password},{headers:{skip:"true"}})
+  } 
 }
