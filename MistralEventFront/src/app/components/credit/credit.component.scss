@@ -126,6 +126,20 @@
     z-index:5;
   }
 
+  .col-credit:nth-child(6n) > .card-credit{
+    transform:rotate(2deg);
+    position:relative;
+    top:5px;
+    background:#8bc34a;
+    border: 1px solid #689F38;
+  }
+  .col-credit:nth-child(6n) > .card-credit:hover,.card-credit:focus{
+      box-shadow:10px 10px 7px rgba(0,0,0,.7);
+      transform: scale(1.25);
+      position:relative;
+      z-index:5;
+    }
+
 .col-credit:nth-child(7n) > .card-credit{
   transform:rotate(-3deg);
   background:#8bc34a;
