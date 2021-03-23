@@ -6,30 +6,24 @@
         <thead>
           <tr>
             <th scope="col">Nom du lieu</th>
-            <th scope="col">Rue</th>
-            <th scope="col">Code postal</th>
-            <th scope="col">Ville</th>
+            <th scope="col">Adresse</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <th scope="row">Mistral</th>
             <td>4 Rue Marx Darmoy</td>
-            <td>63000</td>
-            <td>Clermont-Ferrand</td>
           </tr>
             <tr *ngFor="let location of listLocations">
               <th scope="row" >{{ location.name}} </th>
-              <td>{{ location.street}}</td>
-              <td>{{ location.zipCode}}</td>
-              <td>{{ location.city}}</td>
+              <td>{{ location.adress}}</td>
             </tr>
         </tbody>
       </table>
     <div class="tableDiv">
 
       <div class="addButtonDiv">
-        <a [routerLink]="['/home', 'create-event']" routerLinkActive="active-link" class="btn btn-success addButton"> 
+        <a [routerLink]="['/home', 'create-location']" routerLinkActive="active-link" class="btn btn-success addButton"> 
           <fa-icon [icon]="plusIcon" class="mx-auto plusIcon"></fa-icon> </a>
       </div>
 </div>

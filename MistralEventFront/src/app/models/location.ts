@@ -1,7 +1,8 @@
 export interface Location {
     id ?: number,
     name: string,
-    street: string,
+    adress: string
+    /* ,
     zipCode: number,
-    city: string
+    city: string */
 }
