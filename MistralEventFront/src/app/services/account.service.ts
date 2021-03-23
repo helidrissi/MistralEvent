@@ -81,20 +81,36 @@ export class AccountService {
     }
   }
 
-  changePassword(id: number, password:string) {
-    return this.usersService.changePasswordBis(id, password);
+  changePassword(password:string) {
+    const userToSave: User = {id: 0, userId: null, firstName: null, lastName: null, email: null, password: null, groups: null,   events: null};
+    userToSave.id = this.user.id;
+    userToSave.userId = this.user.userId;
+    userToSave.password = password;
+    return this.usersService.saveUser(userToSave);
   }
 
-  isInGroup(group: Group) {
-    return this.user.groups.find(x => x.id === group.id);
+  isInGroup(group: Group): boolean {
+    if(this.user.groups.some(row => row.id == group.id)){
+      return true;
+    } else{
+      return false;
+    }
   }
 
   addGroup(group: Group) {
     this.user.groups.push(group);
   }
 
+  saveGroups() {
+    const userToSave: User = {id: 0, userId: null, firstName: null, lastName: null, email: null, password: null, groups: null,   events: null};
+    userToSave.id = this.user.id;
+    userToSave.userId = this.user.userId;
+    userToSave.groups = this.user.groups;
+    return this.usersService.saveUser(userToSave);
+  }
+
   removeGroup(group: Group) {
-    const index: number = this.user.groups.indexOf(group);
+    const index = this.user.groups.findIndex(row => row.id == group.id);
     if (index !== -1) {
       this.user.groups.splice(index, 1);
     }   

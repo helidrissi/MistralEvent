@@ -57,6 +57,7 @@ export class AccountComponent implements OnInit {
 
     this.groupsService.getGroups().subscribe((data: Group[]) => {
       this.listGroups = data;
+      console.log (this.listGroups);
     });
   }
 
@@ -64,7 +65,7 @@ export class AccountComponent implements OnInit {
   }
 
   selectGroups() {
-    this.account.saveUser().subscribe((userLoaded:User) => {
+    this.account.saveGroups().subscribe((userLoaded:User) => {
       this.errorMessage2 = "";
       this.groupsSave = true;
       this.account.refreshUser(userLoaded);
@@ -94,7 +95,7 @@ export class AccountComponent implements OnInit {
   }
 
   handleResponse(res:{}) {
-    this.account.changePassword(this.account.user.id, this.changePasswordForm.get('newpassword').value).subscribe(res => {
+    this.account.changePassword(this.changePasswordForm.get('newpassword').value).subscribe(res => {
       this.changePasswordForm.get('oldpassword').setValue("");
       this.changePasswordForm.get('newpassword').setValue("");
       this.changePasswordForm.get('newpassword2').setValue("");
