@@ -12,6 +12,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CreateEventComponent } from './components/create-event/create-event.component';
 import { CreateLocationComponent } from './components/create-location/create-location.component';
+
+import { EvenementService } from './services/evenement.service';
+
 import { LocationsComponent } from './components/locations/locations.component';
 import { LoginComponent } from './components/login/login.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
@@ -44,5 +47,6 @@ import { JwtInterceptor } from './services/jwt.interceptor';
     multi:true,
   }],
   bootstrap: [AppComponent],
+
 })
 export class AppModule {}

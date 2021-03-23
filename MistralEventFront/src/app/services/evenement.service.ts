@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { BASE_URL_API } from '../../environments/environment';
-import { Evenenement } from '../models/evenement';
+import { Evenement } from '../models/evenement';
 
 @Injectable({
   providedIn: 'root',
@@ -14,38 +14,38 @@ export class EvenementService {
   constructor(private http: HttpClient) {
   }
 
-  getEvenements(): Observable<Evenenement[]> {
-    return this.http.get<Evenenement[]>(this.SERVER_URL).pipe(
-      map((res: Evenenement[]) => res),
+  getEvenements(): Observable<Evenement[]> {
+    return this.http.get<Evenement[]>(this.SERVER_URL).pipe(
+      map((res: Evenement[]) => res),
     );
   }
 
-  getEvenementById(evenementId: number): Observable<Evenenement | null | undefined> {
-    return this.http.get<Evenenement>(this.SERVER_URL + '/' + evenementId).pipe(
-      map((res: Evenenement) => res),
+  getEvenementById(evenementId: number): Observable<Evenement | null | undefined> {
+    return this.http.get<Evenement>(this.SERVER_URL + '/' + evenementId).pipe(
+      map((res: Evenement) => res),
     );
   }
 
-  getEvenementsByUser(userId: number): Observable<Evenenement[]> {
-    return this.http.get<Evenenement[]>( this.SERVER_URL + '/' + userId).pipe(
-      map((res: Evenenement[]) => res)
+  getEvenementsByUser(userId: number): Observable<Evenement[]> {
+    return this.http.get<Evenement[]>( this.SERVER_URL + '/' + userId).pipe(
+      map((res: Evenement[]) => res)
     );
   } 
 
-  addEvenement(evenement: Evenenement): Observable<Evenenement | null> {
+  addEvenement(evenement: Evenement): Observable<Evenement | null> {
     return this.http.post(this.SERVER_URL + 'events', evenement).pipe(
       map((res: any) => res),
     );
     
   }
 
-  updateEvenementById(evenement :Evenenement): Observable<Evenenement | null> {
-    return this.http.put<Evenenement>(this.SERVER_URL + 'events/' + evenement.id, evenement).pipe(
+  updateEvenementById(evenement :Evenement): Observable<Evenement | null> {
+    return this.http.put<Evenement>(this.SERVER_URL + 'events/' + evenement.id, evenement).pipe(
       map((res)=> res),
     )
   }
 
-  deleteEvenementById(evenement: Evenenement): Observable<any> {
+  deleteEvenementById(evenement: Evenement): Observable<any> {
     return this.http.delete(this.SERVER_URL + 'events/' + evenement.id).pipe(
       map(() => true),
       catchError((err)=> err)
