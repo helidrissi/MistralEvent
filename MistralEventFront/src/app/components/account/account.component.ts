@@ -80,7 +80,8 @@ export class AccountComponent implements OnInit {
   }
 
   changePassword() {
-    if (this.changePasswordForm.get('newpassword') !== this.changePasswordForm.get('newpassword2')) {
+    this.newPwdSave = false;
+    if (this.changePasswordForm.get('newpassword').value == this.changePasswordForm.get('newpassword2').value) {
       this.authService.login(this.account.email, this.changePasswordForm.get('oldpassword').value).subscribe(res => this.handleResponse(res), error => {
         if (error.status === 403) {
           this.errorMessage = "Le mot de passe actuel est incorrect";

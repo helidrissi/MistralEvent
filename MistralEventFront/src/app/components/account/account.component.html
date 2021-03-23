@@ -96,12 +96,12 @@
                         </div>
                     </div>
                     <div class="alert alert-danger"
-                        *ngIf="!newPwdSave && changePasswordForm.get('newpassword2').invalid && (changePasswordForm.get('newpassword2').touched || changePasswordForm.get('newpassword2').dirty  )">
+                        *ngIf="!newPwdSave && ((changePasswordForm.get('newpassword2').value != changePasswordForm.get('newpassword').value) || changePasswordForm.get('newpassword2').invalid) && (changePasswordForm.get('newpassword2').touched || changePasswordForm.get('newpassword2').dirty)">
                         <div *ngIf="changePasswordForm.get('newpassword2').getError('required')">Le nouveau mot de passe doit être répété
                         </div>
                         <div *ngIf="changePasswordForm.get('newpassword2').getError('minlength')">Le nouveau mot de passe répété n'est pas assez long
                         </div>
-                        <div *ngIf="changePasswordForm.get('newpassword2').value !== changePasswordForm.get('newpassword').value">Les deux champs pour le nouveau mot de passe ne sont pas identiques
+                        <div *ngIf="changePasswordForm.get('newpassword2').value != changePasswordForm.get('newpassword').value">Les deux champs pour le nouveau mot de passe ne sont pas identiques
                         </div>
                     </div>
                     <div class="alert alert-danger" *ngIf="errorMessage != null && errorMessage!== ''">
@@ -113,7 +113,7 @@
                 </div>
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary"><fa-icon [icon]="saveIcon"></fa-icon>&nbsp;Enregistrer</button>
+                    <button type="submit" class="btn btn-primary" ><fa-icon [icon]="saveIcon"></fa-icon>&nbsp;Enregistrer</button>
                 </div>
             </form>
         </div>
