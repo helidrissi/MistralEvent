@@ -7,16 +7,18 @@
           <tr>
             <th scope="col">Nom du lieu</th>
             <th scope="col">Adresse</th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <th scope="row">Mistral</th>
             <td>4 Rue Marx Darmoy</td>
+            <td><a class="btn btn-primary btn-sm" (click)="showGallery(null)"><fa-icon [icon]="picturesIcon"></fa-icon></a></td>
           </tr>
             <tr *ngFor="let location of listLocations">
               <th scope="row" >{{ location.name}} </th>
-              <td>{{ location.address}}</td>
+              <td><a class="btn btn-primary btn-sm" (click)="showGallery(location)"><fa-icon [icon]="picturesIcon"></fa-icon></a></td>
             </tr>
         </tbody>
       </table>

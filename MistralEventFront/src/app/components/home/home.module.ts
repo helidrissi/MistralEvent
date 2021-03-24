@@ -16,6 +16,8 @@ import { EventCardComponent } from '../EventCard/eventCard.component';
 import { CheckGroupComponent } from '../checkgroup/checkgroup.component';
 import { UpcomingEventsComponent } from '../upcomingEvents/upcomingEvents.component';
 import { FileUploadComponent, FileUploadComponent as ModalComponent } from '../fileupload/fileupload.component';
+import { GalleryLocationComponent, GalleryLocationComponent as ModalComponent2 } from '../gallery-location/gallery-location.component';
+import { PictureLocationComponent, PictureLocationComponent as ModalComponent3 } from '../picture-location/picture-location.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 //import {JwtInterceptor} from '../../services/jwt.interceptor';
 
@@ -36,6 +38,7 @@ import { CreateLocationComponent } from '../create-location/create-location.comp
     CheckGroupComponent,
     UpcomingEventsComponent,
     FileUploadComponent,
+    GalleryLocationComponent,
     CreateEventComponent,
     CreateLocationComponent
   ],
