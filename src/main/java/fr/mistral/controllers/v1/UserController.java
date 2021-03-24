@@ -30,7 +30,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping(path = "/{id}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(path = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<UserEntity> getUser(@PathVariable String id) {
 
         UserEntity user = userService.getUserByUserId(id);
@@ -43,7 +43,7 @@ public class UserController {
     }
 
 
-    @GetMapping(produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<UserEntity> getAllUsers() {
 
         List<UserEntity> userEntities = userService.getUsers();
@@ -54,8 +54,8 @@ public class UserController {
 
 
     @PostMapping(
-            consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE},
-            produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE}
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE}
     )
     public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest userRequest) throws Exception {
 

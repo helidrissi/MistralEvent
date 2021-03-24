@@ -107,7 +107,6 @@ public class UserSeviceImpl implements UserService {
             if (user.getFirstName() != null) {
                 us.setFirstName(user.getFirstName());
             }
-
             if (user.getLastName() != null) {
                 us.setLastName(user.getLastName());
             }
@@ -115,7 +114,10 @@ public class UserSeviceImpl implements UserService {
                 us.setEmail(user.getEmail());
             }
             if (user.getPassword() != null) {
-                us.setPassword(user.getPassword());
+                us.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            }
+            if (user.getGroups() != null) {
+                us.setGroups(user.getGroups());
             }
             UserEntity userUpdated = userRepository.save(us);
 
