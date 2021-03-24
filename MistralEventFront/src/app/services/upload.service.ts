@@ -10,6 +10,7 @@ export class UploadService {
 
     TYPE_AVATAR = 1;
     TYPE_ATTACHED_PICTURE_LOCATION = 2;
+    TYPE_LOCATION = 3;
 
     SERVER_URL = BASE_URL_API.url_api_v + 'image/upload';
 

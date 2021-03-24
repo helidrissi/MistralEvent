@@ -11,7 +11,7 @@ import { LocationsComponent } from '../locations/locations.component';
 
 const routes: Routes = [
   {
-    path: '', redirectTo: '',
+    path: '',
     component: HomeComponent,
     children: [
       { path: 'account', component: AccountComponent },
@@ -30,4 +30,4 @@ const routes: Routes = [
   exports: [RouterModule],
   declarations: [],
 })
-export class HomeRoutingModule {}
+export class HomeRoutingModule { }

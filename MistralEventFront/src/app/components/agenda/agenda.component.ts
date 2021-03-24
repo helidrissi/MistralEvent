@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { faCalendarAlt } from '@fortawesome/free-regular-svg-icons';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { Evenenement } from 'src/app/models/evenement';
+import { Evenement } from 'src/app/models/evenement';
 import { EvenementService } from '../../services/evenement.service';
 
 
@@ -14,12 +14,12 @@ export class AgendaComponent implements OnInit {
   calendarAltIcon = faCalendarAlt;
   plusIcon = faPlus;
 
-  listEvents: Evenenement[] = [];
+  listEvents: Evenement[] = [];
 
   constructor(private evenementService: EvenementService) { }
 
   ngOnInit(): void {
-    this.evenementService.getEvenements().subscribe((data: Evenenement[]) => {
+    this.evenementService.getEvenements().subscribe((data: Evenement[]) => {
       this.listEvents = data;
     })
   }

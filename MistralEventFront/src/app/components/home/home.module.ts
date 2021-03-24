@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {HttpClientModule, HTTP_INTERCEPTORS, HttpClient} from '@angular/common/http'
-
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
-
 import { HomeRoutingModule } from './home-routing.module';
 import { AgendaComponent } from '../agenda/agenda.component';
 import { FooterComponent } from '../footer/footer.component';
@@ -18,9 +16,13 @@ import { EventCardComponent } from '../EventCard/eventCard.component';
 import { CheckGroupComponent } from '../checkgroup/checkgroup.component';
 import { UpcomingEventsComponent } from '../upcomingEvents/upcomingEvents.component';
 import { FileUploadComponent, FileUploadComponent as ModalComponent } from '../fileupload/fileupload.component';
+import { GalleryLocationComponent, GalleryLocationComponent as ModalComponent2 } from '../gallery-location/gallery-location.component';
+import { PictureLocationComponent, PictureLocationComponent as ModalComponent3 } from '../picture-location/picture-location.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 //import {JwtInterceptor} from '../../services/jwt.interceptor';
 
+import { CreateEventComponent } from '../create-event/create-event.component';
+import { CreateLocationComponent } from '../create-location/create-location.component';
 
 
 @NgModule({
@@ -35,7 +37,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     EventCardComponent,
     CheckGroupComponent,
     UpcomingEventsComponent,
-    FileUploadComponent
+    FileUploadComponent,
+    GalleryLocationComponent,
+    CreateEventComponent,
+    CreateLocationComponent
   ],
   imports: [
     CommonModule,
@@ -44,7 +49,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatButtonModule,
     MatDialogModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+
   ],
   providers: [/*{
     provide:HTTP_INTERCEPTORS,
