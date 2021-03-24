@@ -28,6 +28,8 @@ public class Event {
     private String name;
     private Date date;
     private String type;
+    private String author;
+    
     @ManyToMany(mappedBy = "events")
     private Set<UserEntity> users=new HashSet<>();
     @ManyToMany
