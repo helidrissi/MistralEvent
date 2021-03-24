@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Evenenement } from '../../models/evenement';
+import { Evenement } from '../../models/evenement';
 import { EvenementService } from '../../services/evenement.service';
 
 @Component({
@@ -8,12 +8,13 @@ import { EvenementService } from '../../services/evenement.service';
   styleUrls: ['./upcomingEvents.component.scss']
 })
 export class UpcomingEventsComponent implements OnInit {
-  agenda: Evenenement[] = [];
+  agenda: Evenement[] = [];
 
   constructor(private evenementService: EvenementService) { }
 
+
   ngOnInit() {
-    this.evenementService.getEvenements().subscribe((res: Evenenement[]) => {
+    this.evenementService.getEvenements().subscribe((res: Evenement[]) => {
       this.agenda = res;
     })
   }

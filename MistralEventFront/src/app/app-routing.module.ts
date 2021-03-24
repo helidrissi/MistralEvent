@@ -7,7 +7,7 @@ import { LoginComponent } from './components/login/login.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: 'home/agenda', pathMatch: 'full' },
   { path: 'login', component: LoginComponent , canActivate: [AfterAuthGuard]  },
   {
     path: 'home',

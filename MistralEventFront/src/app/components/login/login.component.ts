@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
     this.account.changeStatus(true);
     this.account.loadUser();
 
-    this.router.navigateByUrl("/");
+    this.router.navigateByUrl("/home/agenda");
   }
 
   toggleFieldTextType(): void {

@@ -30,4 +30,4 @@ const routes: Routes = [
   exports: [RouterModule],
   declarations: [],
 })
-export class HomeRoutingModule {}
+export class HomeRoutingModule { }
