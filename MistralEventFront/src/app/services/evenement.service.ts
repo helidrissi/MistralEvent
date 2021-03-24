@@ -33,20 +33,20 @@ export class EvenementService {
   } 
 
   addEvenement(evenement: Evenement): Observable<Evenement | null> {
-    return this.http.post(this.SERVER_URL + 'events', evenement).pipe(
+    return this.http.post(this.SERVER_URL, evenement).pipe(
       map((res: any) => res),
     );
     
   }
 
   updateEvenementById(evenement :Evenement): Observable<Evenement | null> {
-    return this.http.put<Evenement>(this.SERVER_URL + 'events/' + evenement.id, evenement).pipe(
+    return this.http.put<Evenement>(this.SERVER_URL + '/' + evenement.id, evenement).pipe(
       map((res)=> res),
     )
   }
 
   deleteEvenementById(evenement: Evenement): Observable<any> {
-    return this.http.delete(this.SERVER_URL + 'events/' + evenement.id).pipe(
+    return this.http.delete(this.SERVER_URL + '/' + evenement.id).pipe(
       map(() => true),
       catchError((err)=> err)
     )

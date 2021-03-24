@@ -29,11 +29,11 @@ export class CreateLocationComponent implements OnInit {
     const city = this.city.value
     const location: Location = {
       name: name,
-      address: streetAddress
+      adress: streetAddress
 
     }
-    this.locationService.addLocation(location)
-    alert(JSON.stringify(location))
+    this.locationService.addLocation(location).subscribe(result => alert(JSON.stringify(result)))
+    this.locationService.getAllLocations().subscribe(result => alert(JSON.stringify(result)))
 
   }
 

@@ -61,8 +61,9 @@ export class CreateEventComponent implements OnInit {
 
         name: locationName,
 
-        address: streetAddress,
+        adress: streetAddress,
       }
+      alert("if")
       this.locationService.addLocation(location)
     }
     else {
@@ -80,16 +81,15 @@ export class CreateEventComponent implements OnInit {
       location: location
     }
 
-    this.evenementService.addEvenement(evenement);
+    this.evenementService.addEvenement(evenement).subscribe(result => JSON.stringify(result));
 
-    alert(JSON.stringify(evenement))
-    this.displayNumberOfEvents()
+    
 
   }
 
   displayNumberOfEvents() {
     let nombreEvements = 0;
-    this.evenementService.getEvenements().subscribe(evenements => nombreEvements = evenements.length)
+    this.evenementService.getEvenements().subscribe(evenements => alert(evenements))
 
 
     alert(nombreEvements + " evenemets")
@@ -132,7 +132,7 @@ export class CreateEventComponent implements OnInit {
         const location = this.getLocationById(this.locationControl.value)
         this.disableLocationControls()
         this.locationNameControl.setValue(location.name)
-        this.streetAddressControl.setValue(location.address)
+        this.streetAddressControl.setValue(location.adress)
         //this.cityControl.setValue(newLocation.city)
         this.cityControl.setValue('Clermont-Ferrand')
 
