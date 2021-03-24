@@ -11,7 +11,7 @@ import { LocationsComponent } from '../locations/locations.component';
 
 const routes: Routes = [
   {
-    path: '', redirectTo: 'agenda',
+    path: '', redirectTo: '',
     component: HomeComponent,
     children: [
       { path: 'account', component: AccountComponent },

@@ -7,16 +7,29 @@
           <tr>
             <th scope="col">Nom du lieu</th>
             <th scope="col">Adresse</th>
+            <th scope="col" class="col-action"></th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <th scope="row">Mistral</th>
-            <td>4 Rue Marx Darmoy</td>
+            <td scope="row">4 Rue Marx Darmoy</td>
+            <td>
+              <a class="deleteLocation" (click)="deleteLocation(location.id)">
+                  <button class="btn btn-danger"> Supprimer
+                  </button>
+              </a>
+          </td>
           </tr>
             <tr *ngFor="let location of listLocations">
               <th scope="row" >{{ location.name}} </th>
-              <td>{{ location.adress}}</td>
+              <td scope="row">{{ location.adress}}</td>
+              <td class="btn-div">
+                <a class="deleteLocation" (click)="deleteLocation(location.id)">
+                    <button class="btn btn-danger"> Supprimer
+                    </button>
+                </a>
+            </td>
             </tr>
         </tbody>
       </table>
