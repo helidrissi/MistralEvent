@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,4 +37,6 @@ public class Event {
     private Set<Group> groups=new HashSet<>();
     @ManyToOne
     private Location Location;
+
+
 }
