@@ -43,6 +43,10 @@ public class UserEntity implements Serializable {
 
 	@Column(nullable=false)
 	private String password;
+	
+	@Column(nullable = false)
+	private Boolean participation;
+	
 	@ManyToMany
 	@JoinTable(name = "users_group",
 			joinColumns = @JoinColumn(name = "users_id"),
