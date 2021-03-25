@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { faCalendarAlt } from '@fortawesome/free-regular-svg-icons';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Evenement } from 'src/app/models/evenement';
-import { EvenementService } from '../../services/evenement.service';
+import { UsersService } from 'src/app/services/users.service';
+import { TokenService } from '../../services/token.service';
 
 
 @Component({
@@ -16,12 +17,12 @@ export class AgendaComponent implements OnInit {
 
   listEvents: Evenement[] = [];
 
-  constructor(private evenementService: EvenementService) { }
+  constructor(private tokenservice:TokenService, private usersService:UsersService) { }
 
   ngOnInit(): void {
-    this.evenementService.getEvenements().subscribe((data: Evenement[]) => {
-      this.listEvents = data;
-    })
+   this.usersService.getUser(this.tokenservice.getId()).subscribe(data => {
+     this.listEvents = data.events;
+   });
   }
 
 }

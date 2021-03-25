@@ -78,7 +78,9 @@ export class CreateEventComponent implements OnInit {
       date: new Date(datetimeString),
       description: description,
       type: 'resto',
-      location: location
+      location: location,
+      // TO DO
+      groups: []
     }
 
     this.evenementService.addEvenement(evenement).subscribe(result => JSON.stringify(result));
