@@ -44,47 +44,45 @@ export class CreateEventComponent implements OnInit {
   }
 
   onSubmit() {
-
-    const eventName = this.eventNameControl.value
     const locationId = this.locationControl.value
     const locationName = this.locationNameControl.value
     const streetAddress = this.streetAddressControl.value
-    const city = this.cityControl.value
-    const datetimeString = this.datetimeControl.value + ":00"
-    const description = this.descriptionControl.value
 
 
     let location: Location;
     if (this.locationControl.value === "new") {
-
       location = {
-
         name: locationName,
-
         adress: streetAddress,
       }
-      alert("if")
-      this.locationService.addLocation(location)
+      this.locationService.addLocation(location).subscribe(result => {
+        location = result
+        this.addEvenement(location)
+      })
     }
     else {
       location = this.getLocationById(locationId);
+      this.addEvenement(location)
     }
 
     // const eventMessage = "Evenement créé, " +
     //   eventName + ", " + locationName + ", " + streetAddress + ", " + city + ", " + datetime
     // alert(eventMessage)
+
+
+
+
+  }
+
+  addEvenement(location: Location) {
     let evenement: Evenement = {
-      name: eventName,
-      date: new Date(datetimeString),
-      description: description,
+      name: this.eventNameControl.value,
+      date: new Date(this.datetimeControl.value + ":00"),
+      description: this.descriptionControl.value,
       type: 'resto',
       location: location
     }
-
     this.evenementService.addEvenement(evenement).subscribe(result => JSON.stringify(result));
-
-    
-
   }
 
   displayNumberOfEvents() {
