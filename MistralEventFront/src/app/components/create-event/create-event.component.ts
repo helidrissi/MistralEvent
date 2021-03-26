@@ -33,7 +33,7 @@ export class CreateEventComponent implements OnInit {
   });
 
   constructor(private evenementService: EvenementService, private locationService: LocationService) {
-    this.locationService.getAllLocations().subscribe(result => {this.locations = result, alert(result)})
+    this.locationService.getAllLocations().subscribe(result => {this.locations = result, alert(JSON.stringify(result))})
     
   }
 
