@@ -22,25 +22,18 @@ export class CreateLocationComponent implements OnInit {
     city: this.city,
   });
 
-
-  onSubmit() {
-    const name = this.name.value
-    const streetAddress = this.streetAddress.value
-    const city = this.city.value
-    const location: Location = {
-      name: name,
-      adress: streetAddress
-
-    }
-    this.locationService.addLocation(location).subscribe(result => alert(JSON.stringify(result)))
-    this.locationService.getAllLocations().subscribe(result => alert(JSON.stringify(result)))
-
-  }
-
-
   constructor(private locationService: LocationService) { }
 
   ngOnInit(): void {
   }
 
+  onSubmit() {
+    const location: Location = {
+      name: this.name.value,
+      adress: this.streetAddress.value,
+      city: this.city.value
+    }
+    this.locationService.addLocation(location).subscribe(result => alert(JSON.stringify(result)))
+    this.locationService.getAllLocations().subscribe(result => alert(JSON.stringify(result)))
+  }
 }
