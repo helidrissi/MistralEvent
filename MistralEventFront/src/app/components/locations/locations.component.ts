@@ -39,10 +39,10 @@ export class LocationsComponent implements OnInit {
       });
       this.router.navigate(['/home']);
     });
-
+  }
   showGallery(location: Location) {
     this.galleryLocationService.location = location;
     const modalRef = this.modalService.open(GalleryLocationComponent, { size: 'lg', backdrop: 'static' });
   }
-}
+
 }

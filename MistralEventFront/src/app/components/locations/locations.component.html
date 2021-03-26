@@ -16,8 +16,7 @@
             <td scope="row">4 Rue Marx Darmoy</td>
             <td>
               <a class="deleteLocation" (click)="deleteLocation(location.id)">
-                  <button class="btn btn-danger"> Supprimer
-                  </button>
+                <fa-icon [icon]="trashIcon" class="mx-auto trashIcon"></fa-icon>
               </a>
           </td>
           </tr>
@@ -26,8 +25,7 @@
               <td scope="row">{{ location.adress}}</td>
               <td class="btn-div">
                 <a class="deleteLocation" (click)="deleteLocation(location.id)">
-                    <button class="btn btn-danger"> Supprimer
-                    </button>
+                  <fa-icon [icon]="trashIcon" class="mx-auto trashIcon"></fa-icon>
                 </a>
             </td>
             <td>4 Rue Marx Darmoy</td>
