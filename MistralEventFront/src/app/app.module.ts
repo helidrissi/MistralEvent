@@ -17,6 +17,7 @@ import { LoginComponent } from './components/login/login.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 import { JwtInterceptor } from './services/jwt.interceptor';
+import { DetailEventComponent } from './components/detail-event/detail-event.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { JwtInterceptor } from './services/jwt.interceptor';
     LoginComponent,
     PageNotFoundComponent,
     LocationsComponent,
+    DetailEventComponent,
   ],
   imports: [
     BrowserModule,

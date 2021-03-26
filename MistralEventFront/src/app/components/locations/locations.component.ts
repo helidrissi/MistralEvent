@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Location } from 'src/app/models/location';
 import { LocationService } from '../../services/location.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -10,7 +10,8 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 })
 export class LocationsComponent implements OnInit {
 
-  plusIcon = faPlus
+  plusIcon = faPlus;
+  trashIcon = faTrash;
   listLocations: Location[] = [];
   location: Location;
 
