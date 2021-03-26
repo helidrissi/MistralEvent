@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { faCloudUploadAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
 
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal, ModalDismissReasons, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 // Modèles
 import { File } from '../../models/file';
@@ -33,7 +33,7 @@ export class FileUploadComponent implements OnInit {
     fileSource: new FormControl('', [Validators.required])
   });
 
-  constructor(private modalService: NgbModal, private uploadService: UploadService, private accountService: AccountService, private tokenService: TokenService) {
+  constructor(private activeModal: NgbActiveModal, private modalService: NgbModal, private uploadService: UploadService, private accountService: AccountService, private tokenService: TokenService) {
     if (this.uploadService.type_file == this.uploadService.TYPE_AVATAR) {
       this.fileuplaod_title = "Votre image de profil";
       this.fileuplaod_text = "Sélectionner une image pour votre image de profil";
@@ -73,7 +73,7 @@ export class FileUploadComponent implements OnInit {
   // If the user clicks the cancel button a.k.a. the go back button, then\
   // just close the modal
   closeModal() {
-    this.modalService.dismissAll();
+    this.activeModal.dismiss();
   }
 
   onFileChange(event) {

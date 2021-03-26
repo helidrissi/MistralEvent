@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal, ModalDismissReasons, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 // Components
 import { PictureLocationComponent } from '../picture-location/picture-location.component';
@@ -19,7 +19,7 @@ export class GalleryLocationComponent implements OnInit {
   
   closeIcon = faTimes;
 
-  constructor(private modalService: NgbModal, public galleryLocationService: GalleryLocationService) {
+  constructor(private activeModal: NgbActiveModal, private modalService: NgbModal, public galleryLocationService: GalleryLocationService) {
  
   }
 
@@ -33,6 +33,6 @@ export class GalleryLocationComponent implements OnInit {
   // If the user clicks the cancel button a.k.a. the go back button, then\
   // just close the modal
   closeModal() {
-    this.modalService.dismissAll();
+    this.activeModal.dismiss();
   }
 }

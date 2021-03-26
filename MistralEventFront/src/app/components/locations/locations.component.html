@@ -7,32 +7,37 @@
           <tr>
             <th scope="col">Nom du lieu</th>
             <th scope="col">Adresse</th>
-            <th scope="col" class="col-action"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
             <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">Mistral</th>
-            <td scope="row">4 Rue Marx Darmoy</td>
-            <td>
+          <tr *ngFor="let location of listLocations">
+            <td scope="row" >{{ location.name}} </td>
+            <td scope="row">{{ location.adress}}</td>
+            <td scope="row">
+              <a class="galleryLocation" (click)="showGallery(location)">
+                <button class="btn btn-primary">
+                  <fa-icon [icon]="picturesIcon"></fa-icon>
+                </button>
+              </a>
+            </td>
+            <td scope="row">
+              <a class="editLocation" (click)="showGallery(location)">
+                <button class="btn btn-success">
+                  <fa-icon [icon]="editIcon"></fa-icon>
+                </button>
+              </a>
+            </td>
+            <td scope="row">
               <a class="deleteLocation" (click)="deleteLocation(location.id)">
-                  <button class="btn btn-danger"> Supprimer
+                  <button class="btn btn-danger">
+                    <fa-icon [icon]="deleteIcon"></fa-icon>
                   </button>
               </a>
-          </td>
-          </tr>
-            <tr *ngFor="let location of listLocations">
-              <th scope="row" >{{ location.name}} </th>
-              <td scope="row">{{ location.adress}}</td>
-              <td class="btn-div">
-                <a class="deleteLocation" (click)="deleteLocation(location.id)">
-                    <button class="btn btn-danger"> Supprimer
-                    </button>
-                </a>
             </td>
-              <td><a class="btn btn-primary btn-sm" (click)="showGallery(location)"><fa-icon [icon]="picturesIcon"></fa-icon></a></td>
-            </tr>
+          </tr>
         </tbody>
       </table>
     <div class="tableDiv">

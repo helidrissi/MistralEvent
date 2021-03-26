@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { BASE_URL_API } from 'src/environments/environment';
+
+// Modèles
 import { Location } from '../models/location';
 
 
@@ -13,7 +15,6 @@ import { Location } from '../models/location';
   export class LocationService {
   
     baseUrl= BASE_URL_API.url_api_v + 'locations/';
-
 
     constructor(private http:HttpClient) { }
 
