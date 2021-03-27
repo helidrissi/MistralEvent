@@ -1,13 +1,17 @@
-<div>
+<div class="modalDiv">
     <div class="header">
         <h1> Nom de l'événement</h1>
     </div>
     <div class="modal-body">
         <img src="https://www.justacote.com/photos_entreprises/cafe-de-l-univers-clermont-ferrand-146505929057.jpg" alt="">
         <div class="details">
-            <img src="" alt="photo de profil">
-            <h2> Organisateur</h2>
-            <h3> Groupes </h3>
+            <div class="image-organisateur-groupes">
+                <img [src]='account.avatar64' alt="photo de profil">
+                <div>
+                    <h2> Organisateur</h2>
+                    <h3> Groupes </h3>
+                </div>
+            </div>
             <h3> Date (03/09/2021 13h10) </h3>
             <h3> Adresse du lieu </h3>
             <div id="participantsPhotos">Participants</div>

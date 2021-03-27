@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import { AccountService } from '../../services/account.service';
+import { TokenService } from '../../services/token.service';
 @Component({
   selector: 'app-detail-event',
   templateUrl: './detail-event.component.html',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetailEventComponent implements OnInit {
 
-  constructor() { }
+  constructor(public account: AccountService, private token: TokenService) {
+    
+   }
 
   ngOnInit(): void {
   }
