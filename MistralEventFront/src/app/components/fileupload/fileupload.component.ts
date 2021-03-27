@@ -11,6 +11,7 @@ import { File } from '../../models/file';
 import { AccountService } from 'src/app/services/account.service';
 import { UploadService } from 'src/app/services/upload.service';
 import { TokenService } from 'src/app/services/token.service';
+import { EditedLocationService } from 'src/app/services/edited-location.service';
 
 @Component({
   selector: 'app-fileupload',
@@ -33,7 +34,7 @@ export class FileUploadComponent implements OnInit {
     fileSource: new FormControl('', [Validators.required])
   });
 
-  constructor(private activeModal: NgbActiveModal, private modalService: NgbModal, private uploadService: UploadService, private accountService: AccountService, private tokenService: TokenService) {
+  constructor(private activeModal: NgbActiveModal, private modalService: NgbModal, private uploadService: UploadService, private accountService: AccountService, private tokenService: TokenService, public editedLocation: EditedLocationService) {
     if (this.uploadService.type_file == this.uploadService.TYPE_AVATAR) {
       this.fileuplaod_title = "Votre image de profil";
       this.fileuplaod_text = "Sélectionner une image pour votre image de profil";
@@ -41,7 +42,11 @@ export class FileUploadComponent implements OnInit {
     } else if (this.uploadService.type_file == this.uploadService.TYPE_ATTACHED_PICTURE_LOCATION) {
       this.fileuplaod_title = "Document attaché";
       this.fileuplaod_text = "Sélectionner une image à attacher";
-      this.fileName = "test";
+      this.fileName = "gallerylocation" + editedLocation.location.id;
+    } else if (this.uploadService.type_file == this.uploadService.TYPE_LOCATION) {
+      this.fileuplaod_title = "Image de l'adresse";
+      this.fileuplaod_text = "Sélectionner une image pour cette adresse";
+      this.fileName = "location" + editedLocation.location.id;
     }
   }
 
@@ -57,7 +62,13 @@ export class FileUploadComponent implements OnInit {
     console.log(formData.get('imageFile'));
 
     this.uploadService.upload(formData).subscribe((event: any) => {
-      this.accountService.loadAvatar();
+      if (this.uploadService.type_file == this.uploadService.TYPE_AVATAR) {
+        this.accountService.loadAvatar();
+      } else if (this.uploadService.type_file == this.uploadService.TYPE_ATTACHED_PICTURE_LOCATION) {
+      
+      } else if (this.uploadService.type_file == this.uploadService.TYPE_LOCATION) {
+        this.editedLocation.loadImage();
+      }
       this.closeModal();
     });  
     

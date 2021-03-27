@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Evenement } from 'src/app/models/evenement';
 import { Group } from 'src/app/models/group';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DetailEventComponent } from '../detail-event/detail-event.component';
 
 @Component({
   selector: 'app-eventCard',
@@ -19,9 +21,11 @@ export class EventCardComponent implements OnInit {
  */
   @Input() type: string;
 
-  constructor() { }
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit() {
   }
-
+  openDetailEvent() {
+    const modalRef = this.modalService.open(DetailEventComponent);
+  }
 }
