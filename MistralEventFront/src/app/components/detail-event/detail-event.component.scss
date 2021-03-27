@@ -1,15 +1,31 @@
 #modal-content-wrapper {
-    width: 100%;
-    height: 100%;
-    display: grid;
-    grid-template-rows: repeat(1fr, 3);
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: repeat(1fr, 3);
 }
 
 #modal-footer {
-    justify-self: right;
-    align-self: center;
+  justify-self: right;
+  align-self: center;
 }
 
 #modal-action-button {
-    margin-right: 30px;
+  margin-right: 30px;
+}
+.header {
+  display: flex;
+  justify-content: center;
+}
+.modal-body {
+  display: flex;
+  flex-direction: row;
+  img {
+    max-width: 50%;
+    height: auto;
+    max-height: 200px;
+  }
+  .details {
+    margin: 10px 20px;
+  }
 }
