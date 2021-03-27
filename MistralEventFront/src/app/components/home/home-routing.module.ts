@@ -12,7 +12,7 @@ import { DetailEventComponent } from '../detail-event/detail-event.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: '', redirectTo: '',
     component: HomeComponent,
     children: [
       { path: 'account', component: AccountComponent },

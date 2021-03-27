@@ -1,9 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
-import { EvenementService } from '../../services/evenement.service'
-import { Location } from '../../models/location'
+import { faTimes, faSave, faImage, faImages } from '@fortawesome/free-solid-svg-icons';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+
+// Services
 import { LocationService } from 'src/app/services/location.service';
+import { UploadService } from 'src/app/services/upload.service';
+import { EditedLocationService } from 'src/app/services/edited-location.service';
+
+// Models
+import { Location } from '../../models/location'
+
+// Components
+import { FileUploadComponent } from '../fileupload/fileupload.component';
 
 @Component({
   selector: 'app-create-location',
@@ -12,6 +23,12 @@ import { LocationService } from 'src/app/services/location.service';
 })
 
 export class CreateLocationComponent implements OnInit {
+
+  saveIcon = faSave;
+  cancelIcon = faTimes;
+  pictureIcon = faImages;
+  avatarIcon = faImage;
+
   name = new FormControl('', Validators.required)
   streetAddress = new FormControl('', Validators.required)
   city = new FormControl('Clermont-Ferrand', Validators.required)
@@ -22,25 +39,48 @@ export class CreateLocationComponent implements OnInit {
     city: this.city,
   });
 
-
-  onSubmit() {
-    const name = this.name.value
-    const streetAddress = this.streetAddress.value
-    const city = this.city.value
-    const location: Location = {
-      name: name,
-      adress: streetAddress
-
-    }
-    this.locationService.addLocation(location).subscribe(result => alert(JSON.stringify(result)))
-    this.locationService.getAllLocations().subscribe(result => alert(JSON.stringify(result)))
-
-  }
-
-
-  constructor(private locationService: LocationService) { }
+  constructor(private locationService: LocationService, public editedLocation: EditedLocationService, public uploadService: UploadService, private modalService: NgbModal, private router: Router) { }
 
   ngOnInit(): void {
+    if (this.editedLocation.location != null) {
+      this.name.setValue(this.editedLocation.location.name);
+      this.streetAddress.setValue(this.editedLocation.location.adress);
+      this.city.setValue(this.editedLocation.location.city);
+    }
   }
 
+  onSubmit() {
+    const location: Location = {
+      name: this.name.value,
+      adress: this.streetAddress.value,
+      city: this.city.value
+    }
+    if (this.editedLocation.location != null) {
+      location.id = this.editedLocation.location.id;
+    }
+    //this.locationService.addLocation(location).subscribe(result => alert(JSON.stringify(result)))
+    //this.locationService.getAllLocations().subscribe(result => alert(JSON.stringify(result)))
+    this.locationService.addLocation(location).subscribe(result => this.cancel())
+  }
+
+  openAvatarUpload() {
+    const location: Location = {
+      name: this.name.value,
+      adress: this.streetAddress.value,
+      city: this.city.value
+    }
+    if (this.editedLocation.location != null) {
+      location.id = this.editedLocation.location.id;
+    }
+
+    this.locationService.addLocation(location).subscribe(result => {
+      this.uploadService.type_file = this.uploadService.TYPE_LOCATION;
+      const modalRef = this.modalService.open(FileUploadComponent);
+    })
+    
+  }
+
+  cancel() {
+    this.router.navigate(['/home/locations']);
+  }
 }

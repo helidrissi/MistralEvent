@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Evenement } from 'src/app/models/evenement';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DetailEventComponent } from '../detail-event/detail-event.component';
+import { Group } from 'src/app/models/group';
 
 @Component({
   selector: 'app-eventCard',
@@ -9,13 +10,7 @@ import { DetailEventComponent } from '../detail-event/detail-event.component';
   styleUrls: ['./eventCard.component.scss']
 })
 export class EventCardComponent implements OnInit {
-  @Input() evenement: Evenement = {
-    id: 0,
-    name: '',
-    date: new Date,
-    description: '',
-    type: ''
-  };
+  @Input() evenement: Evenement;
 
   /**
  * @example
