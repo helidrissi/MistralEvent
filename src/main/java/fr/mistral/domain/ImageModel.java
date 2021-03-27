@@ -21,6 +21,8 @@ public class ImageModel {
     @Column(name = "picByte", length = 1000)
     @Lob
     private byte[] picByte;
+    @ManyToOne
+    private Location Location;
 
     public ImageModel(String name, String type, byte[] picByte) {
 
