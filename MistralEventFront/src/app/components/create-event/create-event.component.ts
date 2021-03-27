@@ -4,7 +4,11 @@ import { Validators } from '@angular/forms';
 import { EvenementService } from '../../services/evenement.service';
 import { Evenement } from '../../models/evenement';
 import { Location } from '../../models/location';
+import { Group } from '../../models/group';
 import { LocationService } from 'src/app/services/location.service';
+import { GroupsService } from 'src/app/services/groups.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-create-event',
   templateUrl: './create-event.component.html',
@@ -19,9 +23,15 @@ export class CreateEventComponent implements OnInit {
   datetimeControl = new FormControl('', Validators.required)
   descriptionControl = new FormControl('', Validators.required)
   now = new Date().toISOString().substring(0, 16)
+  errorMessage2 = "Erreur"
+  groupsSave = true
+
+  isChecked: boolean[] = []
+
 
   locations: Location[] = []
-  
+  groups: Group[] = []
+
   form: FormGroup = new FormGroup({
     eventName: this.eventNameControl,
     location: this.locationControl,
@@ -32,13 +42,27 @@ export class CreateEventComponent implements OnInit {
     description: this.descriptionControl
   });
 
-  constructor(private evenementService: EvenementService, private locationService: LocationService) {
-    this.locationService.getAllLocations().subscribe(result => {this.locations = result, alert(JSON.stringify(result))})
-    
+  constructor(
+  private evenementService: EvenementService, private locationService: LocationService, private groupsService: GroupsService) {
+    this.locationService.getAllLocations().subscribe(result => { this.locations = result; alert(result) })
+    this.groupsService.getGroups().subscribe(result => {
+      if (result.length == 0) {
+        this.groupsService.addGroup({ "name": "bamboche" }).subscribe(result => alert(JSON.stringify(result)))
+        this.groupsService.addGroup({ "name": "tralala" }).subscribe()
+        this.groupsService.addGroup({ "name": "karadoc" }).subscribe()
+      }
+      else {
+        this.groups = result
+        this.groups.forEach((group) => { this.isChecked.push(false) })
+      }
+
+    })
   }
 
   ngOnInit(): void {
-  
+
+    this.locationService.getAllLocations().subscribe(result => { alert(result) })
+
     this.disableLocationControls()
     this.locationControl.valueChanges.subscribe(value => {
       if (this.locationControl.value === 'new') {
@@ -70,12 +94,19 @@ export class CreateEventComponent implements OnInit {
         location = result
         alert(JSON.stringify(location))
         this.addEvenement(location)
+        
       })
     }
     else {
       location = this.getLocationById(this.locationControl.value);
       this.addEvenement(location)
+     
     }
+  }
+
+
+  toggleGroup(groupIndex: number, group: Group) {
+    this.isChecked[groupIndex] = !this.isChecked[groupIndex]
   }
 
   getLocationById(id: string) {
@@ -84,14 +115,18 @@ export class CreateEventComponent implements OnInit {
   }
 
   addEvenement(location: Location) {
+    const groups: Group[] = this.groups.filter((group, index) => this.isChecked[index])
     let evenement: Evenement = {
       name: this.eventNameControl.value,
       date: new Date(this.datetimeControl.value + ":00"),
       description: this.descriptionControl.value,
       type: 'resto',
-      location: location
+      location: location,
+      groups: groups
     }
-    this.evenementService.addEvenement(evenement).subscribe(result => alert(JSON.stringify(result)));
+    this.evenementService.addEvenement(evenement).subscribe(result => {alert(JSON.stringify(result))
+  //   this.router.navigate(['/agenda'])
+  })
   }
 
   disableLocationControls() {

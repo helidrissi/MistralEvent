@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {HttpClientModule, HTTP_INTERCEPTORS, HttpClient} from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -17,10 +17,12 @@ import { CheckGroupComponent } from '../checkgroup/checkgroup.component';
 import { UpcomingEventsComponent } from '../upcomingEvents/upcomingEvents.component';
 import { FileUploadComponent, FileUploadComponent as ModalComponent } from '../fileupload/fileupload.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 //import {JwtInterceptor} from '../../services/jwt.interceptor';
 
 import { CreateEventComponent } from '../create-event/create-event.component';
 import { CreateLocationComponent } from '../create-location/create-location.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -48,6 +50,7 @@ import { CreateLocationComponent } from '../create-location/create-location.comp
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    RouterModule
 
   ],
   providers: [/*{
@@ -55,6 +58,7 @@ import { CreateLocationComponent } from '../create-location/create-location.comp
     useClass:JwtInterceptor,
     multi:true,
   }*/
-],
+
+  ],
 })
 export class HomeModule { }

@@ -1,4 +1,5 @@
 import { Location } from './location'
+import { Group } from './group'
 
 export interface Evenement {
     id?: number,
@@ -6,5 +7,6 @@ export interface Evenement {
     date: Date,
     description: string,
     type: string,
-    location?: Location
+    location?: Location,
+    groups?: Group[]
 }
