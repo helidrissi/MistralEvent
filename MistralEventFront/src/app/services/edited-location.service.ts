@@ -17,13 +17,16 @@ import { Location } from '../models/location';
     location: Location = null;
     avatar64: String;
 
-    constructor(private http:HttpClient) { }
+    constructor(private http:HttpClient) {
+        this.avatar64 = this.avatar64_default;
+    }
 
     loadLocation(location: Location) {
         if (location == null) {
-            this.location = location;
-        } else {
             this.location = null;
+            this.avatar64 = this.avatar64_default;
+        } else {
+            this.location = location;
             this.avatar64 = this.avatar64_default;
         }
     }

@@ -7,6 +7,7 @@
           <tr>
             <th scope="col">Nom du lieu</th>
             <th scope="col">Adresse</th>
+            <th scope="col">Ville</th>
             <th scope="col"></th>
             <th scope="col"></th>
             <th scope="col"></th>
@@ -16,6 +17,7 @@
           <tr *ngFor="let location of listLocations">
             <td scope="row" >{{ location.name}} </td>
             <td scope="row">{{ location.adress}}</td>
+            <td scope="row">{{ location.city}}</td>
             <td scope="row">
               <a class="galleryLocation" (click)="showGallery(location)">
                 <button class="btn btn-primary">
@@ -24,14 +26,14 @@
               </a>
             </td>
             <td scope="row">
-              <a class="editLocation" (click)="showGallery(location)">
+              <a class="editLocation" (click)="openLocation(location)">
                 <button class="btn btn-success">
                   <fa-icon [icon]="editIcon"></fa-icon>
                 </button>
               </a>
             </td>
             <td scope="row">
-              <a class="deleteLocation" (click)="deleteLocation(location.id)">
+              <a class="deleteLocation" (click)="deleteLocation(location)">
                   <button class="btn btn-danger">
                     <fa-icon [icon]="deleteIcon"></fa-icon>
                   </button>
@@ -43,7 +45,9 @@
     <div class="tableDiv">
 
       <div class="addButtonDiv">
-        <a [routerLink]="['/home', 'create-location']" routerLinkActive="active-link" class="btn btn-success addButton"> 
-          <fa-icon [icon]="plusIcon" class="mx-auto plusIcon"></fa-icon> </a>
+        <!--<a [routerLink]="['/home', 'create-location']" routerLinkActive="active-link" class="btn btn-success addButton"> -->
+        <a (click)="newLocation()" class="btn btn-success addButton">
+          <fa-icon [icon]="plusIcon" class="mx-auto plusIcon"></fa-icon>
+        </a>
       </div>
 </div>

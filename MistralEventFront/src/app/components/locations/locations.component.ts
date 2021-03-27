@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { faPlus, faImages, faTrash, faPen } from '@fortawesome/free-solid-svg-icons';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 // Modèles
 import { Location } from 'src/app/models/location';
@@ -10,8 +11,8 @@ import { GalleryLocationComponent } from '../gallery-location/gallery-location.c
 
 // Services
 import { LocationService } from '../../services/location.service';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { GalleryLocationService } from '../../services/gallery-location.service';
+import { EditedLocationService } from 'src/app/services/edited-location.service';
 
 @Component({
   selector: 'app-locations',
@@ -27,24 +28,35 @@ export class LocationsComponent implements OnInit {
   listLocations: Location[] = [];
   location: Location;
 
-  constructor(private locationService: LocationService, private galleryLocationService: GalleryLocationService, private modalService: NgbModal, private router: Router) { }
+  constructor(private locationService: LocationService, public editedLocation: EditedLocationService, private modalService: NgbModal, private router: Router) { }
 
   ngOnInit(): void {
     this.locationService.getAllLocations().subscribe((data: Location[]) => {
+      alert(JSON.stringify(data))
       this.listLocations = data;
     })
   }
-  deleteLocation(id): void {
-    this.locationService.deleteLocationById(id).subscribe(then => {
+  deleteLocation(location: Location): void {
+    this.locationService.deleteLocationById(location).subscribe(then => {
       this.locationService.getAllLocations().subscribe((data: Location[]) => {
         this.listLocations = data;
       });
-      this.router.navigate(['/home']);
+      this.router.navigate(['/home/locations']);
     });
   }
 
   showGallery(location: Location) {
-    this.galleryLocationService.location = location;
+    this.editedLocation.loadLocation(location);
     const modalRef = this.modalService.open(GalleryLocationComponent, { size: 'lg', backdrop: 'static' });
+  }
+
+  newLocation() {
+    this.editedLocation.loadLocation(null);
+    this.router.navigate(['/home/create-location']);
+  }
+
+  openLocation(location: Location) {
+    this.editedLocation.loadLocation(location);
+    this.router.navigate(['/home/create-location']);
   }
 }

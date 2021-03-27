@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
-import { faTimes, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faSave, faImage, faImages } from '@fortawesome/free-solid-svg-icons';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 // Services
 import { LocationService } from 'src/app/services/location.service';
@@ -25,6 +26,8 @@ export class CreateLocationComponent implements OnInit {
 
   saveIcon = faSave;
   cancelIcon = faTimes;
+  pictureIcon = faImages;
+  avatarIcon = faImage;
 
   name = new FormControl('', Validators.required)
   streetAddress = new FormControl('', Validators.required)
@@ -36,9 +39,14 @@ export class CreateLocationComponent implements OnInit {
     city: this.city,
   });
 
-  constructor(private locationService: LocationService, public editedLocation: EditedLocationService, public uploadService: UploadService, private modalService: NgbModal) { }
+  constructor(private locationService: LocationService, public editedLocation: EditedLocationService, public uploadService: UploadService, private modalService: NgbModal, private router: Router) { }
 
   ngOnInit(): void {
+    if (this.editedLocation.location != null) {
+      this.name.setValue(this.editedLocation.location.name);
+      this.streetAddress.setValue(this.editedLocation.location.adress);
+      this.city.setValue(this.editedLocation.location.city);
+    }
   }
 
   onSubmit() {
@@ -47,13 +55,32 @@ export class CreateLocationComponent implements OnInit {
       adress: this.streetAddress.value,
       city: this.city.value
     }
-    this.locationService.addLocation(location).subscribe(result => alert(JSON.stringify(result)))
-    this.locationService.getAllLocations().subscribe(result => alert(JSON.stringify(result)))
+    if (this.editedLocation.location != null) {
+      location.id = this.editedLocation.location.id;
+    }
+    //this.locationService.addLocation(location).subscribe(result => alert(JSON.stringify(result)))
+    //this.locationService.getAllLocations().subscribe(result => alert(JSON.stringify(result)))
+    this.locationService.addLocation(location).subscribe(result => this.cancel())
   }
 
   openAvatarUpload() {
-    this.uploadService.type_file = this.uploadService.TYPE_AVATAR;
-    const modalRef = this.modalService.open(FileUploadComponent);
+    const location: Location = {
+      name: this.name.value,
+      adress: this.streetAddress.value,
+      city: this.city.value
+    }
+    if (this.editedLocation.location != null) {
+      location.id = this.editedLocation.location.id;
+    }
+
+    this.locationService.addLocation(location).subscribe(result => {
+      this.uploadService.type_file = this.uploadService.TYPE_LOCATION;
+      const modalRef = this.modalService.open(FileUploadComponent);
+    })
+    
   }
 
+  cancel() {
+    this.router.navigate(['/home/locations']);
+  }
 }
