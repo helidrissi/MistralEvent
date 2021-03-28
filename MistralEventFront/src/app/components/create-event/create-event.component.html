@@ -32,7 +32,7 @@
       </option>
     </select>
     </div>
-    <div class="form-group">
+    <div *ngIf="isNewEvent" class="form-group">
         <label for="location-name">Nom du lieu</label>
         <input name="location-name" formControlName="locationName" class="form-control" />
     </div>

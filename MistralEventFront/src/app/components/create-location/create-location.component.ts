@@ -4,6 +4,7 @@ import { Validators } from '@angular/forms';
 import { EvenementService } from '../../services/evenement.service'
 import { Location } from '../../models/location'
 import { LocationService } from 'src/app/services/location.service';
+import {Router} from '@angular/router'
 
 @Component({
   selector: 'app-create-location',
@@ -22,7 +23,7 @@ export class CreateLocationComponent implements OnInit {
     city: this.city,
   });
 
-  constructor(private locationService: LocationService) { }
+  constructor(private locationService: LocationService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -33,7 +34,10 @@ export class CreateLocationComponent implements OnInit {
       adress: this.streetAddress.value,
       city: this.city.value
     }
-    this.locationService.addLocation(location).subscribe(result => alert(JSON.stringify(result)))
-    this.locationService.getAllLocations().subscribe(result => alert(JSON.stringify(result)))
+    this.locationService.addLocation(location).subscribe(result => 
+    {console.log(JSON.stringify(result))
+    this.router.navigate(['home/locations'])}
+    )
+    
   }
 }

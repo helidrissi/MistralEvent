@@ -17,7 +17,7 @@ import { CheckGroupComponent } from '../checkgroup/checkgroup.component';
 import { UpcomingEventsComponent } from '../upcomingEvents/upcomingEvents.component';
 import { FileUploadComponent, FileUploadComponent as ModalComponent } from '../fileupload/fileupload.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import {Router} from '@angular/router'
 //import {JwtInterceptor} from '../../services/jwt.interceptor';
 
 import { CreateEventComponent } from '../create-event/create-event.component';

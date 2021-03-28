@@ -16,20 +16,27 @@ import { Router } from '@angular/router';
 })
 export class CreateEventComponent implements OnInit {
   eventNameControl = new FormControl('', Validators.required)
+
   locationControl = new FormControl('', Validators.required)
+
   locationNameControl = new FormControl('', Validators.required)
+
   streetAddressControl = new FormControl('', Validators.required)
+
   cityControl = new FormControl('', Validators.required)
+
   datetimeControl = new FormControl('', Validators.required)
+
   descriptionControl = new FormControl('', Validators.required)
+
   now = new Date().toISOString().substring(0, 16)
-  errorMessage2 = "Erreur"
-  groupsSave = true
 
   isChecked: boolean[] = []
-
+  
+  isNewEvent = false;
 
   locations: Location[] = []
+
   groups: Group[] = []
 
   form: FormGroup = new FormGroup({
@@ -43,40 +50,41 @@ export class CreateEventComponent implements OnInit {
   });
 
   constructor(
-  private evenementService: EvenementService, private locationService: LocationService, private groupsService: GroupsService) {
-    this.locationService.getAllLocations().subscribe(result => { this.locations = result; alert(result) })
+  private evenementService: EvenementService, private locationService: LocationService, private groupsService: GroupsService, private router: Router) {
+    this.locationService.getAllLocations().subscribe(result =>  this.locations = result)
     this.groupsService.getGroups().subscribe(result => {
       if (result.length == 0) {
-        this.groupsService.addGroup({ "name": "bamboche" }).subscribe(result => alert(JSON.stringify(result)))
-        this.groupsService.addGroup({ "name": "tralala" }).subscribe()
-        this.groupsService.addGroup({ "name": "karadoc" }).subscribe()
+        // this.groupsService.addGroup({ "name": "bamboche" }).subscribe()
+        // this.groupsService.addGroup({ "name": "tralala" }).subscribe()
+        // this.groupsService.addGroup({ "name": "karadoc" }).subscribe()
       }
       else {
         this.groups = result
         this.groups.forEach((group) => { this.isChecked.push(false) })
       }
-
     })
   }
 
   ngOnInit(): void {
 
-    this.locationService.getAllLocations().subscribe(result => { alert(result) })
+    this.locationService.getAllLocations().subscribe()
 
     this.disableLocationControls()
     this.locationControl.valueChanges.subscribe(value => {
       if (this.locationControl.value === 'new') {
+        this.isNewEvent = true;
         this.enableLocationControls()
         this.locationNameControl.setValue('')
         this.streetAddressControl.setValue('')
         this.cityControl.setValue('Clermont-Ferrand')
       }
       else {
+        this.isNewEvent = false;
         const location = this.getLocationById(this.locationControl.value)
         this.disableLocationControls()
         this.locationNameControl.setValue(location.name)
         this.streetAddressControl.setValue(location.adress)
-        //this.cityControl.setValue(newLocation.city)
+        this.cityControl.setValue(location.city)
         this.cityControl.setValue('Clermont-Ferrand')
       }
     })
@@ -92,7 +100,7 @@ export class CreateEventComponent implements OnInit {
       }
       this.locationService.addLocation(location).subscribe(result => {
         location = result
-        alert(JSON.stringify(location))
+        console.log(JSON.stringify(location))
         this.addEvenement(location)
         
       })
@@ -103,7 +111,6 @@ export class CreateEventComponent implements OnInit {
      
     }
   }
-
 
   toggleGroup(groupIndex: number, group: Group) {
     this.isChecked[groupIndex] = !this.isChecked[groupIndex]
@@ -124,9 +131,10 @@ export class CreateEventComponent implements OnInit {
       location: location,
       groups: groups
     }
-    this.evenementService.addEvenement(evenement).subscribe(result => {alert(JSON.stringify(result))
-  //   this.router.navigate(['/agenda'])
-  })
+    this.evenementService.addEvenement(evenement).subscribe(result => {
+      console.log(JSON.stringify(result))
+      this.router.navigate(['/home/agenda']) 
+    })
   }
 
   disableLocationControls() {
