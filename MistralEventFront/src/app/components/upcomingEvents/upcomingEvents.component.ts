@@ -5,6 +5,8 @@ import { Evenement } from '../../models/evenement';
 import { EvenementService } from '../../services/evenement.service';
 import { TokenService } from '../../services/token.service';
 import { UsersService } from '../../services/users.service';
+import { DetailEventComponent } from '../detail-event/detail-event.component';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-upcomingEvents',
@@ -17,7 +19,8 @@ export class UpcomingEventsComponent implements OnInit {
   constructor(
     private evenementService: EvenementService,
     private tokenservice: TokenService,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit() {
@@ -49,5 +52,7 @@ export class UpcomingEventsComponent implements OnInit {
       });
     }
   }
-
+  openDetailEvent() {
+    const modalRef = this.modalService.open(DetailEventComponent, { size: 'lg', backdrop: 'static' });
+  }
 }
