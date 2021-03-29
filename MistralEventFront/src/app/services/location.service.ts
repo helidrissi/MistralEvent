@@ -37,7 +37,7 @@ import { Location } from '../models/location';
     }
 
     updateLocationById(location: Location): Observable<Location> {
-        return this.http.put<Location>(`${this.baseUrl}${location.id}`, location).pipe(
+        return this.http.patch(`${this.baseUrl}${location.id}`, location).pipe(
             map((res: Location) => res)
         );
     }

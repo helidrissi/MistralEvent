@@ -1,5 +1,5 @@
 import { Location } from './location'
-import { Group } from './group';
+import { Group } from './group'
 
 export interface Evenement {
     id?: number,
@@ -8,5 +8,5 @@ export interface Evenement {
     description: string,
     type: string,
     location?: Location,
-    groups: Group[]
+    groups?: Group[]
 }

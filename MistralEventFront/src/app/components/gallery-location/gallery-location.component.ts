@@ -7,7 +7,7 @@ import {NgbModal, ModalDismissReasons, NgbActiveModal} from '@ng-bootstrap/ng-bo
 import { PictureLocationComponent } from '../picture-location/picture-location.component';
 
 // Services
-import { GalleryLocationService } from 'src/app/services/gallery-location.service';
+import { EditedLocationService } from 'src/app/services/edited-location.service';
 
 @Component({
   selector: 'app-gallery-location',
@@ -19,7 +19,7 @@ export class GalleryLocationComponent implements OnInit {
   
   closeIcon = faTimes;
 
-  constructor(private activeModal: NgbActiveModal, private modalService: NgbModal, public galleryLocationService: GalleryLocationService) {
+  constructor(private activeModal: NgbActiveModal, private modalService: NgbModal, public editedLocation: EditedLocationService) {
  
   }
 

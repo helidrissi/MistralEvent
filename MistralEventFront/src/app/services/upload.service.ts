@@ -17,17 +17,9 @@ export class UploadService {
     constructor(private httpClient: HttpClient) {}
 
     public upload(formData) {
-        console.log(this.SERVER_URL);
-        if (this.type_file == this.TYPE_AVATAR) {
-            return this.httpClient.post<any>(this.SERVER_URL, formData, {
-                reportProgress: true,
-                observe: 'events'
-            });
-        } else if (this.type_file == this.TYPE_ATTACHED_PICTURE_LOCATION) {
-            return this.httpClient.post<any>(this.SERVER_URL, formData, {
-                reportProgress: true,
-                observe: 'events'
-            });
-        }
+        return this.httpClient.post<any>(this.SERVER_URL, formData, {
+            reportProgress: true,
+            observe: 'events'
+        });
     }
 }

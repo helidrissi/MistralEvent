@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 import {NgbModal, ModalDismissReasons, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import { GalleryLocationService } from 'src/app/services/gallery-location.service';
+import { EditedLocationService } from 'src/app/services/edited-location.service';
 
 @Component({
   selector: 'app-picture-location',
@@ -14,7 +14,7 @@ export class PictureLocationComponent implements OnInit {
   
   closeIcon = faChevronLeft;
 
-  constructor(private activeModal: NgbActiveModal, private modalService: NgbModal, public galleryLocationService: GalleryLocationService) {
+  constructor(private activeModal: NgbActiveModal, private modalService: NgbModal, public editedLocation: EditedLocationService) {
  
   }
 

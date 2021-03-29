@@ -11,6 +11,9 @@ import { File } from '../../models/file';
 import { AccountService } from 'src/app/services/account.service';
 import { UploadService } from 'src/app/services/upload.service';
 import { TokenService } from 'src/app/services/token.service';
+import { EditedLocationService } from 'src/app/services/edited-location.service';
+import { LocationService } from 'src/app/services/location.service';
+import { FilesService } from 'src/app/services/files.service';
 
 @Component({
   selector: 'app-fileupload',
@@ -33,7 +36,8 @@ export class FileUploadComponent implements OnInit {
     fileSource: new FormControl('', [Validators.required])
   });
 
-  constructor(private activeModal: NgbActiveModal, private modalService: NgbModal, private uploadService: UploadService, private accountService: AccountService, private tokenService: TokenService) {
+  constructor(private activeModal: NgbActiveModal, private modalService: NgbModal, private uploadService: UploadService, private accountService: AccountService, private tokenService: TokenService, public editedLocation: EditedLocationService, public locationService: LocationService, private filesService:FilesService) {
+    
     if (this.uploadService.type_file == this.uploadService.TYPE_AVATAR) {
       this.fileuplaod_title = "Votre image de profil";
       this.fileuplaod_text = "Sélectionner une image pour votre image de profil";
@@ -41,7 +45,11 @@ export class FileUploadComponent implements OnInit {
     } else if (this.uploadService.type_file == this.uploadService.TYPE_ATTACHED_PICTURE_LOCATION) {
       this.fileuplaod_title = "Document attaché";
       this.fileuplaod_text = "Sélectionner une image à attacher";
-      this.fileName = "test";
+      this.fileName = "gallerylocation" + editedLocation.location.id + "_" + new Date().getTime();
+    } else if (this.uploadService.type_file == this.uploadService.TYPE_LOCATION) {
+      this.fileuplaod_title = "Image de l'adresse";
+      this.fileuplaod_text = "Sélectionner une image pour cette adresse";
+      this.fileName = "location" + editedLocation.location.id;
     }
   }
 
@@ -53,21 +61,31 @@ export class FileUploadComponent implements OnInit {
   actionFunction() {
     const formData = new FormData();
     formData.append('imageFile', this.uploadForm.get('fileSource').value, this.fileName);
+    this.uploadService.upload(formData).subscribe((retour: any) => {
+      if (retour != null && retour.body != null && retour.body.id != 0) {
+        if (this.uploadService.type_file == this.uploadService.TYPE_AVATAR) {
+          this.accountService.loadAvatar();
+          this.closeModal();
+        } else if (this.uploadService.type_file == this.uploadService.TYPE_ATTACHED_PICTURE_LOCATION) {
+          alert(JSON.stringify(retour));
+          this.filesService.getFile(this.fileName).subscribe((fileLoaded:File) => {
+            if (fileLoaded.name != null) {
+              alert(JSON.stringify(fileLoaded));
+              this.editedLocation.location.images.push(fileLoaded);
 
-    console.log(formData.get('imageFile'));
-
-    this.uploadService.upload(formData).subscribe((event: any) => {
-      this.accountService.loadAvatar();
-      this.closeModal();
-    });  
-    
-    
-    /*.subscribe((fileLoaded:File) => {
-      if (fileLoaded != null && fileLoaded.picByte != null && fileLoaded.picByte.length > 0) {
-        this.accountService.avatar64 = 'data:image/png;base64,' + fileLoaded.picByte;
-        this.closeModal();
+              this.locationService.updateLocationById(this.editedLocation.location).subscribe(result => {
+                alert(JSON.stringify(result));
+                this.closeModal();
+              })
+            }
+          })
+        } else if (this.uploadService.type_file == this.uploadService.TYPE_LOCATION) {
+          alert(JSON.stringify(retour));
+          this.editedLocation.loadImage();
+          this.closeModal();
+        }
       }
-    });*/
+    });
   }
 
   // If the user clicks the cancel button a.k.a. the go back button, then\

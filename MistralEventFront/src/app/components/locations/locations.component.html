@@ -7,7 +7,6 @@
           <tr>
             <th scope="col">Nom du lieu</th>
             <th scope="col">Adresse</th>
-            <th scope="col">Ville</th>
             <th scope="col"></th>
             <th scope="col"></th>
             <th scope="col"></th>
@@ -16,8 +15,7 @@
         <tbody>
           <tr *ngFor="let location of listLocations">
             <td scope="row" >{{ location.name}} </td>
-            <td scope="row">{{ location.adress}}</td>
-            <td scope="row">{{ location.city}}</td>
+            <td scope="row">{{ location.adress}}, {{ location.city}}</td>
             <td scope="row">
               <a class="galleryLocation" (click)="showGallery(location)">
                 <button class="btn btn-primary">
