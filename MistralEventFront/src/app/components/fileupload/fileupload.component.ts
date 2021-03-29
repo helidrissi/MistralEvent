@@ -72,6 +72,7 @@ export class FileUploadComponent implements OnInit {
             if (fileLoaded.name != null) {
               alert(JSON.stringify(fileLoaded));
               this.editedLocation.location.images.push(fileLoaded);
+
               this.locationService.updateLocationById(this.editedLocation.location).subscribe(result => {
                 alert(JSON.stringify(result));
                 this.closeModal();

@@ -2,6 +2,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+// Environnement
+import { BASE_URL_API } from 'src/environments/environment';
+
 // Models
 import { File } from '../models/file';
 
@@ -11,12 +14,12 @@ import { File } from '../models/file';
   })
   export class FilesService {
   
-    baseUrl="http://localhost:8080/api/v1/image/get/";
+    baseUrl= BASE_URL_API.url_api_v + 'image/';
 
     constructor(private http:HttpClient) { }
 
     getFile(name: string) {  
-        return this.http.get<File>(`${this.baseUrl}${name}`); 
-    }  
+        return this.http.get<File>(`${this.baseUrl}get/${name}`); 
+    }
     
 }
