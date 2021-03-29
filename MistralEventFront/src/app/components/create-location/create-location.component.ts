@@ -12,6 +12,7 @@ import { EditedLocationService } from 'src/app/services/edited-location.service'
 
 // Models
 import { Location } from '../../models/location'
+import { File } from '../../models/file'
 
 // Components
 import { FileUploadComponent } from '../fileupload/fileupload.component';
@@ -53,10 +54,12 @@ export class CreateLocationComponent implements OnInit {
     const location: Location = {
       name: this.name.value,
       adress: this.streetAddress.value,
-      city: this.city.value
+      city: this.city.value,
+      images: []
     }
     if (this.editedLocation.location != null) {
       location.id = this.editedLocation.location.id;
+      location.images = this.editedLocation.location.images;
     }
     //this.locationService.addLocation(location).subscribe(result => alert(JSON.stringify(result)))
     //this.locationService.getAllLocations().subscribe(result => alert(JSON.stringify(result)))
@@ -67,14 +70,37 @@ export class CreateLocationComponent implements OnInit {
     const location: Location = {
       name: this.name.value,
       adress: this.streetAddress.value,
-      city: this.city.value
+      city: this.city.value,
+      images: []
     }
     if (this.editedLocation.location != null) {
       location.id = this.editedLocation.location.id;
+      location.images = this.editedLocation.location.images;
     }
 
     this.locationService.addLocation(location).subscribe(result => {
+      this.editedLocation.loadLocation(result);
       this.uploadService.type_file = this.uploadService.TYPE_LOCATION;
+      const modalRef = this.modalService.open(FileUploadComponent);
+    })
+    
+  }
+
+  addImageUpload() {
+    const location: Location = {
+      name: this.name.value,
+      adress: this.streetAddress.value,
+      city: this.city.value,
+      images: []
+    }
+    if (this.editedLocation.location != null) {
+      location.id = this.editedLocation.location.id;
+      location.images = this.editedLocation.location.images;
+    }
+
+    this.locationService.addLocation(location).subscribe(result => {
+      this.editedLocation.loadLocation(result);
+      this.uploadService.type_file = this.uploadService.TYPE_ATTACHED_PICTURE_LOCATION;
       const modalRef = this.modalService.open(FileUploadComponent);
     })
     

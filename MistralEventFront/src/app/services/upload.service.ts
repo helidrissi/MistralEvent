@@ -17,7 +17,6 @@ export class UploadService {
     constructor(private httpClient: HttpClient) {}
 
     public upload(formData) {
-        console.log(this.SERVER_URL);
         return this.httpClient.post<any>(this.SERVER_URL, formData, {
             reportProgress: true,
             observe: 'events'

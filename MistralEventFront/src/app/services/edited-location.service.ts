@@ -23,6 +23,7 @@ import { DEFAULT_IMG } from 'src/environments/environment';
     location: Location = null;
     avatar64: String = DEFAULT_IMG.image_location_default;
     avatar64_default: String = DEFAULT_IMG.image_location_default;
+    listFile: File[];
 
     constructor(private http:HttpClient, private filesService:FilesService) {
         this.avatar64 = DEFAULT_IMG.image_location_default;

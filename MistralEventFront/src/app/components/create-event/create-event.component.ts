@@ -64,7 +64,8 @@ export class CreateEventComponent implements OnInit {
       location = {
         name: this.locationNameControl.value,
         adress: this.streetAddressControl.value,
-        city: this.cityControl.value
+        city: this.cityControl.value,
+        images: []
       }
       this.locationService.addLocation(location).subscribe(result => {
         location = result

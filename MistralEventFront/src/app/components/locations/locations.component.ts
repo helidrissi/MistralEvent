@@ -32,6 +32,7 @@ export class LocationsComponent implements OnInit {
 
   ngOnInit(): void {
     this.locationService.getAllLocations().subscribe((data: Location[]) => {
+      alert(JSON.stringify(data))
       this.listLocations = data;
     })
   }

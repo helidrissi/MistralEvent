@@ -1,5 +1,5 @@
 export interface File {
-    id ?: number,
+    id? : number,
     type: string,
     name: string,
     picByte: string
