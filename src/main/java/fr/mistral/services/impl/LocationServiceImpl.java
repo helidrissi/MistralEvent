@@ -1,6 +1,8 @@
 package fr.mistral.services.impl;
 
+import fr.mistral.domain.ImageModel;
 import fr.mistral.domain.Location;
+import fr.mistral.repositories.ImageRepository;
 import fr.mistral.repositories.LocationRepository;
 import fr.mistral.services.LocationService;
 import org.springframework.stereotype.Service;
@@ -56,13 +58,22 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public Location patchLocation(Long id, Location location) {
         return locationRepository.findById(id).map(loc -> {
-
+            System.err.println("On rentre dedans");
             if (location.getName() != null) {
                 loc.setName(location.getName());
             }
 
             if (location.getAdress() != null) {
                 loc.setAdress(location.getAdress());
+            }
+
+            if (location.getCity() != null) {
+                loc.setCity(location.getCity());
+            }
+
+            System.err.println("nb=" + (location.getImages() != null ? location.getImages().size() : "null"));
+            if (location.getImages() != null) {
+                loc.setImages(location.getImages());
             }
 
             Location locationUpdated = locationRepository.save(loc);

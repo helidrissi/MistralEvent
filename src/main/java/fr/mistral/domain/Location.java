@@ -27,9 +27,9 @@ public class Location {
     private String name;
     private String adress;
     private String city;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "Location")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "location")
     private Set<ImageModel> images=new HashSet<>();
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "Location")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "location")
     private Set<Event> events=new HashSet<>();
 }

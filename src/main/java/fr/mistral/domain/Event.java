@@ -38,7 +38,7 @@ public class Event {
             inverseJoinColumns = @JoinColumn(name = "group_id"))
     private Set<Group> groups=new HashSet<>();
     @ManyToOne
-    private Location Location;
+    private Location location;
 
 
 }

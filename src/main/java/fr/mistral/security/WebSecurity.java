@@ -38,14 +38,14 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers(SecurityConstants.SIGN_UP_URL,"/v2/api-docs","/swagger-ui.html","/swagger-resources/**",
                         "/swagger-ui.html",
                         "/v2/api-docs",
-                        "/webjars/**")
+                        "/webjars/**","/h2-console/**")
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(getAuthenticationFilter())
                 .addFilter(new AuthorizationFilter(authenticationManager()))
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().headers().frameOptions().sameOrigin();
     }
 
 

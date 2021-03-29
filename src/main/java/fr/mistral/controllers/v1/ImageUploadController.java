@@ -1,6 +1,7 @@
 package fr.mistral.controllers.v1;
 
 import fr.mistral.domain.ImageModel;
+import fr.mistral.domain.Location;
 import fr.mistral.repositories.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -73,15 +74,12 @@ public class ImageUploadController {
     }
 
     @DeleteMapping("/delete/{name}")
-
     public void deleteImage(@PathVariable("name") String name) {
-
         imageRepository.delete(name);
     }
 
     // compress the image bytes before storing it in the database
     @PostMapping("/upload")
-
     public ResponseEntity uplaodImage(@RequestParam("imageFile") MultipartFile file) throws IOException {
 
         System.out.println("Original Image Byte Size - " + file.getBytes().length);
@@ -94,21 +92,9 @@ public class ImageUploadController {
     }
 
     // uncompress the image bytes before returning it to the angular application
-
     @GetMapping(path = {"/get/{imageName}"})
-
     public ImageModel getImage(@PathVariable("imageName") String imageName) {
 
-      /*  final ImageModel retrievedImage = imageRepository.findByName(imageName);
-        if (retrievedImage == null) {
-            ImageModel img = new ImageModel();
-
-            return img;
-        }
-        ImageModel img = new ImageModel(retrievedImage.getName(), retrievedImage.getType(),
-                decompressBytes(retrievedImage.getPicByte()));
-
-        return img;*/
         final List<ImageModel> retrievedImage = imageRepository.findByName(imageName);
 
         if (retrievedImage.size() == 0) {
@@ -117,8 +103,7 @@ public class ImageUploadController {
             return img;
         }
 
-
-        ImageModel img = new ImageModel(retrievedImage.get(0).getName(), retrievedImage.get(0).getType(),
+        ImageModel img = new ImageModel(retrievedImage.get(0).getId(), retrievedImage.get(0).getName(), retrievedImage.get(0).getType(),
                 decompressBytes(retrievedImage.get(0).getPicByte()));
 
         return img;

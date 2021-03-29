@@ -1,5 +1,6 @@
 package fr.mistral.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,13 +22,28 @@ public class ImageModel {
     @Column(name = "picByte", length = 1000)
     @Lob
     private byte[] picByte;
+    @JsonIgnore
     @ManyToOne
-    private Location Location;
+    private Location location;
 
     public ImageModel(String name, String type, byte[] picByte) {
-
         this.name = name;
         this.type = type;
         this.picByte = picByte;
     }
+
+    public ImageModel(long id, String name, String type, byte[] picByte) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.picByte = picByte;
+    }
+
+    /*public ImageModel(long id, String name, String type, byte[] picByte, Location location) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.picByte = picByte;
+        this.location = location;
+    }*/
 }
