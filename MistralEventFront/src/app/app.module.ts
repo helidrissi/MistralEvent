@@ -47,4 +47,7 @@ import { DetailEventComponent } from './components/detail-event/detail-event.com
   bootstrap: [AppComponent],
 
 })
-export class AppModule {}
+export class AppModule {
+
+ 
+}

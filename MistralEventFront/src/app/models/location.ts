@@ -1,3 +1,4 @@
+import { Evenement } from "./evenement"
 import { File } from './file';
 
 export interface Location {
@@ -5,5 +6,6 @@ export interface Location {
     name: string;
     adress: string;
     city: string;
+    events?: Evenement[];
     images: File[];
 }

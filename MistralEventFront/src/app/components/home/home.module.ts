@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {HttpClientModule, HTTP_INTERCEPTORS, HttpClient} from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -20,10 +20,12 @@ import { GalleryLocationComponent, GalleryLocationComponent as ModalComponent2 }
 import { PictureLocationComponent, PictureLocationComponent as ModalComponent3 } from '../picture-location/picture-location.component';
 import { PictureGalleryLocationComponent } from '../picture-gallery-location/picture-gallery-location.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {Router} from '@angular/router'
 //import {JwtInterceptor} from '../../services/jwt.interceptor';
 
 import { CreateEventComponent } from '../create-event/create-event.component';
 import { CreateLocationComponent } from '../create-location/create-location.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -53,6 +55,7 @@ import { CreateLocationComponent } from '../create-location/create-location.comp
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    RouterModule
 
   ],
   providers: [/*{
@@ -60,6 +63,7 @@ import { CreateLocationComponent } from '../create-location/create-location.comp
     useClass:JwtInterceptor,
     multi:true,
   }*/
-],
+
+  ],
 })
 export class HomeModule { }

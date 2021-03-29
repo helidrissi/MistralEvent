@@ -22,4 +22,10 @@ export class GroupsService {
       map((res: Group[]) => res),
     );
   }
+
+  addGroup(group: Group): Observable<Group> {
+    return this.http.post<Group>(`${this.SERVER_URL}`, group).pipe(
+      map((res: Group) => res)
+    );
+  }
 }

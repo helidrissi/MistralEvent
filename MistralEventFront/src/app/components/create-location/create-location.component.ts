@@ -61,9 +61,11 @@ export class CreateLocationComponent implements OnInit {
       location.id = this.editedLocation.location.id;
       location.images = this.editedLocation.location.images;
     }
-    //this.locationService.addLocation(location).subscribe(result => alert(JSON.stringify(result)))
-    //this.locationService.getAllLocations().subscribe(result => alert(JSON.stringify(result)))
-    this.locationService.addLocation(location).subscribe(result => this.cancel())
+    
+    this.locationService.addLocation(location).subscribe(result => 
+      {console.log(JSON.stringify(result))
+      this.router.navigate(['home/locations'])}
+    )
   }
 
   openAvatarUpload() {
