@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Evenement } from 'src/app/models/evenement';
-import { Group } from 'src/app/models/group';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DetailEventComponent } from '../detail-event/detail-event.component';
+import { Group } from 'src/app/models/group';
 
 @Component({
   selector: 'app-eventCard',

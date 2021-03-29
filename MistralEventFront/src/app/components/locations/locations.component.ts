@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { faPlus, faImages, faTrash, faPen } from '@fortawesome/free-solid-svg-icons';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 // Modèles
 import { Location } from 'src/app/models/location';
@@ -11,6 +10,7 @@ import { GalleryLocationComponent } from '../gallery-location/gallery-location.c
 
 // Services
 import { LocationService } from '../../services/location.service';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { GalleryLocationService } from '../../services/gallery-location.service';
 import { EditedLocationService } from 'src/app/services/edited-location.service';
 
@@ -28,7 +28,9 @@ export class LocationsComponent implements OnInit {
   listLocations: Location[] = [];
   location: Location;
 
-  constructor(private locationService: LocationService, public editedLocation: EditedLocationService, private modalService: NgbModal, private router: Router) { }
+  constructor(private locationService: LocationService,  public editedLocation: EditedLocationService, private galleryLocationService: GalleryLocationService, private modalService: NgbModal, private router: Router) { 
+
+  }
 
   ngOnInit(): void {
     this.locationService.getAllLocations().subscribe((data: Location[]) => {
