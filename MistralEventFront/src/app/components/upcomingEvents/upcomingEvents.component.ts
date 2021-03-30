@@ -48,4 +48,7 @@ export class UpcomingEventsComponent implements OnInit {
     }
     alert(JSON.stringify( this.agenda));
   }
+  openDetailEvent() {
+    const modalRef = this.modalService.open(DetailEventComponent, { size: 'lg', backdrop: true });
+  }
 }
