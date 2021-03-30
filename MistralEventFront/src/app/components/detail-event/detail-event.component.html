@@ -8,12 +8,12 @@
             <div class="image-organisateur-groupes">
                 <img [src]='account.avatar64' alt="photo de profil">
                 <div>
-                    <h2> Organisateur</h2>
-                    <h3> Groupes </h3>
+                    <h2> <!-- {{ evenement.user}} Organisateur --></h2>
+                    <h3> {{ evenement?.groups}} </h3>
                 </div>
             </div>
-            <h3> Date (03/09/2021 13h10) </h3>
-            <h3> Adresse du lieu </h3>
+            <h3> {{ evenement?.date}} </h3>
+            <h3> {{ evenement?.location}} </h3>
             <div id="participantsPhotos">
                 <img [src]='account.avatar64' alt="photo de profil">
                 <img [src]='account.avatar64' alt="photo de profil">
@@ -28,7 +28,7 @@
         </a>
     </div>
     <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque voluptates ex, nisi corrupti facilis voluptate magni placeat consequatur provident voluptatem dolorem, voluptas, rerum inventore reprehenderit nesciunt ratione consectetur repellat dignissimos!
+       {{ evenement?.description }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque voluptates ex, nisi corrupti facilis voluptate magni placeat consequatur provident voluptatem dolorem, voluptas, rerum inventore reprehenderit nesciunt ratione consectetur repellat dignissimos!
     </p>
     <div class="modal-footer">
         <button class="btn btn-danger">J'annule</button>
