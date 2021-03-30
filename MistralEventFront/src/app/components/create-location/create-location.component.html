@@ -1,18 +1,70 @@
-<form class="mt-5 mx-auto" [formGroup]="form" (submit)="onSubmit()">
-    <h1>Créer un lieu</h1>
-    <div class="form-group">
-        <label for="name">Nom</label>
-        <input name="name" formControlName="name" class="form-control" />
-    </div>
+<div class="main-screen">
+    <div class="container">
 
-    <div class="form-group">
-        <label for="street-address">Adresse</label>
-        <input name="street-address" formControlName="streetAddress" class="form-control" />
-    </div>
+        <div class="card">
+            <form role="form" [formGroup]="form" (submit)="onSubmit()">
+                <div class="card-header">
+                    Créer une adresse
+                </div>
+                
+                <div class="card-body">
+                    <div class="row">
+                        <div class="form-group col-12">
+                            <label for="name">Nom</label>
+                            <input name="name" formControlName="name" class="form-control" />
+                        </div>
 
-    <div class="form-group">
-        <label for="city">Ville</label>
-        <input name="city" formControlName="city" class="form-control" (ngmodel)="(this.city)" />
+                        <div class="form-group col-12">
+                            <label for="street-address">Adresse</label>
+                            <input name="street-address" formControlName="streetAddress" class="form-control" />
+                        </div>
+
+                        <div class="form-group col-12">
+                            <label for="city">Ville</label>
+                            <input name="city" formControlName="city" class="form-control" (ngmodel)="(this.city)" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary" [disabled]="!form.valid"><fa-icon [icon]="saveIcon"></fa-icon>&nbsp;Enregistrer</button>
+                    <button class="btn btn-danger" style="margin-left: 10px;" (click)="cancel()"><fa-icon [icon]="cancelIcon"></fa-icon>&nbsp;Annuler</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="m-5"></div>
+
+        <div class="card">
+            <div class="card-header">
+                Image de l'adresse
+            </div>
+            
+            <div class="card-body card-body-avatar">
+                <img  [src]='editedLocation.avatar64' class="img-location" >
+            </div>
+            <div class="card-footer">
+                <button type="button" class="btn btn-primary" (click)="openAvatarUpload()" [disabled]="!form.valid"><fa-icon [icon]="avatarIcon"></fa-icon>&nbsp;Changer l'image</button>
+            </div>
+        </div>
+
+        <div class="m-5"></div>
+        
+        <div class="card">
+            <div class="card-header">
+                Photos attachées
+            </div>
+            
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12  col-md-6 col-lg-6 col-xl-4 col-xxl-4" *ngFor="let file of editedLocation.location.images">
+                        <app-picture-gallery-location [file]=file type="fileCard" ></app-picture-gallery-location>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="button" class="btn btn-primary" (click)="addImageUpload()" [disabled]="!form.valid"><fa-icon [icon]="pictureIcon"></fa-icon>&nbsp;Ajouter une photo</button>
+            </div>
+        </div>
     </div>
-    <input type="submit" [disabled]="!form.valid" class="btn btn-primary" />
-</form>
+</div>

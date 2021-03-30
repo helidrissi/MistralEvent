@@ -8,10 +8,11 @@ import { AgendaComponent } from '../agenda/agenda.component';
 import { HomeComponent } from './home.component';
 import { UpcomingEventsComponent } from '../upcomingEvents/upcomingEvents.component';
 import { LocationsComponent } from '../locations/locations.component';
+import { DetailEventComponent } from '../detail-event/detail-event.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: '', redirectTo: '',
     component: HomeComponent,
     children: [
       { path: 'account', component: AccountComponent },
@@ -21,6 +22,7 @@ const routes: Routes = [
       { path: 'upcommingEvent', component: UpcomingEventsComponent },
       { path: 'create-location', component: CreateLocationComponent },
       { path: 'create-event', component: CreateEventComponent},
+      { path: 'detail-event', component: DetailEventComponent},
     ],
   },
 ];

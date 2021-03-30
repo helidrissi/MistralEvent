@@ -8,6 +8,8 @@ import { FormsModule, FormBuilder } from '@angular/forms';
 import { AccountService } from '../../services/account.service';
 import { UsersService } from '../../services/users.service';
 import { GroupsService } from '../../services/groups.service';
+import { UploadService } from 'src/app/services/upload.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 // Models
 import { User } from '../../models/user';
@@ -15,8 +17,6 @@ import { Group } from 'src/app/models/group';
 
 // Components
 import { FileUploadComponent } from '../fileupload/fileupload.component';
-import { UploadService } from 'src/app/services/upload.service';
-import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-account',

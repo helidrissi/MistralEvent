@@ -1,0 +1,75 @@
+@media screen and (min-width: 200px) and (max-width: 375px) {
+}
+@media screen and (max-width: 992px) {
+}
+@media screen and (min-width: 993px) {
+  #modal-footer {
+    justify-self: right;
+    align-self: center;
+  }
+
+  #modal-action-button {
+    margin-right: 30px;
+  }
+  .header {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    h1 {
+      font-size: 2rem;
+    }
+  }
+  .modal-body {
+    display: flex;
+    flex-direction: row;
+    img {
+      width: 80%;
+      height: auto;
+      max-height: 300px;
+    }
+    .details {
+      width: 100%;
+      margin: 10px 20px;
+      .image-organisateur-groupes {
+        display: flex;
+        flex-direction: row;
+        img {
+          border-radius: 50%;
+          width: 100px;
+          height: 100px;
+        }
+        div {
+          h2 {
+            font-size: 2rem;
+          }
+          h3 {
+            color: grey;
+          }
+        }
+      }
+      h3 {
+        font-weight: bold;
+      }
+      h4 {
+        color: grey;
+      }
+    }
+  }
+}
+
+#participantsPhotos {
+  margin-left: 20px;
+  img {
+    width: 50px;
+    height: 50px;
+    margin-left: -20px;
+    border-radius: 50px;
+  }
+}
+
+p {
+  margin-left: 20px;
+}
+.eventSiteLink {
+  margin-left: 20px;
+}

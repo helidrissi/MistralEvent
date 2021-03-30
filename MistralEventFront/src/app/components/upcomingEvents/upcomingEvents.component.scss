@@ -1,7 +1,26 @@
-.cardList {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-  
+.main-screen {
+  h3 {
+    margin-left: 20px;
+    font-size: 2rem;
+  }
+ 
+  .cardList {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    
+    }
+}
+
+
+// ElseDIV
+  .noEvent {
+    width: 50%;
+    margin: auto;
+
+    h3{
+      text-align: center;
+      font-size: 1rem;
+    }
   }
