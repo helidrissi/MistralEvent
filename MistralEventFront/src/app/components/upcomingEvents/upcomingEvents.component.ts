@@ -53,6 +53,6 @@ export class UpcomingEventsComponent implements OnInit {
     }
   }
   openDetailEvent() {
-    const modalRef = this.modalService.open(DetailEventComponent, { size: 'lg', backdrop: 'static' });
+    const modalRef = this.modalService.open(DetailEventComponent, { size: 'lg', backdrop: true });
   }
 }
