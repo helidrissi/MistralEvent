@@ -33,6 +33,7 @@ export class UpcomingEventsComponent implements OnInit {
   }
 
   filterEventByUserGroup(user: User, events: Evenement[]) {
+    alert(JSON.stringify(events));
     let groupEvent: Evenement[];
     for (let userGroup of user.groups) {
       groupEvent = events.filter((event: Evenement) => {
@@ -51,6 +52,7 @@ export class UpcomingEventsComponent implements OnInit {
         // this.agenda = [...this.agenda, ...groupEvent]
       });
     }
+    alert(JSON.stringify( this.agenda));
   }
   openDetailEvent() {
     const modalRef = this.modalService.open(DetailEventComponent, { size: 'lg', backdrop: true });
