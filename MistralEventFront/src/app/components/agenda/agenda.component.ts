@@ -6,6 +6,9 @@ import { UsersService } from 'src/app/services/users.service';
 import { TokenService } from '../../services/token.service';
 import { DetailEventComponent } from '../detail-event/detail-event.component';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { EvenementService } from 'src/app/services/evenement.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { User } from 'src/app/models/user';
 @Component({
   selector: 'app-agenda',
   templateUrl: './agenda.component.html',
@@ -15,14 +18,18 @@ export class AgendaComponent implements OnInit {
   calendarAltIcon = faCalendarAlt;
   plusIcon = faPlus;
 
-  listEvents: Evenement[] = [];
-
-  constructor(private tokenservice:TokenService, private usersService:UsersService, private modalService: NgbModal) { }
+  user: User;
+  users: User[];
+  listEvents: Evenement[];
+  id: number;
+  constructor(private route: ActivatedRoute, private router: Router, private tokenservice:TokenService, private usersService:UsersService, private evenementService: EvenementService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
-   this.usersService.getUser(this.tokenservice.getId()).subscribe(data => {
-     this.listEvents = data.events;
-   });
+
+  this.usersService.getUser(this.tokenservice.getId()).subscribe(data => {
+    this.listEvents = data.events;
+    alert(JSON.stringify(this.listEvents));
+  }); 
   }
   openDetailEvent() {
     const modalRef = this.modalService.open(DetailEventComponent, { size: 'lg', backdrop: true });

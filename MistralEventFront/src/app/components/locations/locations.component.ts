@@ -49,7 +49,7 @@ export class LocationsComponent implements OnInit {
 
   showGallery(location: Location) {
     this.editedLocation.loadLocation(location);
-    const modalRef = this.modalService.open(GalleryLocationComponent, { size: 'lg', backdrop: 'static' });
+    const modalRef = this.modalService.open(GalleryLocationComponent, { size: 'lg', backdrop: true });
   }
 
   newLocation() {

@@ -31,6 +31,11 @@
        {{ evenement?.description }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque voluptates ex, nisi corrupti facilis voluptate magni placeat consequatur provident voluptatem dolorem, voluptas, rerum inventore reprehenderit nesciunt ratione consectetur repellat dignissimos!
     </p>
     <div class="modal-footer">
+        <a class="galleryLocation" (click)="showGallery(location)">
+            <button class="btn btn-primary">
+              <fa-icon [icon]="picturesIcon"></fa-icon>
+            </button>
+          </a>
         <button class="btn btn-success">Je viens</button>
         <button class="btn btn-danger">J'annule</button>
     </div>

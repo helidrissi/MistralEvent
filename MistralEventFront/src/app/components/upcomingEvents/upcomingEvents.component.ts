@@ -14,7 +14,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./upcomingEvents.component.scss'],
 })
 export class UpcomingEventsComponent implements OnInit {
-  agenda: Evenement[] = [];
+  events: Evenement[];
 
   constructor(
     private evenementService: EvenementService,
@@ -24,6 +24,10 @@ export class UpcomingEventsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.evenementService.getEvenements().subscribe((data: Evenement[]) => {
+      alert(JSON.stringify(data))
+      this.events = data;
+    })
     forkJoin({
       user: this.usersService.getUser(this.tokenservice.getId()),
       events: this.evenementService.getEvenements(),
@@ -46,13 +50,13 @@ export class UpcomingEventsComponent implements OnInit {
           }
         }
         if (groupEvent !== undefined) {
-          this.agenda = this.agenda.concat(groupEvent);
+          this.events = this.events.concat(groupEvent);
         }
 
         // this.agenda = [...this.agenda, ...groupEvent]
       });
     }
-    alert(JSON.stringify( this.agenda));
+    alert(JSON.stringify( this.events));
   }
   openDetailEvent() {
     const modalRef = this.modalService.open(DetailEventComponent, { size: 'lg', backdrop: true });
