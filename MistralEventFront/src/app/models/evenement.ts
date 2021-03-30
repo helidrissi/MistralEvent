@@ -8,7 +8,7 @@ export interface Evenement {
     date: Date,
     description: string,
     type: string,
-/*     user: User, */
+    author?: User,
     location?: Location,
     groups?: Group[]
 }
