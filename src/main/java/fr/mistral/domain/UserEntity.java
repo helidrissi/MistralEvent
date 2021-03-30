@@ -1,5 +1,6 @@
 package fr.mistral.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -58,7 +59,9 @@ public class UserEntity implements Serializable {
 			inverseJoinColumns = @JoinColumn(name = "event_id"))
 	private Set<Event> events = new HashSet<>();
 
-
+	@OneToMany (mappedBy = "author")
+	@JsonIgnore
+	private Set<Event> createdEvents = new HashSet<>();
 	
 	
 

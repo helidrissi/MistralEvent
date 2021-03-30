@@ -14,10 +14,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.sql.Date;
 
 
 @Component
+@Transactional
 public class Bootstrap implements CommandLineRunner {
 
     @Autowired
@@ -59,7 +61,6 @@ public class Bootstrap implements CommandLineRunner {
 
         Date date =new Date(System.currentTimeMillis());
         Location location = new Location();
-
         location.setAdress("40 Boulevard Charles de Gaulle");
         location.setName("L'Univers");
         location.setCity("Clermont-Ferrand");
@@ -70,9 +71,11 @@ public class Bootstrap implements CommandLineRunner {
         fest.setName("Resto du vendredi midi");
         fest.setLocation(location);
         fest.getGroups().add(group);
+        fest.setAuthor(user);
+        fest.getUsers().add(user);
 
-        groupRepository.save(group);
         userRepository.save(user);
+        groupRepository.save(group);
         locationRepository.save(location);
         eventRepository.save(fest);
 
