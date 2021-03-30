@@ -22,6 +22,7 @@ export class AgendaComponent implements OnInit {
   ngOnInit(): void {
    this.usersService.getUser(this.tokenservice.getId()).subscribe(data => {
      this.listEvents = data.events;
+     console.log('listEvents', data.events)
    });
   }
   openDetailEvent() {

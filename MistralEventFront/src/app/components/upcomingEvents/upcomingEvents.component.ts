@@ -27,34 +27,25 @@ export class UpcomingEventsComponent implements OnInit {
     forkJoin({
       user: this.usersService.getUser(this.tokenservice.getId()),
       events: this.evenementService.getEvenements(),
-    }).subscribe(({ user, events }) => {
+    }).subscribe(async ({ user, events }) => {
       this.filterEventByUserGroup(user, events);
     });
   }
 
   filterEventByUserGroup(user: User, events: Evenement[]) {
-    alert(JSON.stringify(events));
-    let groupEvent: Evenement[];
     for (let userGroup of user.groups) {
-      groupEvent = events.filter((event: Evenement) => {
+      console.log('userGroup', userGroup);
+      
+      const result = events.filter((event: Evenement) => {
+        console.log('userGroup.name', userGroup.name);
+        console.log('event.name', event);  
         if (
-          event.groups.find((eventGroup) => eventGroup.name === userGroup.name)
-        ) {
-          // groupEvent = [...groupEvent, event];
-          if (groupEvent !== undefined) {
-            groupEvent = groupEvent.concat(event);
-          }
+          event.groups.find((eventGroups) => eventGroups.name === userGroup.name)
+          ) {
+          this.agenda.push(event);
         }
-        if (groupEvent !== undefined) {
-          this.agenda = this.agenda.concat(groupEvent);
-        }
-
-        // this.agenda = [...this.agenda, ...groupEvent]
       });
     }
     alert(JSON.stringify( this.agenda));
-  }
-  openDetailEvent() {
-    const modalRef = this.modalService.open(DetailEventComponent, { size: 'lg', backdrop: 'static' });
   }
 }
