@@ -8,7 +8,16 @@ import { LocationService } from '../../services/location.service';
 import { GalleryLocationService } from '../../services/gallery-location.service';
 import { EditedLocationService } from 'src/app/services/edited-location.service';
 import { GalleryLocationComponent } from '../gallery-location/gallery-location.component';
-import { faImages } from '@fortawesome/free-solid-svg-icons';
+import { faImages, faMapMarked, faClock } from '@fortawesome/free-solid-svg-icons';
+import { File } from 'src/app/models/file';
+
+// Services
+import { FilesService } from '../../services/files.service';
+import { ImComingService } from '../../services/im-coming.service';
+import { AccountService } from '../../services/account.service';
+
+// Environnement
+import { DEFAULT_IMG } from 'src/environments/environment';
 
 @Component({
   selector: 'app-eventCard',
@@ -27,18 +36,47 @@ export class EventCardComponent implements OnInit {
  */
   @Input() type: string;
   picturesIcon = faImages;
+  clockIcon = faClock;
+  mapMarkerIcon = faMapMarked;
   listLocations: Location[] = [];
   location: Location;
+  imComing: boolean;
+  base64: String = DEFAULT_IMG.image_location_default;
 
-  constructor(private modalService: NgbModal, private locationService: LocationService,  public editedLocation: EditedLocationService, private galleryLocationService: GalleryLocationService) { }
+  constructor(private modalService: NgbModal, private locationService: LocationService,  public editedLocation: EditedLocationService, private galleryLocationService: GalleryLocationService, private filesService:FilesService, private imComingService: ImComingService, private accountService: AccountService) {
+    
+  }
 
   ngOnInit() {
+    this.location = this.evenement.location;
+    this.imComing = this.imComingService.imComing(this.evenement, this.accountService.user);
+    if (this.location != null) {
+      this.filesService.getFile("location" + this.location.id).subscribe((fileLoaded:File) => {
+        if (fileLoaded != null && fileLoaded.picByte != null && fileLoaded.picByte.length > 0) {
+          this.base64 = 'data:image/png;base64,' + fileLoaded.picByte;
+        }
+      }); 
+    }
   }
+
   openDetailEvent() {
     const modalRef = this.modalService.open(DetailEventComponent);
   }
+
   showGallery(location: Location) {
-    this.editedLocation.loadLocation(location);
-    const modalRef = this.modalService.open(GalleryLocationComponent, { size: 'lg', backdrop: true });
+    if (location != null) {
+      this.editedLocation.loadLocation(location);
+      const modalRef = this.modalService.open(GalleryLocationComponent, { size: 'lg', backdrop: true });
+    }
+  }
+
+  iAccept() {
+    this.imComing = true;
+    this.imComingService.addUser(this.evenement, this.accountService.user);
+  }
+
+  iRefuse() {
+    this.imComing = false;
+    this.imComingService.removeUser(this.evenement, this.accountService.user);
   }
 }

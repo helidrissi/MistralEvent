@@ -18,4 +18,31 @@
       padding: auto;
     }
   }
+
+  
+  @media screen and (max-width: 576px) {
+    .card-img-top {
+      max-height: 150px;
+      object-fit: cover;
+    }
+  }
+  @media screen and (min-width: 576px) and (max-width: 767px) {
+    .card-img-top {
+      max-height: 200px;
+      object-fit: cover;
+    }
+  }
+  @media screen and (min-width: 768px) and (max-width: 992px) {
+    .card-img-top {
+      max-height: 250px;
+      object-fit: cover;
+    }
+  }
+  @media screen and (min-width: 992px) {
+    .card-img-top {
+      max-height: 300px;
+      object-fit: cover;
+    }
+  }
 }
+

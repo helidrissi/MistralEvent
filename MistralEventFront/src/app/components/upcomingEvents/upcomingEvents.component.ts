@@ -25,28 +25,28 @@ export class UpcomingEventsComponent implements OnInit {
 
   ngOnInit() {
     this.evenementService.getEvenements().subscribe((data: Evenement[]) => {
-      alert(JSON.stringify(data))
+      console.log(JSON.stringify(data))
       this.events = data;
     })
     forkJoin({
       user: this.usersService.getUser(this.tokenservice.getId()),
       events: this.evenementService.getEvenements(),
-    }).subscribe(async ({ user, events }) => {
+    }).subscribe(({ user, events }) => {
       this.filterEventByUserGroup(user, events);
     });
   }
 
   filterEventByUserGroup(user: User, events: Evenement[]) {
+    let groupEvent: Evenement[];
     for (let userGroup of user.groups) {
-      console.log('userGroup', userGroup);
-      
-      const result = events.filter((event: Evenement) => {
-        console.log('userGroup.name', userGroup.name);
-        console.log('event.name', event);  
+      groupEvent = events.filter((event: Evenement) => {
         if (
-          event.groups.find((eventGroups) => eventGroups.name === userGroup.name)
-          ) {
-          this.agenda.push(event);
+          event.groups.find((eventGroup) => eventGroup.name === userGroup.name)
+        ) {
+          // groupEvent = [...groupEvent, event];
+          if (groupEvent !== undefined) {
+            groupEvent = groupEvent.concat(event);
+          }
         }
         if (groupEvent !== undefined) {
           this.events = this.events.concat(groupEvent);
@@ -55,7 +55,6 @@ export class UpcomingEventsComponent implements OnInit {
         // this.agenda = [...this.agenda, ...groupEvent]
       });
     }
-    alert(JSON.stringify( this.events));
   }
   openDetailEvent() {
     const modalRef = this.modalService.open(DetailEventComponent, { size: 'lg', backdrop: true });

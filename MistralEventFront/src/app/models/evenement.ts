@@ -10,5 +10,6 @@ export interface Evenement {
     type: string,
     author?: User,
     location?: Location,
-    groups?: Group[]
+    groups?: Group[],
+    users?: User[]
 }
