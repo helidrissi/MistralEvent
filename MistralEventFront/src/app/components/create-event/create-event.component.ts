@@ -58,12 +58,10 @@ export class CreateEventComponent implements OnInit {
   constructor(
     private evenementService: EvenementService, private locationService: LocationService, private groupsService: GroupsService, private usersService: UsersService, private tokenService: TokenService, private router: Router) {
     this.locationService.getAllLocations().subscribe(result => this.locations = result)
-    const token = this.tokenService.getId();
 
-    this.usersService.getUser(this.tokenService.getId()).subscribe(result => {
-      alert(JSON.stringify(result))
+    this.usersService.getUser(this.tokenService.getId()).subscribe(result => 
       this.author = result
-    });
+    );
     this.groupsService.getGroups().subscribe(result => {
       if (result.length == 0) {
         // this.groupsService.addGroup({ "name": "bamboche" }).subscribe()
@@ -97,7 +95,6 @@ export class CreateEventComponent implements OnInit {
         this.locationNameControl.setValue(location.name)
         this.streetAddressControl.setValue(location.adress)
         this.cityControl.setValue(location.city)
-        this.cityControl.setValue('Clermont-Ferrand')
       }
     })
   }
@@ -142,7 +139,8 @@ export class CreateEventComponent implements OnInit {
       description: this.descriptionControl.value,
       type: 'resto',
       location: location,
-      groups: groups
+      groups: groups,
+      author: this.author
     }
     this.evenementService.addEvenement(evenement).subscribe(result => {
       console.log(JSON.stringify(result))
