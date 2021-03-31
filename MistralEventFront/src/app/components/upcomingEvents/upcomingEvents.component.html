@@ -1,8 +1,8 @@
 <div class="main-screen">
-  <div *ngIf="agenda.length > 0; else noEvent">
+  <div *ngIf="events?.length > 0; else noEvent">
     <h3>Cette semaine</h3>
     <div class="card-list row row-cols-auto">
-      <div class="col" *ngFor="let event of agenda">
+      <div class="col" *ngFor="let event of events">
         <app-eventCard [evenement]=event type="upCommingCard" ></app-eventCard>
       </div>
     </div>
