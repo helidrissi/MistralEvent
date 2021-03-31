@@ -5,9 +5,12 @@ import { EvenementService } from '../../services/evenement.service';
 import { Evenement } from '../../models/evenement';
 import { Location } from '../../models/location';
 import { Group } from '../../models/group';
+import { User } from '../../models/user';
 import { LocationService } from 'src/app/services/location.service';
 import { GroupsService } from 'src/app/services/groups.service';
 import { Router } from '@angular/router';
+import { UsersService } from 'src/app/services/users.service';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-create-event',
@@ -32,12 +35,15 @@ export class CreateEventComponent implements OnInit {
   now = new Date().toISOString().substring(0, 16)
 
   isChecked: boolean[] = []
-  
+
   isNewEvent = false;
 
   locations: Location[] = []
 
   groups: Group[] = []
+
+  author?: User;
+
 
   form: FormGroup = new FormGroup({
     eventName: this.eventNameControl,
@@ -50,8 +56,12 @@ export class CreateEventComponent implements OnInit {
   });
 
   constructor(
-  private evenementService: EvenementService, private locationService: LocationService, private groupsService: GroupsService, private router: Router) {
-    this.locationService.getAllLocations().subscribe(result =>  this.locations = result)
+    private evenementService: EvenementService, private locationService: LocationService, private groupsService: GroupsService, private usersService: UsersService, private tokenService: TokenService, private router: Router) {
+    this.locationService.getAllLocations().subscribe(result => this.locations = result)
+
+    this.usersService.getUser(this.tokenService.getId()).subscribe(result => 
+      this.author = result
+    );
     this.groupsService.getGroups().subscribe(result => {
       if (result.length == 0) {
         // this.groupsService.addGroup({ "name": "bamboche" }).subscribe()
@@ -85,7 +95,6 @@ export class CreateEventComponent implements OnInit {
         this.locationNameControl.setValue(location.name)
         this.streetAddressControl.setValue(location.adress)
         this.cityControl.setValue(location.city)
-        this.cityControl.setValue('Clermont-Ferrand')
       }
     })
   }
@@ -103,13 +112,13 @@ export class CreateEventComponent implements OnInit {
         location = result
         console.log(JSON.stringify(location))
         this.addEvenement(location)
-        
+
       })
     }
     else {
       location = this.getLocationById(this.locationControl.value);
       this.addEvenement(location)
-     
+
     }
   }
 
@@ -130,11 +139,12 @@ export class CreateEventComponent implements OnInit {
       description: this.descriptionControl.value,
       type: 'resto',
       location: location,
-      groups: groups
+      groups: groups,
+      author: this.author
     }
     this.evenementService.addEvenement(evenement).subscribe(result => {
       console.log(JSON.stringify(result))
-      this.router.navigate(['/home/agenda']) 
+      this.router.navigate(['/home/agenda'])
     })
   }
 
