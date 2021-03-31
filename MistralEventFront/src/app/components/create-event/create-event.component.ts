@@ -59,10 +59,9 @@ export class CreateEventComponent implements OnInit {
     private evenementService: EvenementService, private locationService: LocationService, private groupsService: GroupsService, private usersService: UsersService, private tokenService: TokenService, private router: Router) {
     this.locationService.getAllLocations().subscribe(result => this.locations = result)
 
-    this.usersService.getUser(this.tokenService.getId()).subscribe(result => {
-      alert(JSON.stringify(result))
+    this.usersService.getUser(this.tokenService.getId()).subscribe(result => 
       this.author = result
-    });
+    );
     this.groupsService.getGroups().subscribe(result => {
       if (result.length == 0) {
         // this.groupsService.addGroup({ "name": "bamboche" }).subscribe()
