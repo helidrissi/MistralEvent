@@ -25,7 +25,7 @@ export class DetailEventComponent implements OnInit {
   listLocations: Location[] = [];
   location: Location;
 
-  constructor(public account: AccountService, private token: TokenService, private evenementService: EvenementService, private router: Router, private route: ActivatedRoute,
+  constructor(private ngbActiveModal: NgbActiveModal, public account: AccountService, private token: TokenService, private evenementService: EvenementService, private router: Router, private route: ActivatedRoute,
     private locationService: LocationService,  public editedLocation: EditedLocationService, private galleryLocationService: GalleryLocationService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
@@ -35,7 +35,11 @@ export class DetailEventComponent implements OnInit {
     console.log(this.evenement)
   }
   showGallery(location: Location) {
+
     this.editedLocation.loadLocation(location);
-    const modalRef = this.modalService.open(GalleryLocationComponent, { size: 'lg', backdrop: 'static' });
+
+    this.router.navigate(['/home/upcommingEvent'])
+    const modalRef = this.modalService.open(GalleryLocationComponent, { size: 'lg', backdrop: true });
+/*     const modaleRef = this.ngbActiveModal.close(DetailEventComponent); */
   }
 }

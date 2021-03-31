@@ -66,7 +66,7 @@ export class EventCardComponent implements OnInit {
   showGallery(location: Location) {
     if (location != null) {
       this.editedLocation.loadLocation(location);
-      const modalRef = this.modalService.open(GalleryLocationComponent, { size: 'lg', backdrop: true });
+      const modaleRef = this.modalService.open(GalleryLocationComponent, { size: 'lg', backdrop: true });
     }
   }
 
