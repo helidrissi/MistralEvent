@@ -8,6 +8,8 @@ import { UsersService } from '../../services/users.service';
 import { DetailEventComponent } from '../detail-event/detail-event.component';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'app-upcomingEvents',
   templateUrl: './upcomingEvents.component.html',
@@ -15,6 +17,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class UpcomingEventsComponent implements OnInit {
   events: Evenement[];
+  plusIcon = faPlus;
 
   constructor(
     private evenementService: EvenementService,
@@ -25,7 +28,7 @@ export class UpcomingEventsComponent implements OnInit {
 
   ngOnInit() {
     this.evenementService.getEvenements().subscribe((data: Evenement[]) => {
-      console.log(JSON.stringify(data))
+/*       console.log(JSON.stringify(data)) */
       this.events = data;
     })
     forkJoin({

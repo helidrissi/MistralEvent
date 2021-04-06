@@ -34,13 +34,13 @@ export class CreateEventComponent implements OnInit {
 
   now = new Date().toISOString().substring(0, 16)
 
-  isChecked: boolean[] = []
+  isChecked: boolean[] =[];
 
   isNewEvent = false;
 
-  locations: Location[] = []
+  locations: Location[] = [];
 
-  groups: Group[] = []
+  groups: Group[] =[];
 
   author?: User;
 
@@ -60,7 +60,7 @@ export class CreateEventComponent implements OnInit {
     this.locationService.getAllLocations().subscribe(result => this.locations = result)
 
     this.usersService.getUser(this.tokenService.getId()).subscribe(result => {
-      alert(JSON.stringify(result))
+       alert(JSON.stringify(result)) 
       this.author = result
     });
     this.groupsService.getGroups().subscribe(result => {
@@ -101,6 +101,7 @@ export class CreateEventComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(JSON.stringify(this.author)) 
     let location: Location;
     if (this.locationControl.value === "new") {
       location = {
@@ -111,7 +112,7 @@ export class CreateEventComponent implements OnInit {
       }
       this.locationService.addLocation(location).subscribe(result => {
         location = result
-        console.log(JSON.stringify(location))
+/*         console.log(JSON.stringify(location)) */
         this.addEvenement(location)
 
       })
@@ -134,6 +135,7 @@ export class CreateEventComponent implements OnInit {
 
   addEvenement(location: Location) {
     const groups: Group[] = this.groups.filter((group, index) => this.isChecked[index])
+    console.log(JSON.stringify(this.author)) 
     let evenement: Evenement = {
       name: this.eventNameControl.value,
       date: new Date(this.datetimeControl.value + ":00"),
@@ -144,7 +146,7 @@ export class CreateEventComponent implements OnInit {
       author: this.author
     }
     this.evenementService.addEvenement(evenement).subscribe(result => {
-      console.log(JSON.stringify(result))
+       console.log(JSON.stringify(result)) 
       this.router.navigate(['/home/agenda'])
     })
   }
