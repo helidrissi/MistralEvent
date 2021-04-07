@@ -3,6 +3,8 @@ package fr.mistral.shared;
 import org.springframework.stereotype.Component;
 
 import java.security.SecureRandom;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 
@@ -26,4 +28,13 @@ public class Utils {
         return new String(returnValue);
     }
 
+
+    public String formatDate()
+    {
+        LocalDateTime datetime1 = LocalDateTime.now();
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String formatDateTime = datetime1.format(format);
+        System.out.println(formatDateTime);
+        return formatDateTime;
+    };
 }

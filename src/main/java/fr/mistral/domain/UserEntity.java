@@ -53,10 +53,7 @@ public class UserEntity implements Serializable {
 			joinColumns = @JoinColumn(name = "users_id"),
 			inverseJoinColumns = @JoinColumn(name = "group_id"))
 	private Set<Group> groups = new HashSet<>();
-	@ManyToMany
-	@JoinTable(name = "users_event",
-			joinColumns = @JoinColumn(name = "users_id"),
-			inverseJoinColumns = @JoinColumn(name = "event_id"))
+	@ManyToMany(mappedBy = "users")
 	private Set<Event> events = new HashSet<>();
 
 	@OneToMany (mappedBy = "author")

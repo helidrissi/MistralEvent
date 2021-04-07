@@ -71,10 +71,10 @@ public class LocationServiceImpl implements LocationService {
                 loc.setCity(location.getCity());
             }
 
-            System.err.println("nb=" + (location.getImages() != null ? location.getImages().size() : "null"));
+          /*  System.err.println("nb=" + (location.getImages() != null ? location.getImages().size() : "null"));
             if (location.getImages() != null) {
                 loc.setImages(location.getImages());
-            }
+            }*/
 
             Location locationUpdated = locationRepository.save(loc);
 

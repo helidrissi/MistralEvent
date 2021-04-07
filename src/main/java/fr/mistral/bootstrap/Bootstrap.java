@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 
 @Component
@@ -44,6 +45,7 @@ public class Bootstrap implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         loadEvent();
+        util.formatDate();
     }
 
     private void loadEvent() {
@@ -59,14 +61,14 @@ public class Bootstrap implements CommandLineRunner {
         user.setUserId(util.generateStringId(32));
         user.getGroups().add(group);
 
-        Date date =new Date(System.currentTimeMillis());
+        LocalDateTime datetime = LocalDateTime.now();
         Location location = new Location();
         location.setAdress("40 Boulevard Charles de Gaulle");
         location.setName("L'Univers");
         location.setCity("Clermont-Ferrand");
 
         Event fest=new Event();
-        fest.setDate(date);
+        fest.setDate(datetime);
         fest.setType("Restaurant");
         fest.setName("Resto du vendredi midi");
         fest.setLocation(location);

@@ -22,9 +22,10 @@ public class ImageModel {
     @Column(name = "picByte", length = 1000)
     @Lob
     private byte[] picByte;
-    @JsonIgnore
+   /* @JsonIgnore
     @ManyToOne
-    private Location location;
+    @JoinColumn(name="loc_id", nullable=false)
+    private Location location;*/
 
     public ImageModel(String name, String type, byte[] picByte) {
         this.name = name;
