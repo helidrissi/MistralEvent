@@ -8,13 +8,16 @@ import { UsersService } from '../../services/users.service';
 import { DetailEventComponent } from '../detail-event/detail-event.component';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'app-upcomingEvents',
   templateUrl: './upcomingEvents.component.html',
   styleUrls: ['./upcomingEvents.component.scss'],
 })
 export class UpcomingEventsComponent implements OnInit {
-  agenda: Evenement[] = [];
+  events: Evenement[];
+  plusIcon = faPlus;
 
   constructor(
     private evenementService: EvenementService,
@@ -24,6 +27,10 @@ export class UpcomingEventsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.evenementService.getEvenements().subscribe((data: Evenement[]) => {
+/*       console.log(JSON.stringify(data)) */
+      this.events = data;
+    })
     forkJoin({
       user: this.usersService.getUser(this.tokenservice.getId()),
       events: this.evenementService.getEvenements(),
@@ -33,7 +40,6 @@ export class UpcomingEventsComponent implements OnInit {
   }
 
   filterEventByUserGroup(user: User, events: Evenement[]) {
-    alert(JSON.stringify(events));
     let groupEvent: Evenement[];
     for (let userGroup of user.groups) {
       groupEvent = events.filter((event: Evenement) => {
@@ -46,15 +52,14 @@ export class UpcomingEventsComponent implements OnInit {
           }
         }
         if (groupEvent !== undefined) {
-          this.agenda = this.agenda.concat(groupEvent);
+          this.events = this.events.concat(groupEvent);
         }
 
         // this.agenda = [...this.agenda, ...groupEvent]
       });
     }
-    alert(JSON.stringify( this.agenda));
   }
   openDetailEvent() {
-    const modalRef = this.modalService.open(DetailEventComponent, { size: 'lg', backdrop: 'static' });
+    const modalRef = this.modalService.open(DetailEventComponent, { size: 'lg', backdrop: true });
   }
 }
