@@ -8,6 +8,8 @@ import { UsersService } from '../../services/users.service';
 import { DetailEventComponent } from '../detail-event/detail-event.component';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'app-upcomingEvents',
   templateUrl: './upcomingEvents.component.html',
@@ -15,6 +17,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class UpcomingEventsComponent implements OnInit {
   events: Evenement[];
+  plusIcon = faPlus;
 
   constructor(
     private evenementService: EvenementService,
@@ -25,7 +28,7 @@ export class UpcomingEventsComponent implements OnInit {
 
   ngOnInit() {
     this.evenementService.getEvenements().subscribe((data: Evenement[]) => {
-      alert(JSON.stringify(data))
+/*       console.log(JSON.stringify(data)) */
       this.events = data;
     })
     forkJoin({
@@ -37,7 +40,6 @@ export class UpcomingEventsComponent implements OnInit {
   }
 
   filterEventByUserGroup(user: User, events: Evenement[]) {
-    alert(JSON.stringify(events));
     let groupEvent: Evenement[];
     for (let userGroup of user.groups) {
       groupEvent = events.filter((event: Evenement) => {
@@ -56,7 +58,6 @@ export class UpcomingEventsComponent implements OnInit {
         // this.agenda = [...this.agenda, ...groupEvent]
       });
     }
-    alert(JSON.stringify( this.events));
   }
   openDetailEvent() {
     const modalRef = this.modalService.open(DetailEventComponent, { size: 'lg', backdrop: true });
