@@ -2,6 +2,7 @@ package fr.mistral.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,6 +42,7 @@ public class Event {
     @JoinTable(name = "users_event",
             joinColumns = @JoinColumn(name = "users_id"),
             inverseJoinColumns = @JoinColumn(name = "event_id"))
+             @JsonIgnoreProperties("events")
     private Set<UserEntity> users=new HashSet<>();
     @ManyToMany
     @JoinTable(name = "event_groups",
