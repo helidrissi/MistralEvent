@@ -54,6 +54,7 @@ public class UserEntity implements Serializable {
 			inverseJoinColumns = @JoinColumn(name = "group_id"))
 	private Set<Group> groups = new HashSet<>();
 	@ManyToMany(mappedBy = "users")
+	@JsonIgnore
 	private Set<Event> events = new HashSet<>();
 
 	@OneToMany (mappedBy = "author")
