@@ -21,6 +21,7 @@ import { User } from 'src/app/models/user';
       }
 
     addUser(event: Evenement, user: User) {
+      console.log('user', user)
         event.users.push(user);
         console.log(JSON.stringify(event));
         this.evenementService.updateEvenementById(event).subscribe(result => {
