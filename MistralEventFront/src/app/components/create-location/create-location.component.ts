@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
-import { faTimes, faSave, faImage, faImages } from '@fortawesome/free-solid-svg-icons';
+import {
+  faTimes,
+  faSave,
+  faImage,
+  faImages,
+} from '@fortawesome/free-solid-svg-icons';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
@@ -11,28 +16,27 @@ import { UploadService } from 'src/app/services/upload.service';
 import { EditedLocationService } from 'src/app/services/edited-location.service';
 
 // Models
-import { Location } from '../../models/location'
-import { File } from '../../models/file'
+import { Location } from '../../models/location';
+import { File } from '../../models/file';
 
 // Components
 import { FileUploadComponent } from '../fileupload/fileupload.component';
+import { ToasterService } from '../toaster/toaster.service';
 
 @Component({
   selector: 'app-create-location',
   templateUrl: './create-location.component.html',
-  styleUrls: ['./create-location.component.scss']
+  styleUrls: ['./create-location.component.scss'],
 })
-
 export class CreateLocationComponent implements OnInit {
-
   saveIcon = faSave;
   cancelIcon = faTimes;
   pictureIcon = faImages;
   avatarIcon = faImage;
 
-  name = new FormControl('', Validators.required)
-  streetAddress = new FormControl('', Validators.required)
-  city = new FormControl('Clermont-Ferrand', Validators.required)
+  name = new FormControl('', Validators.required);
+  streetAddress = new FormControl('', Validators.required);
+  city = new FormControl('Clermont-Ferrand', Validators.required);
 
   form: FormGroup = new FormGroup({
     name: this.name,
@@ -40,7 +44,14 @@ export class CreateLocationComponent implements OnInit {
     city: this.city,
   });
 
-  constructor(private locationService: LocationService, public editedLocation: EditedLocationService, public uploadService: UploadService, private modalService: NgbModal, private router: Router) { }
+  constructor(
+    private toaster: ToasterService,
+    private locationService: LocationService,
+    public editedLocation: EditedLocationService,
+    public uploadService: UploadService,
+    private modalService: NgbModal,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     if (this.editedLocation.location != null) {
@@ -55,17 +66,19 @@ export class CreateLocationComponent implements OnInit {
       name: this.name.value,
       adress: this.streetAddress.value,
       city: this.city.value,
-      images: []
-    }
+      images: [],
+    };
     if (this.editedLocation.location != null) {
       location.id = this.editedLocation.location.id;
-      location.images = this.editedLocation.location.images;
+      if (location.images != null) {
+        location.images = this.editedLocation.location.images;
+      }
     }
-    
-    this.locationService.addLocation(location).subscribe(result => 
-      {console.log(JSON.stringify(result))
-      this.router.navigate(['home/locations'])}
-    )
+
+    this.locationService.addLocation(location).subscribe((result) => {
+        console.log(JSON.stringify(result));
+        this.router.navigate(['home/locations']);
+    });
   }
 
   openAvatarUpload() {
@@ -73,19 +86,20 @@ export class CreateLocationComponent implements OnInit {
       name: this.name.value,
       adress: this.streetAddress.value,
       city: this.city.value,
-      images: []
-    }
+      images: [],
+    };
     if (this.editedLocation.location != null) {
       location.id = this.editedLocation.location.id;
-      location.images = this.editedLocation.location.images;
+      if (location.images != null) {
+        location.images = this.editedLocation.location.images;
+      }
     }
 
-    this.locationService.addLocation(location).subscribe(result => {
+    this.locationService.addLocation(location).subscribe((result) => {
       this.editedLocation.loadLocation(result);
       this.uploadService.type_file = this.uploadService.TYPE_LOCATION;
       const modalRef = this.modalService.open(FileUploadComponent);
-    })
-    
+    });
   }
 
   addImageUpload() {
@@ -93,19 +107,20 @@ export class CreateLocationComponent implements OnInit {
       name: this.name.value,
       adress: this.streetAddress.value,
       city: this.city.value,
-      images: []
-    }
+      images: [],
+    };
     if (this.editedLocation.location != null) {
       location.id = this.editedLocation.location.id;
-      location.images = this.editedLocation.location.images;
+      if (location.images != null) {
+        location.images = this.editedLocation.location.images;
+      }
     }
 
-    this.locationService.addLocation(location).subscribe(result => {
+    this.locationService.addLocation(location).subscribe((result) => {
       this.editedLocation.loadLocation(result);
       this.uploadService.type_file = this.uploadService.TYPE_ATTACHED_PICTURE_LOCATION;
       const modalRef = this.modalService.open(FileUploadComponent);
-    })
-    
+    });
   }
 
   cancel() {

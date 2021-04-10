@@ -10,6 +10,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { ImComingService } from 'src/app/services/im-coming.service';
+import { ToasterService } from '../toaster/toaster.service';
 
 @Component({
   selector: 'app-upcomingEvents',
@@ -27,6 +28,7 @@ export class UpcomingEventsComponent implements OnInit {
     private usersService: UsersService,
     private modalService: NgbModal,
     private imComingService: ImComingService,
+    private toasterService: ToasterService
   ) {}
 
   ngOnInit() {
@@ -61,8 +63,10 @@ export class UpcomingEventsComponent implements OnInit {
 
   IAccept(evenement: Evenement) {
     this.imComingService.addUser(evenement, this.user);
+    this.toasterService.showSucces("Vous participez à l'événément")
   }
   IRefuse(evenement: Evenement) {
     this.imComingService.removeUser(evenement, this.user);
+    this.toasterService.showError("Vous ne venez pas =(")
   }
 }
