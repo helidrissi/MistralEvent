@@ -39,9 +39,10 @@ export class EvenementService {
     
   }
 
-  updateEvenementById(evenement :Evenement): Observable<Evenement | null> {
+  updateEvenementById(evenement :Evenement): Observable<Evenement | any> {
     return this.http.put<Evenement>(this.SERVER_URL + '/' + evenement.id, evenement).pipe(
-      map((res)=> res),
+      map((res: Evenement)=> res),
+      catchError((err) => err)
     )
   }
 
