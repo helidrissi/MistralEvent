@@ -9,6 +9,7 @@ import { DetailEventComponent } from '../detail-event/detail-event.component';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { ImComingService } from 'src/app/services/im-coming.service';
 
 @Component({
   selector: 'app-upcomingEvents',
@@ -24,7 +25,8 @@ export class UpcomingEventsComponent implements OnInit {
     private evenementService: EvenementService,
     private tokenservice: TokenService,
     private usersService: UsersService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private imComingService: ImComingService,
   ) {}
 
   ngOnInit() {
@@ -55,5 +57,12 @@ export class UpcomingEventsComponent implements OnInit {
       size: 'lg',
       backdrop: true,
     });
+  }
+
+  IAccept(evenement: Evenement) {
+    this.imComingService.addUser(evenement, this.user);
+  }
+  IRefuse(evenement: Evenement) {
+    this.imComingService.removeUser(evenement, this.user);
   }
 }

@@ -8,7 +8,7 @@
     </h3>
     <div class="card-list row row-cols-auto">
       <div class="col col-md-4" *ngFor="let event of listEvents">
-        <app-eventCard [evenement]=event type="agendaCard" [user]=user></app-eventCard>
+        <app-eventCard [evenement]=event type="agendaCard" [user]=user (IRefuse)="IRefuse($event)"></app-eventCard>
       </div>
     </div>
   </div>
