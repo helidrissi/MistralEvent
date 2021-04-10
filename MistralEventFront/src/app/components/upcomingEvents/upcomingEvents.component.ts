@@ -19,7 +19,7 @@ export class UpcomingEventsComponent implements OnInit {
   events: Evenement[] = [];
   plusIcon = faPlus;
   user: User;
-
+  evenement: Evenement;
   constructor(
     private evenementService: EvenementService,
     private tokenservice: TokenService,
@@ -49,11 +49,5 @@ export class UpcomingEventsComponent implements OnInit {
         }
       });
     }
-  }
-  openDetailEvent() {
-    const modalRef = this.modalService.open(DetailEventComponent, {
-      size: 'lg',
-      backdrop: true,
-    });
   }
 }

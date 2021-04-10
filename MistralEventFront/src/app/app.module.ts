@@ -45,7 +45,7 @@ import { DetailEventComponent } from './components/detail-event/detail-event.com
     multi:true,
   }],
   bootstrap: [AppComponent],
-
+  entryComponents: [ DetailEventComponent ]
 })
 export class AppModule {
 

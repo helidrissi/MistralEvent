@@ -1,6 +1,7 @@
 <div class="webModalDiv">
     <div class="header">
-        <h1> {{ evenement?.name}} Restaurant Jeudi midi</h1>
+        <h1> {{ evenement?.name}}</h1>
+        <h1> {{ evenement?.author?.firstName}}</h1>
     </div>
     <div class="modal-body">
         <img src="https://www.justacote.com/photos_entreprises/cafe-de-l-univers-clermont-ferrand-146505929057.jpg" alt="">
@@ -8,13 +9,14 @@
             <div class="image-organisateur-groupes">
                 <img [src]='account.avatar64' alt="photo de profil">
                 <div>
-                    <h2> <!-- {{ evenement.user}} Organisateur --> Anthony Pfeifer</h2>
-                    <h3> {{ evenement?.groups}} Mistral </h3>
+<!--                     <h2 *ngFor="let author of evenement.author">  {{ author?.firstName}}</h2> -->
+                    <h2 *ngFor="let user of evenement.users">  {{ user?.firstName}}</h2>
+                    <h3 *ngFor="let group of evenement.groups"> {{ group.name}}</h3>
                 </div>
             </div>
             <h3> {{ evenement?.date}} </h3>
-            <h3> {{ evenement?.location}} </h3>
-            <div id="participantsPhotos">
+            <h3> {{ evenement?.location.adress}} </h3>
+            <div id="participantsPhotos" >
                 <img [src]='account.avatar64' alt="photo de profil">
                 <img [src]='account.avatar64' alt="photo de profil">
                 <img [src]='account.avatar64' alt="photo de profil">

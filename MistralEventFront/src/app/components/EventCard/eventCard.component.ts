@@ -64,6 +64,7 @@ export class EventCardComponent implements OnInit {
 
   openDetailEvent() {
     const modalRef = this.modalService.open(DetailEventComponent);
+    modalRef.componentInstance.evenement = this.evenement;
   }
 
   showGallery(location: Location) {
