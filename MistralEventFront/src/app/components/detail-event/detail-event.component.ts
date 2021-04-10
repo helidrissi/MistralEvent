@@ -36,7 +36,6 @@ export class DetailEventComponent implements OnInit {
 
   ngOnInit(): void {
       console.log( this.evenement)
-      console.log( this.evenement.author)
   }
   showGallery(location: Location) {
 

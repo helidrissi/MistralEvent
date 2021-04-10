@@ -52,4 +52,17 @@ export class UpcomingEventsComponent implements OnInit {
       });
     }
   }
+  openDetailEvent() {
+    const modalRef = this.modalService.open(DetailEventComponent, {
+      size: 'lg',
+      backdrop: true,
+    });
+  }
+
+  IAccept(evenement: Evenement) {
+    this.imComingService.addUser(evenement, this.user);
+  }
+  IRefuse(evenement: Evenement) {
+    this.imComingService.removeUser(evenement, this.user);
+  }
 }
