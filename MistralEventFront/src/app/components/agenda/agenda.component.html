@@ -1,14 +1,14 @@
 <div class="main-screen">
   <div class="filters">
   </div>
-  <div *ngIf="listEvents.length > 0; else noEvent">
+  <div *ngIf="listEvents && listEvents.length > 0; else noEvent">
   <div class="today">
     <h3>
       Aujourd'hui
     </h3>
     <div class="card-list row row-cols-auto">
-      <div class="col" *ngFor="let event of listEvents">
-        <app-eventCard [evenement]=event type="agendaCard"></app-eventCard>
+      <div class="col col-md-4" *ngFor="let event of listEvents">
+        <app-eventCard [evenement]=event type="agendaCard" [user]=user></app-eventCard>
       </div>
     </div>
   </div>

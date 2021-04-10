@@ -3,7 +3,7 @@
     <h3>Cette semaine</h3>
     <div class="card-list row">
       <div class="col col-md-4" *ngFor="let event of events">
-        <app-eventCard [evenement]=event type="upCommingCard" ></app-eventCard>
+        <app-eventCard [evenement]=event type="upCommingCard" [user]=user ></app-eventCard>
       </div>
     </div>
   </div>

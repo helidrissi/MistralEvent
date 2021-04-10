@@ -18,6 +18,7 @@ import { AccountService } from '../../services/account.service';
 
 // Environnement
 import { DEFAULT_IMG } from 'src/environments/environment';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'app-eventCard',
@@ -26,6 +27,8 @@ import { DEFAULT_IMG } from 'src/environments/environment';
 })
 export class EventCardComponent implements OnInit {
   @Input() evenement: Evenement;
+
+  @Input() user: User;
 
   /**
  * @example
@@ -49,7 +52,7 @@ export class EventCardComponent implements OnInit {
 
   ngOnInit() {
     this.location = this.evenement.location;
-    this.imComing = this.imComingService.imComing(this.evenement, this.accountService.user);
+    this.imComing = this.imComingService.imComing(this.evenement, this.user);
     if (this.location != null) {
       this.filesService.getFile("location" + this.location.id).subscribe((fileLoaded:File) => {
         if (fileLoaded != null && fileLoaded.picByte != null && fileLoaded.picByte.length > 0) {
@@ -72,11 +75,11 @@ export class EventCardComponent implements OnInit {
 
   iAccept() {
     this.imComing = true;
-    this.imComingService.addUser(this.evenement, this.accountService.user);
+    this.imComingService.addUser(this.evenement, this.user);
   }
 
   iRefuse() {
     this.imComing = false;
-    this.imComingService.removeUser(this.evenement, this.accountService.user);
+    this.imComingService.removeUser(this.evenement, this.user);
   }
 }
