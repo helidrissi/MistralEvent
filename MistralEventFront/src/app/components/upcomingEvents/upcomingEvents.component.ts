@@ -8,55 +8,61 @@ import { UsersService } from '../../services/users.service';
 import { DetailEventComponent } from '../detail-event/detail-event.component';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { ImComingService } from 'src/app/services/im-coming.service';
+
 @Component({
   selector: 'app-upcomingEvents',
   templateUrl: './upcomingEvents.component.html',
   styleUrls: ['./upcomingEvents.component.scss'],
 })
 export class UpcomingEventsComponent implements OnInit {
-  events: Evenement[];
+  events: Evenement[] = [];
+  plusIcon = faPlus;
+  user: User;
 
   constructor(
     private evenementService: EvenementService,
     private tokenservice: TokenService,
     private usersService: UsersService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private imComingService: ImComingService,
   ) {}
 
   ngOnInit() {
-    this.evenementService.getEvenements().subscribe((data: Evenement[]) => {
-      console.log(JSON.stringify(data))
-      this.events = data;
-    })
     forkJoin({
       user: this.usersService.getUser(this.tokenservice.getId()),
       events: this.evenementService.getEvenements(),
     }).subscribe(({ user, events }) => {
+      this.user = user;
       this.filterEventByUserGroup(user, events);
     });
   }
 
   filterEventByUserGroup(user: User, events: Evenement[]) {
-    let groupEvent: Evenement[];
     for (let userGroup of user.groups) {
-      groupEvent = events.filter((event: Evenement) => {
+      const result = events.filter((event: Evenement) => {
         if (
-          event.groups.find((eventGroup) => eventGroup.name === userGroup.name)
+          event.groups.find(
+            (eventGroups) => eventGroups.name === userGroup.name
+          )
         ) {
-          // groupEvent = [...groupEvent, event];
-          if (groupEvent !== undefined) {
-            groupEvent = groupEvent.concat(event);
-          }
+          this.events.push(event);
         }
-        if (groupEvent !== undefined) {
-          this.events = this.events.concat(groupEvent);
-        }
-
-        // this.agenda = [...this.agenda, ...groupEvent]
       });
     }
   }
   openDetailEvent() {
-    const modalRef = this.modalService.open(DetailEventComponent, { size: 'lg', backdrop: true });
+    const modalRef = this.modalService.open(DetailEventComponent, {
+      size: 'lg',
+      backdrop: true,
+    });
+  }
+
+  IAccept(evenement: Evenement) {
+    this.imComingService.addUser(evenement, this.user);
+  }
+  IRefuse(evenement: Evenement) {
+    this.imComingService.removeUser(evenement, this.user);
   }
 }

@@ -8,9 +8,9 @@
     <!-- {{evenement.description.length > 200 ? (evenement.description | slice:0:200)+'...' : evenement.description }} -->
     {{evenement.description}}
     <div class="btn-card-agenda">
-      <button *ngIf="type === 'upCommingCard' " class="btn btn-success" [disabled]="imComing" (click)="iAccept()">Je viens !</button>
+      <button *ngIf="type === 'upCommingCard' " class="btn btn-success" [disabled]="imComing" (click)="sendResponseEvent(true)">Je viens !</button>
       <button *ngIf="type === 'agendaCard' " class="btn btn-primary" (click)="openDetailEvent()">Afficher</button>
-      <button class="btn btn-danger" [disabled]="!imComing"  (click)="iRefuse()">Je peux pas</button>
+      <button class="btn btn-danger" [disabled]="!imComing"  (click)="sendResponseEvent(false)">Je peux pas</button>
     </div>
   </div>
 </div>
