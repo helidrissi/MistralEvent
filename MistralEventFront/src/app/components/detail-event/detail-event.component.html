@@ -1,6 +1,6 @@
-<div class="modalDiv">
+<div class="webModalDiv">
     <div class="header">
-        <h1> Nom de l'événement</h1>
+        <h1> {{ evenement?.name}} Restaurant Jeudi midi</h1>
     </div>
     <div class="modal-body">
         <img src="https://www.justacote.com/photos_entreprises/cafe-de-l-univers-clermont-ferrand-146505929057.jpg" alt="">
@@ -8,8 +8,8 @@
             <div class="image-organisateur-groupes">
                 <img [src]='account.avatar64' alt="photo de profil">
                 <div>
-                    <h2> <!-- {{ evenement.user}} Organisateur --></h2>
-                    <h3> {{ evenement?.groups}} </h3>
+                    <h2> <!-- {{ evenement.user}} Organisateur --> Anthony Pfeifer</h2>
+                    <h3> {{ evenement?.groups}} Mistral </h3>
                 </div>
             </div>
             <h3> {{ evenement?.date}} </h3>
@@ -31,6 +31,58 @@
        {{ evenement?.description }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque voluptates ex, nisi corrupti facilis voluptate magni placeat consequatur provident voluptatem dolorem, voluptas, rerum inventore reprehenderit nesciunt ratione consectetur repellat dignissimos!
     </p>
     <div class="modal-footer">
+        <a class="galleryLocation" (click)="showGallery(location)">
+            <button class="btn btn-primary">
+              <fa-icon [icon]="picturesIcon"></fa-icon>
+            </button>
+          </a>
+        <button class="btn btn-success">Je viens</button>
+        <button class="btn btn-danger">J'annule</button>
+    </div>
+</div>
+
+
+
+
+<div class="phoneModalDiv">
+    <div class="header">
+        <div class="imageEvent">
+            <img src="https://www.justacote.com/photos_entreprises/cafe-de-l-univers-clermont-ferrand-146505929057.jpg" alt="">
+            <h4> X places restantes</h4>
+            <div id="participantsPhotos">
+                <img [src]='account.avatar64' alt="photo de profil">
+                <img [src]='account.avatar64' alt="photo de profil">
+                <img [src]='account.avatar64' alt="photo de profil">
+            </div>
+        </div>
+        <h1> {{ evenement?.name}}</h1>
+    </div>
+    <div class="modal-body">
+
+        <div class="details">
+            <div class="image-organisateur-groupes">
+                <img [src]='account.avatar64' alt="photo de profil">
+                <div>
+                    <h2> <!-- {{ evenement.user}} Organisateur --></h2>
+                    <h3> {{ evenement?.groups}} </h3>
+                </div>
+            </div>
+            <h3> {{ evenement?.date}} </h3>
+            <h3> {{ evenement?.location}} </h3>
+
+
+        </div>
+    </div>
+    <div class="eventSiteLink">
+        <a href="https://www.tripadvisor.fr/Restaurant_Review-g187091-d9795059-Reviews-Brasserie_L_univers-Clermont_Ferrand_Puy_de_Dome_Auvergne_Rhone_Alpes.html">
+        https://www.tripadvisor.fr/Restaurant_Review-g187091-d9795059-Reviews-Brasserie_L_univers-Clermont_Ferrand_Puy_de_Dome_Auvergne_Rhone_Alpes.html
+        </a>
+    </div>
+    <p>
+       {{ evenement?.description }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque voluptates ex, nisi corrupti facilis voluptate magni placeat consequatur provident voluptatem dolorem, voluptas, rerum inventore reprehenderit nesciunt ratione consectetur repellat dignissimos!
+    </p>
+    <div class="modal-footer">
+        <button class="btn btn-success">Je viens</button>
         <button class="btn btn-danger">J'annule</button>
     </div>
 </div>

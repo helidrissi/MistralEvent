@@ -58,7 +58,6 @@ export class LoginComponent implements OnInit {
     this.token.handle(res);
     this.account.changeStatus(true);
     this.account.loadUser();
-
     this.router.navigateByUrl("/home/agenda");
   }
 

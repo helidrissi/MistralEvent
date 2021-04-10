@@ -1,16 +1,16 @@
 <div class="card">
-  <img src="../../../assets/images/restaurant.jpg" class="card-img-top" alt="..." (click)="openDetailEvent()">
+  <img src="{{base64}}" class="card-img-top" alt="..." (click)="openDetailEvent()">
   <div class="card-body">
     <div class="card-informations">
       <h4 class="card-title">{{evenement.name}}</h4>
-      <p class="card-text">{{evenement.date | date: 'dd/MM/yyyy H:mm'}}</p>
+      <p class="card-text"><fa-icon [icon]="clockIcon"></fa-icon>&nbsp;{{evenement.date | date: 'dd/MM/yyyy H:mm'}}<br><fa-icon [icon]="mapMarkerIcon"></fa-icon>&nbsp;{{location.name}}</p>
     </div>
     <!-- {{evenement.description.length > 200 ? (evenement.description | slice:0:200)+'...' : evenement.description }} -->
     {{evenement.description}}
     <div class="btn-card-agenda">
-      <a *ngIf="type === 'upCommingCard' " href="#" class="btn btn-success">Je viens !</a>
-      <a *ngIf="type === 'agendaCard' " href="#" class="btn btn-primary">Afficher</a>
-      <a href="#" class="btn btn-danger">J'annule</a>
+      <button *ngIf="type === 'upCommingCard' " class="btn btn-success" [disabled]="imComing" (click)="sendResponseEvent(true)">Je viens !</button>
+      <button *ngIf="type === 'agendaCard' " class="btn btn-primary" (click)="openDetailEvent()">Afficher</button>
+      <button class="btn btn-danger" [disabled]="!imComing"  (click)="sendResponseEvent(false)">Je peux pas</button>
     </div>
   </div>
 </div>

@@ -1,16 +1,23 @@
 <div class="main-screen">
-  <div *ngIf="agenda.length > 0; else noEvent">
+  <div *ngIf="events?.length > 0; else noEvent">
     <h3>Cette semaine</h3>
-    <div class="card-list row row-cols-auto">
-      <div class="col" *ngFor="let event of agenda">
-        <app-eventCard [evenement]=event type="upCommingCard" ></app-eventCard>
+    <div class="card-list row">
+      <div class="col col-md-4" *ngFor="let event of events">
+        <app-eventCard [evenement]=event type="upCommingCard" [user]=user (IAccept)="IAccept($event)" (IRefuse)="IRefuse($event)"></app-eventCard>
       </div>
     </div>
   </div>
   <ng-template #noEvent>
     <div class="noEvent">
       <h3 class="alert alert-danger">Vous n'avez pas d'événement à venir</h3>
-      <button (click)="openDetailEvent()"> Test</button>
     </div>
   </ng-template>
+
+  <div class="addButtonDiv">
+    <a [routerLink]="['/home', 'create-event']" routerLinkActive="active-link" class="btn btn-success addButton">
+      <fa-icon [icon]="plusIcon" class="mx-auto plusIcon"></fa-icon>
+    </a>
+  </div>
 </div>
+
+

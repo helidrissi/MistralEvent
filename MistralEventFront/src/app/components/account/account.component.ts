@@ -57,7 +57,7 @@ export class AccountComponent implements OnInit {
 
     this.groupsService.getGroups().subscribe((data: Group[]) => {
       this.listGroups = data;
-      console.log (this.listGroups);
+/*       console.log (this.listGroups); */
     });
   }
 

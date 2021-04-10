@@ -1,31 +1,104 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  faClock, faImages,
+  faMapMarked
+} from '@fortawesome/free-solid-svg-icons';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Evenement } from 'src/app/models/evenement';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { File } from 'src/app/models/file';
+import { Location } from 'src/app/models/location';
+import { EditedLocationService } from 'src/app/services/edited-location.service';
+// Environnement
+import { DEFAULT_IMG } from 'src/environments/environment';
+import { User } from '../../models/user';
+// Services
+import { FilesService } from '../../services/files.service';
+import { GalleryLocationService } from '../../services/gallery-location.service';
+import { ImComingService } from '../../services/im-coming.service';
+import { LocationService } from '../../services/location.service';
 import { DetailEventComponent } from '../detail-event/detail-event.component';
-import { Group } from 'src/app/models/group';
+import { GalleryLocationComponent } from '../gallery-location/gallery-location.component';
+
+
 
 @Component({
   selector: 'app-eventCard',
   templateUrl: './eventCard.component.html',
-  styleUrls: ['./eventCard.component.scss']
+  styleUrls: ['./eventCard.component.scss'],
 })
 export class EventCardComponent implements OnInit {
   @Input() evenement: Evenement;
 
+  @Input() user: User;
+
   /**
- * @example
- * peut prendre en valeur upCommingCard ou agendaCard
- * permet de changer le bouton afficher en boutton je viens !  
- * processTarget('yo')
- *
- */
+   * @example
+   * peut prendre en valeur upCommingCard ou agendaCard
+   * permet de changer le bouton afficher en boutton je viens !
+   * processTarget('yo')
+   *
+   */
   @Input() type: string;
 
-  constructor(private modalService: NgbModal) { }
+  @Output() IRefuse = new EventEmitter<Evenement>();
+  @Output() IAccept = new EventEmitter<Evenement>();
+
+  picturesIcon = faImages;
+  clockIcon = faClock;
+  mapMarkerIcon = faMapMarked;
+  listLocations: Location[] = [];
+  location: Location;
+  imComing: boolean;
+  base64: String = DEFAULT_IMG.image_location_default;
+
+  constructor(
+    private modalService: NgbModal,
+    private locationService: LocationService,
+    public editedLocation: EditedLocationService,
+    private galleryLocationService: GalleryLocationService,
+    private filesService: FilesService,
+    private imComingService: ImComingService,
+  ) {}
 
   ngOnInit() {
+    this.location = this.evenement.location;
+    this.imComing = this.imComingService.imComing(this.evenement, this.user);
+    if (this.location != null) {
+      this.filesService
+        .getFile('location' + this.location.id)
+        .subscribe((fileLoaded: File) => {
+          if (
+            fileLoaded != null &&
+            fileLoaded.picByte != null &&
+            fileLoaded.picByte.length > 0
+          ) {
+            this.base64 = 'data:image/png;base64,' + fileLoaded.picByte;
+          }
+        });
+    }
   }
+
   openDetailEvent() {
     const modalRef = this.modalService.open(DetailEventComponent);
+  }
+
+  showGallery(location: Location) {
+    if (location != null) {
+      this.editedLocation.loadLocation(location);
+      const modaleRef = this.modalService.open(GalleryLocationComponent, {
+        size: 'lg',
+        backdrop: true,
+      });
+    }
+  }
+
+  sendResponseEvent(bool: boolean) {
+    if (bool) {
+      this.imComing = true;
+      this.IAccept.emit(this.evenement);
+    } else {
+      this.imComing = false;
+      this.IRefuse.emit(this.evenement);
+    }
   }
 }
