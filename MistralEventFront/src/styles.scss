@@ -42,13 +42,11 @@
     margin-top: 36px;
     padding-top: 10px;
   }
-}
 
-@media screen and (min-width: 1200px) {
-  .main-screen {
-    margin-left: 234px;
-    margin-top: 36px;
-    padding-top: 10px;
+  /* Modale du détail d'un évènement */
+
+  .modalEvent .modal-dialog {
+    max-width: 1000px;
   }
 }
 
@@ -79,9 +77,3 @@ body {
 
 /* Importing Bootstrap SCSS file. */
 @import "~bootstrap/scss/bootstrap";
-
-/* Modale du détail d'un évènement */
-
-.modalEvent .modal-dialog {
-  max-width: 1000px;
-}
