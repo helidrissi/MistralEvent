@@ -5,71 +5,75 @@
  */
 
 @media screen and (min-width: 200px) and (max-width: 375px) {
-    .main-screen {
-        margin-left: 0px;
-        margin-Top: 36px;
-        padding-top: 10px;
-    }
+  .main-screen {
+    margin-left: 0px;
+    margin-top: 36px;
+    padding-top: 10px;
   }
-  
-  @media screen and (max-width: 576px) {
-    .main-screen {
-        margin-left: 100px;
-        margin-Top: 36px;
-        padding-top: 10px;
-    }
+}
+
+@media screen and (max-width: 576px) {
+  .main-screen {
+    margin-left: 100px;
+    margin-top: 36px;
+    padding-top: 10px;
   }
-  
-  @media screen and (min-width: 576px) and (max-width: 767px) {
-    .main-screen {
-        margin-left: 100px;
-        margin-Top: 36px;
-        padding-top: 10px;
-    }
+}
+
+@media screen and (min-width: 576px) and (max-width: 767px) {
+  .main-screen {
+    margin-left: 100px;
+    margin-top: 36px;
+    padding-top: 10px;
   }
-  
-  @media screen and (min-width: 768px) and (max-width: 992px) {
-    .main-screen {
-        margin-left: 234px;
-        margin-Top: 36px;
-        padding-top: 10px;
-    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 992px) {
+  .main-screen {
+    margin-left: 234px;
+    margin-top: 36px;
+    padding-top: 10px;
   }
-  
-  @media screen and (min-width: 992px) {
-    .main-screen {
-        margin-left: 234px;
-        margin-Top: 36px;
-        padding-top: 10px;
-    }
+}
+
+@media screen and (min-width: 992px) {
+  .main-screen {
+    margin-left: 234px;
+    margin-top: 36px;
+    padding-top: 10px;
   }
-  
-  @media screen and (min-width: 1200px) {
-    .main-screen {
-        margin-left: 234px;
-        margin-Top: 36px;
-        padding-top: 10px;
-    }
+
+  /* Modale du détail d'un évènement */
+
+  .modalEvent .modal-dialog {
+    max-width: 1000px;
   }
+}
 
 /* 
  * Avatar
  */
 .avatar {
-    border-radius: 50%;
-    object-fit: cover;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .btn-primary {
-  background-color: #154194 !important; 
+  background-color: #154194 !important;
   border-color: #154194 !important;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 /* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
+@import "~bootstrap/scss/bootstrap";
 
 /* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
+@import "~bootstrap/scss/bootstrap";

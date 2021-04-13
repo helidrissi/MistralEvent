@@ -41,5 +41,6 @@ import { JwtInterceptor } from './services/jwt.interceptor';
     },
   ],
   bootstrap: [AppComponent],
+  entryComponents: [ DetailEventComponent ]
 })
 export class AppModule {}

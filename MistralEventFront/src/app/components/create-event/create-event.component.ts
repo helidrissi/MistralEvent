@@ -145,7 +145,7 @@ export class CreateEventComponent implements OnInit {
       author: this.author
     }
     this.evenementService.addEvenement(evenement).subscribe(result => {
-       console.log(JSON.stringify(result)) 
+    /*    console.log(JSON.stringify(result))  */
       this.router.navigate(['/home/agenda'])
     })
   }

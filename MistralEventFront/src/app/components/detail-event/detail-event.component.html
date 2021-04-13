@@ -1,20 +1,24 @@
 <div class="webModalDiv">
     <div class="header">
-        <h1> {{ evenement?.name}} Restaurant Jeudi midi</h1>
+        <h1> {{ evenement?.name}}</h1>
+<!--         <h1> {{ evenement?.author?.firstName}}</h1> -->
     </div>
     <div class="modal-body">
-        <img src="https://www.justacote.com/photos_entreprises/cafe-de-l-univers-clermont-ferrand-146505929057.jpg" alt="">
+        <div class="div-img-location">
+            <img class="img-location" src="https://www.justacote.com/photos_entreprises/cafe-de-l-univers-clermont-ferrand-146505929057.jpg" alt="">
+        </div>
         <div class="details">
             <div class="image-organisateur-groupes">
                 <img [src]='account.avatar64' alt="photo de profil">
                 <div>
-                    <h2> <!-- {{ evenement.user}} Organisateur --> Anthony Pfeifer</h2>
-                    <h3> {{ evenement?.groups}} Mistral </h3>
+<!--                     <h2 *ngFor="let author of evenement.author">  {{ author?.firstName}}</h2> -->
+                    <h2 *ngFor="let user of evenement.users">  {{ user?.firstName}} {{ user?.lastName}} </h2>
+                    <h3 *ngFor="let group of evenement.groups"> {{ group.name}}</h3>
                 </div>
             </div>
-            <h3> {{ evenement?.date}} </h3>
-            <h3> {{ evenement?.location}} </h3>
-            <div id="participantsPhotos">
+            <h3> {{ evenement?.date | date: 'dd/MM/yyyy H:mm'}} </h3>
+            <h3> {{ evenement?.location.adress}} à {{ evenement?.location.city}} </h3>
+            <div id="participantsPhotos" >
                 <img [src]='account.avatar64' alt="photo de profil">
                 <img [src]='account.avatar64' alt="photo de profil">
                 <img [src]='account.avatar64' alt="photo de profil">
@@ -48,29 +52,29 @@
     <div class="header">
         <div class="imageEvent">
             <img src="https://www.justacote.com/photos_entreprises/cafe-de-l-univers-clermont-ferrand-146505929057.jpg" alt="">
-            <h4> X places restantes</h4>
+            <h4 id="places-restantes"> X places restantes</h4>
             <div id="participantsPhotos">
                 <img [src]='account.avatar64' alt="photo de profil">
                 <img [src]='account.avatar64' alt="photo de profil">
                 <img [src]='account.avatar64' alt="photo de profil">
             </div>
         </div>
-        <h1> {{ evenement?.name}}</h1>
+        <div id="nom-date-event">
+            <h1> {{ evenement?.name}}</h1>
+            <h3> {{ evenement?.date | date: 'dd/MM/yyyy H:mm' }} </h3>
+        </div>
+        <h3 class="ml-4 mb-0 mt-0"> {{ evenement?.location.adress}} </h3>
     </div>
     <div class="modal-body">
 
         <div class="details">
             <div class="image-organisateur-groupes">
-                <img [src]='account.avatar64' alt="photo de profil">
-                <div>
-                    <h2> <!-- {{ evenement.user}} Organisateur --></h2>
-                    <h3> {{ evenement?.groups}} </h3>
-                </div>
+                    <img [src]='account.avatar64' id="photo-profil" alt="photo de profil">
+                    <div>
+                        <h2 *ngFor="let user of evenement.users">  {{ user?.firstName}} {{ user?.lastName}} </h2>
+                        <h3 *ngFor="let group of evenement.groups"> {{ group.name}} </h3>
+                    </div>
             </div>
-            <h3> {{ evenement?.date}} </h3>
-            <h3> {{ evenement?.location}} </h3>
-
-
         </div>
     </div>
     <div class="eventSiteLink">
@@ -79,7 +83,7 @@
         </a>
     </div>
     <p>
-       {{ evenement?.description }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque voluptates ex, nisi corrupti facilis voluptate magni placeat consequatur provident voluptatem dolorem, voluptas, rerum inventore reprehenderit nesciunt ratione consectetur repellat dignissimos!
+       {{ evenement?.description }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque voluptates ex, nisi corrupti facilis voluptate magni placeat consequatur provident voluptatem dolorem, voluptas, rerum inventore reprehenderit nesciunt ratione consectetur repelrem ipsum dolor sit amet consectetur adipisicing elit. Neque voluptates ex, nisi corrupti facilis voluptate magni placeat consequatur provident voluptatem dolorem, voluptas, rerum inventore reprehenderit nesciunt ratione consectetur repellat dilat dignissimos!Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque voluptates ex, nisi corrupti facilis voluptate magni placeat consequatur provident voluptatem dolorem, voluptas, rerum inventore reprehenderit nesciunt ratione consectetur repelrem ipsum dolor sit amet consectetur adipisicing elit. Neque voluptates ex, nisi corrupti facilis voluptate magni placeat consequatur provident voluptatem dolorem, voluptas, rerum inventore reprehenderit nesciunt ratione consectetur repellat dilat dign test
     </p>
     <div class="modal-footer">
         <button class="btn btn-success">Je viens</button>

@@ -21,7 +21,7 @@ export class UpcomingEventsComponent implements OnInit {
   events: Evenement[] = [];
   plusIcon = faPlus;
   user: User;
-
+  evenement: Evenement;
   constructor(
     private evenementService: EvenementService,
     private tokenservice: TokenService,
