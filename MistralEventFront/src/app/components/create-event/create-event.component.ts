@@ -76,9 +76,6 @@ export class CreateEventComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    this.locationService.getAllLocations().subscribe()
-
     this.disableLocationControls()
     this.locationControl.valueChanges.subscribe(value => {
       if (this.locationControl.value === 'new') {

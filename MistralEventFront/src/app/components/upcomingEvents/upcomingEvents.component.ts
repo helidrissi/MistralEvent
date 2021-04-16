@@ -11,6 +11,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { ImComingService } from 'src/app/services/im-coming.service';
 import { ToasterService } from '../toaster/toaster.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-upcomingEvents',
@@ -35,7 +36,7 @@ export class UpcomingEventsComponent implements OnInit {
     forkJoin({
       user: this.usersService.getUser(this.tokenservice.getId()),
       events: this.evenementService.getEvenements(),
-    }).subscribe(({ user, events }) => {
+    }).pipe(take(1)).subscribe(({ user, events }) => {
       this.user = user;
       this.filterEventByUserGroup(user, events);
     });
