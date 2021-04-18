@@ -56,7 +56,7 @@ export class DetailEventComponent implements OnInit {
   }
 
   modify() {
-    alert("mofif")
+
     this.editedEvenement.loadEvenement(this.evenement)
     this.router.navigate(['/home/create-event'])
   }

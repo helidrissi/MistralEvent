@@ -61,16 +61,15 @@ export class CreateLocationComponent implements OnInit {
       phone: this.phone.value,
       images: []
     }
-
-    alert(this.phone.value)
     if (this.editedLocation.location != null) {
       location.id = this.editedLocation.location.id;
       location.images = this.editedLocation.location.images;
     }
-    
-    this.locationService.addLocation(location).subscribe(result => 
-      {console.log(JSON.stringify(result))
-      this.router.navigate(['home/locations'])}
+
+    this.locationService.addLocation(location).subscribe(result => {
+      console.log(JSON.stringify(result))
+      this.router.navigate(['home/locations'])
+    }
     )
   }
 
@@ -91,7 +90,7 @@ export class CreateLocationComponent implements OnInit {
       this.uploadService.type_file = this.uploadService.TYPE_LOCATION;
       const modalRef = this.modalService.open(FileUploadComponent);
     })
-    
+
   }
 
   addImageUpload() {
@@ -111,7 +110,7 @@ export class CreateLocationComponent implements OnInit {
       this.uploadService.type_file = this.uploadService.TYPE_ATTACHED_PICTURE_LOCATION;
       const modalRef = this.modalService.open(FileUploadComponent);
     })
-    
+
   }
 
   cancel() {
