@@ -33,11 +33,13 @@ export class CreateLocationComponent implements OnInit {
   name = new FormControl('', Validators.required)
   streetAddress = new FormControl('', Validators.required)
   city = new FormControl('Clermont-Ferrand', Validators.required)
+  phone = new FormControl('', Validators.required)
 
   form: FormGroup = new FormGroup({
     name: this.name,
     streetAddress: this.streetAddress,
     city: this.city,
+    phone: this.phone,
   });
 
   constructor(private locationService: LocationService, public editedLocation: EditedLocationService, public uploadService: UploadService, private modalService: NgbModal, private router: Router) { }
@@ -47,6 +49,7 @@ export class CreateLocationComponent implements OnInit {
       this.name.setValue(this.editedLocation.location.name);
       this.streetAddress.setValue(this.editedLocation.location.adress);
       this.city.setValue(this.editedLocation.location.city);
+      this.phone.setValue(this.editedLocation.location.phone);
     }
   }
 
@@ -55,8 +58,11 @@ export class CreateLocationComponent implements OnInit {
       name: this.name.value,
       adress: this.streetAddress.value,
       city: this.city.value,
+      phone: this.phone.value,
       images: []
     }
+
+    alert(this.phone.value)
     if (this.editedLocation.location != null) {
       location.id = this.editedLocation.location.id;
       location.images = this.editedLocation.location.images;
