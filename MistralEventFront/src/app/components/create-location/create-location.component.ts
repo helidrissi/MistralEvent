@@ -33,7 +33,7 @@ export class CreateLocationComponent implements OnInit {
   name = new FormControl('', Validators.required)
   streetAddress = new FormControl('', Validators.required)
   city = new FormControl('Clermont-Ferrand', Validators.required)
-  phone = new FormControl('', Validators.required)
+  phone = new FormControl('')
 
   form: FormGroup = new FormGroup({
     name: this.name,
