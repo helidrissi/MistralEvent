@@ -32,9 +32,9 @@ export class CreateEventComponent implements OnInit {
 
   datetimeControl = new FormControl('', Validators.required)
 
-  descriptionControl = new FormControl('', Validators.required)
+  descriptionControl = new FormControl('')
 
-  now = new Date().toISOString().substring(0, 16)
+  now = this.formatDate(new Date())
 
   isChecked: boolean[] =[];
 
@@ -56,6 +56,11 @@ export class CreateEventComponent implements OnInit {
     datetime: this.datetimeControl,
     description: this.descriptionControl
   });
+
+  formatDate(date: Date)
+  {
+    return date.toISOString().substring(0, 16)
+  }
 
   constructor(
     private evenementService: EvenementService, 
@@ -89,6 +94,20 @@ export class CreateEventComponent implements OnInit {
     alert("edited" + JSON.stringify(this.editedEvenement.evenement))
 
     this.disableLocationControls()
+
+   if(this.editedEvenement.evenement != null)
+   { const event = this.editedEvenement.evenement
+     const location = event.location;
+     this.eventNameControl.setValue(event.name);
+     this.locationControl.setValue(location.id)
+     this.locationNameControl.setValue(location.name)
+     this.streetAddressControl.setValue(location.adress)
+     this.cityControl.setValue(location.city)
+     this.datetimeControl.setValue(this.formatDate(event.date))
+     this.descriptionControl.setValue(event.description)
+     alert(event.date.toISOString())
+   }
+
     this.locationControl.valueChanges.subscribe(value => {
       if (this.locationControl.value === 'new') {
         this.isNewEvent = true;
@@ -163,7 +182,8 @@ export class CreateEventComponent implements OnInit {
     else{
       console.log("edit")
       evenement.id = this.editedEvenement.evenement.id;
-      this.evenementService.updateEvenementById(evenement)
+      this.evenementService.updateEvenementById(evenement).subscribe(result => alert(JSON.stringify(result)))
+      this.router.navigate(['/home/agenda'])
     }
  
   }
