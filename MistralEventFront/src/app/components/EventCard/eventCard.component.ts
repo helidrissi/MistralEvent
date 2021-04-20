@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
-  faClock, faImages,
-  faMapMarked
+  faClock,
+  faImages,
+  faMapMarked,
 } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Evenement } from 'src/app/models/evenement';
@@ -13,13 +14,10 @@ import { DEFAULT_IMG } from 'src/environments/environment';
 import { User } from '../../models/user';
 // Services
 import { FilesService } from '../../services/files.service';
-import { GalleryLocationService } from '../../services/gallery-location.service';
 import { ImComingService } from '../../services/im-coming.service';
-import { LocationService } from '../../services/location.service';
 import { DetailEventComponent } from '../detail-event/detail-event.component';
 import { GalleryLocationComponent } from '../gallery-location/gallery-location.component';
-
-
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-eventCard',
@@ -53,11 +51,9 @@ export class EventCardComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private locationService: LocationService,
     public editedLocation: EditedLocationService,
-    private galleryLocationService: GalleryLocationService,
     private filesService: FilesService,
-    private imComingService: ImComingService,
+    private imComingService: ImComingService
   ) {}
 
   ngOnInit() {
@@ -66,6 +62,7 @@ export class EventCardComponent implements OnInit {
     if (this.location != null) {
       this.filesService
         .getFile('location' + this.location.id)
+        .pipe(take(1))
         .subscribe((fileLoaded: File) => {
           if (
             fileLoaded != null &&

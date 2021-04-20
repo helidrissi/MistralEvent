@@ -3,6 +3,7 @@ import { faImages } from '@fortawesome/free-solid-svg-icons';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GalleryLocationComponent } from '../gallery-location/gallery-location.component';
+import { take } from 'rxjs/operators';
 // Modèles
 import { Evenement } from 'src/app/models/evenement';
 import { Location } from 'src/app/models/location';
@@ -15,6 +16,7 @@ import { EvenementService } from 'src/app/services/evenement.service';
 import { TokenService } from '../../services/token.service';
 import { AccountService } from '../../services/account.service';
 import { UsersService } from '../../services/users.service';
+
 @Component({
   selector: 'app-detail-event',
   templateUrl: './detail-event.component.html',
@@ -30,15 +32,19 @@ export class DetailEventComponent implements OnInit {
   picturesIcon = faImages;
   listLocations: Location[] = [];
   location: Location;
+
   evenementId: number;
   constructor(private ngbActiveModal: NgbActiveModal, private usersService: UsersService, public account: AccountService, private tokenService: TokenService, private evenementService: EvenementService, private router: Router, private route: ActivatedRoute,
     private locationService: LocationService, public editedLocation: EditedLocationService, private galleryLocationService: GalleryLocationService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
-      console.log( this.evenement)
+    this.evenementService.getEvenementById(+this.route.snapshot.paramMap.get('id')).pipe(take(1)).subscribe((data: Evenement) =>  {
+      this.evenement = data;
+    })
+    console.log(this.evenement)
   }
-  showGallery(location: Location) {
 
+  showGallery(location: Location) {
     this.editedLocation.loadLocation(location);
     this.router.navigate(['/home/upcommingEvent'])
     const modalRef = this.modalService.open(GalleryLocationComponent, { size: 'lg', backdrop: true });
