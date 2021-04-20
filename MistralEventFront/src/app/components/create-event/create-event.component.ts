@@ -91,19 +91,22 @@ export class CreateEventComponent implements OnInit {
   ngOnInit(): void {
 
     this.locationService.getAllLocations().subscribe()
-    alert("edited" + JSON.stringify(this.editedEvenement.evenement))
+    
 
     this.disableLocationControls()
 
    if(this.editedEvenement.evenement != null)
    { const event = this.editedEvenement.evenement
+    alert("edited" + JSON.stringify(this.editedEvenement.evenement))
      const location = event.location;
      this.eventNameControl.setValue(event.name);
      this.locationControl.setValue(location.id)
      this.locationNameControl.setValue(location.name)
      this.streetAddressControl.setValue(location.adress)
      this.cityControl.setValue(location.city)
-     this.datetimeControl.setValue(this.formatDate(event.date))
+     this.datetimeControl.setValue(event.date)
+     alert(JSON.stringify(event.date))
+     alert(JSON.stringify(event.description))
      this.descriptionControl.setValue(event.description)
      alert(event.date.toISOString())
    }
@@ -123,6 +126,7 @@ export class CreateEventComponent implements OnInit {
         this.locationNameControl.setValue(location.name)
         this.streetAddressControl.setValue(location.adress)
         this.cityControl.setValue(location.city)
+        
       }
     })
   }
