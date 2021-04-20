@@ -34,14 +34,16 @@ export class CreateLocationComponent implements OnInit {
   pictureIcon = faImages;
   avatarIcon = faImage;
 
-  name = new FormControl('', Validators.required);
-  streetAddress = new FormControl('', Validators.required);
-  city = new FormControl('Clermont-Ferrand', Validators.required);
+  name = new FormControl('', Validators.required)
+  streetAddress = new FormControl('', Validators.required)
+  city = new FormControl('Clermont-Ferrand', Validators.required)
+  phone = new FormControl('')
 
   form: FormGroup = new FormGroup({
     name: this.name,
     streetAddress: this.streetAddress,
     city: this.city,
+    phone: this.phone,
   });
 
   constructor(
@@ -58,6 +60,7 @@ export class CreateLocationComponent implements OnInit {
       this.name.setValue(this.editedLocation.location.name);
       this.streetAddress.setValue(this.editedLocation.location.adress);
       this.city.setValue(this.editedLocation.location.city);
+      this.phone.setValue(this.editedLocation.location.phone);
     }
   }
 
@@ -66,19 +69,20 @@ export class CreateLocationComponent implements OnInit {
       name: this.name.value,
       adress: this.streetAddress.value,
       city: this.city.value,
-      images: [],
-    };
+      phone: this.phone.value,
+      images: []
+    }
     if (this.editedLocation.location != null) {
       location.id = this.editedLocation.location.id;
       if (location.images != null) {
         location.images = this.editedLocation.location.images;
       }
     }
-
-    this.locationService.addLocation(location).subscribe((result) => {
-        console.log(JSON.stringify(result));
-        this.router.navigate(['home/locations']);
-    });
+    this.locationService.addLocation(location).subscribe(result => {
+      console.log(JSON.stringify(result))
+      this.router.navigate(['home/locations'])
+    }
+    )
   }
 
   openAvatarUpload() {
@@ -99,7 +103,7 @@ export class CreateLocationComponent implements OnInit {
       this.editedLocation.loadLocation(result);
       this.uploadService.type_file = this.uploadService.TYPE_LOCATION;
       const modalRef = this.modalService.open(FileUploadComponent);
-    });
+    })
   }
 
   addImageUpload() {
@@ -120,7 +124,7 @@ export class CreateLocationComponent implements OnInit {
       this.editedLocation.loadLocation(result);
       this.uploadService.type_file = this.uploadService.TYPE_ATTACHED_PICTURE_LOCATION;
       const modalRef = this.modalService.open(FileUploadComponent);
-    });
+    })
   }
 
   cancel() {

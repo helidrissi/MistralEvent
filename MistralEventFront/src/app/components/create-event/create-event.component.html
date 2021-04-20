@@ -1,7 +1,7 @@
 <form class="mt-5 mx-auto" [formGroup]="form" (submit)="onSubmit()">
     <h1>Créer un événement</h1>
     <div class="form-group">
-        <label for="event-name">Nom</label>
+        <label for="event-name" >Nom</label>
         <input name="event-name" formControlName="eventName" class="form-control" />
     </div>
     <form id="selectGroups">
@@ -23,7 +23,7 @@
 
     <div class="form-group">
         <label for="location">Lieu</label>
-        <select name="location" formControlName="location" class="form-control" [class.font-weight-bold]="this.locationControl.value === 'new'" list="location-list">
+        <select  name="location" formControlName="location" class="form-control" [class.font-weight-bold]="this.locationControl.value === 'new'" list="location-list">
       <option value="new" class="font-weight-bold">
         &lt; --nouveau lieu-- &gt;
       </option>

@@ -7,6 +7,9 @@ import { TokenService } from '../../services/token.service';
 import { UsersService } from '../../services/users.service';
 import { DetailEventComponent } from '../detail-event/detail-event.component';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { EditedEvenementService } from 'src/app/services/edited-evenement.service';
+import { Router } from '@angular/router';
+
 
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { ImComingService } from 'src/app/services/im-coming.service';
@@ -30,7 +33,9 @@ export class UpcomingEventsComponent implements OnInit {
     private modalService: NgbModal,
     private imComingService: ImComingService,
     private toasterService: ToasterService
-  ) {}
+    private editedEvenement: EditedEvenementService,
+    private router: Router,
+  ) { }
 
   ngOnInit() {
     forkJoin({
@@ -70,4 +75,6 @@ export class UpcomingEventsComponent implements OnInit {
     this.imComingService.removeUser(evenement, this.user);
     this.toasterService.showError("Vous ne venez pas =(")
   }
+
+
 }

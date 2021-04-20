@@ -9,6 +9,8 @@ import { EditedLocationService } from 'src/app/services/edited-location.service'
 import { EvenementService } from 'src/app/services/evenement.service';
 import { AccountService } from '../../services/account.service';
 import { GalleryLocationService } from '../../services/gallery-location.service';
+import { EditedLocationService } from 'src/app/services/edited-location.service';
+import { EditedEvenementService } from 'src/app/services/edited-evenement.service';
 import { LocationService } from '../../services/location.service';
 import { TokenService } from '../../services/token.service';
 import { GalleryLocationComponent } from '../gallery-location/gallery-location.component';
@@ -24,18 +26,24 @@ export class DetailEventComponent implements OnInit {
   @Input() author: User;
   listUsers: User[] = [];
   evenements: Evenement[];
+  currentUser: User;
+  userIsAuthor = false;
 
   picturesIcon = faImages;
   listLocations: Location[] = [];
   location: Location;
   evenementId: number;
   constructor(private ngbActiveModal: NgbActiveModal, private usersService: UsersService, public account: AccountService, private tokenService: TokenService, private evenementService: EvenementService, private router: Router, private route: ActivatedRoute,
-    private locationService: LocationService, public editedLocation: EditedLocationService, private galleryLocationService: GalleryLocationService, private modalService: NgbModal) { }
+    private locationService: LocationService, public editedLocation: EditedLocationService, private galleryLocationService: GalleryLocationService, private modalService: NgbModal, private editedEvenement: EditedEvenementService) {
+    this.usersService.getUser(this.tokenService.getId()).subscribe(result => {
+      this.currentUser = result
 
-  constructor( public account: AccountService, private evenementService: EvenementService, private router: Router, private route: ActivatedRoute,
-      public editedLocation: EditedLocationService, private modalService: NgbModal) { }
-
+      this.userIsAuthor = (this.currentUser.id === this.evenementId)
+    }
+    );
+  }
   ngOnInit(): void {
+    console.log(this.evenement)
     this.evenementService.getEvenementById(+this.route.snapshot.paramMap.get('id')).pipe(take(1)).subscribe((data: Evenement) =>  {
       this.evenement = data;
     })
@@ -46,5 +54,11 @@ export class DetailEventComponent implements OnInit {
     this.editedLocation.loadLocation(location);
     this.router.navigate(['/home/upcommingEvent'])
     const modalRef = this.modalService.open(GalleryLocationComponent, { size: 'lg', backdrop: true });
+  }
+
+  modify() {
+
+    this.editedEvenement.loadEvenement(this.evenement)
+    this.router.navigate(['/home/create-event'])
   }
 }

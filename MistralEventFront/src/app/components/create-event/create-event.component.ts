@@ -11,6 +11,8 @@ import { GroupsService } from 'src/app/services/groups.service';
 import { Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
 import { TokenService } from 'src/app/services/token.service';
+import { EditedEvenementService } from 'src/app/services/edited-evenement.service';
+
 
 @Component({
   selector: 'app-create-event',
@@ -30,9 +32,9 @@ export class CreateEventComponent implements OnInit {
 
   datetimeControl = new FormControl('', Validators.required)
 
-  descriptionControl = new FormControl('', Validators.required)
+  descriptionControl = new FormControl('')
 
-  now = new Date().toISOString().substring(0, 16)
+  now = this.formatDate(new Date())
 
   isChecked: boolean[] =[];
 
@@ -55,8 +57,19 @@ export class CreateEventComponent implements OnInit {
     description: this.descriptionControl
   });
 
+  formatDate(date: Date)
+  {
+    return date.toISOString().substring(0, 16)
+  }
+
   constructor(
-    private evenementService: EvenementService, private locationService: LocationService, private groupsService: GroupsService, private usersService: UsersService, private tokenService: TokenService, private router: Router) {
+    private evenementService: EvenementService, 
+    private locationService: LocationService, 
+    private groupsService: GroupsService, 
+    private usersService: UsersService, 
+    private tokenService: TokenService,
+     private router: Router,
+     private editedEvenement: EditedEvenementService) {
     this.locationService.getAllLocations().subscribe(result => this.locations = result)
 
     this.usersService.getUser(this.tokenService.getId()).subscribe(result => 
@@ -76,7 +89,25 @@ export class CreateEventComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.locationService.getAllLocations().subscribe()
     this.disableLocationControls()
+
+   if(this.editedEvenement.evenement != null)
+   { const event = this.editedEvenement.evenement
+    alert("edited" + JSON.stringify(this.editedEvenement.evenement))
+     const location = event.location;
+     this.eventNameControl.setValue(event.name);
+     this.locationControl.setValue(location.id)
+     this.locationNameControl.setValue(location.name)
+     this.streetAddressControl.setValue(location.adress)
+     this.cityControl.setValue(location.city)
+     this.datetimeControl.setValue(event.date)
+     alert(JSON.stringify(event.date))
+     alert(JSON.stringify(event.description))
+     this.descriptionControl.setValue(event.description)
+     alert(event.date.toISOString())
+   }
+
     this.locationControl.valueChanges.subscribe(value => {
       if (this.locationControl.value === 'new') {
         this.isNewEvent = true;
@@ -92,6 +123,7 @@ export class CreateEventComponent implements OnInit {
         this.locationNameControl.setValue(location.name)
         this.streetAddressControl.setValue(location.adress)
         this.cityControl.setValue(location.city)
+        
       }
     })
   }
@@ -141,10 +173,20 @@ export class CreateEventComponent implements OnInit {
       groups: groups,
       author: this.author
     }
-    this.evenementService.addEvenement(evenement).subscribe(result => {
+    if(this.editedEvenement.evenement == null)
+    {
+         this.evenementService.addEvenement(evenement).subscribe(result => {
     /*    console.log(JSON.stringify(result))  */
       this.router.navigate(['/home/agenda'])
     })
+    }
+    else{
+      console.log("edit")
+      evenement.id = this.editedEvenement.evenement.id;
+      this.evenementService.updateEvenementById(evenement).subscribe(result => alert(JSON.stringify(result)))
+      this.router.navigate(['/home/agenda'])
+    }
+ 
   }
 
   disableLocationControls() {
