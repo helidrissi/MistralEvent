@@ -10,8 +10,9 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { ImComingService } from 'src/app/services/im-coming.service';
-import { ToasterService } from '../toaster/toaster.service';
 import { take } from 'rxjs/operators';
+import { ModalService } from '../utilities/modal/modal.service';
+import { ToasterService } from '../utilities/toaster/toaster.service';
 
 @Component({
   selector: 'app-upcomingEvents',
@@ -29,7 +30,8 @@ export class UpcomingEventsComponent implements OnInit {
     private usersService: UsersService,
     private modalService: NgbModal,
     private imComingService: ImComingService,
-    private toasterService: ToasterService
+    private toasterService: ToasterService,
+    private customModalService: ModalService
   ) {}
 
   ngOnInit() {
@@ -63,11 +65,25 @@ export class UpcomingEventsComponent implements OnInit {
   }
 
   IAccept(evenement: Evenement) {
-    this.imComingService.addUser(evenement, this.user);
-    this.toasterService.showSucces("Vous participez à l'événément")
+    const ref = this.customModalService.open("Etes vous sûr de venir ?", 'lg');
+    ref.result.then(res => {
+      if (res) {
+        this.imComingService.addUser(evenement, this.user);
+        this.toasterService.showSucces("Vous participez à l'événément")
+      } else {
+        return
+      }
+    })
   }
   IRefuse(evenement: Evenement) {
-    this.imComingService.removeUser(evenement, this.user);
-    this.toasterService.showError("Vous ne venez pas =(")
+    const ref = this.customModalService.open('Etes-vous sûr de ne pas venir ?');
+    ref.result.then(res =>{
+      if (res) {
+        this.imComingService.removeUser(evenement, this.user);
+        this.toasterService.showError("Vous ne venez pas =(")
+      } else {
+        return
+      }
+    })
   }
 }
