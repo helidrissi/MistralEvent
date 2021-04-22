@@ -1,13 +1,12 @@
 <div class="modal-header">
-    <h4 class="modal-title">{{title}}</h4>
     <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    <p>Hello, !</p>
+    <h3 class="modal-title">{{title}}</h3>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-success" (click)="activeModal.close(true)">Oui</button>
-    <button type="button" class="btn btn-danger" (click)="activeModal.close(false)">Non</button>
+      <button *ngIf="buttonsLibelle.buttonSuccess && buttonsLibelle.buttonSuccess.length > 0" type="button" class="btn btn-success" (click)="activeModal.close(true)">{{buttonsLibelle.buttonSuccess}}</button>
+      <button *ngIf="buttonsLibelle.buttonDanger && buttonsLibelle.buttonDanger.length > 0" type="button" class="btn btn-danger" (click)="activeModal.close(false)">{{buttonsLibelle.buttonDanger}}</button>
   </div>

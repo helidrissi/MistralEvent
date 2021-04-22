@@ -65,7 +65,7 @@ export class UpcomingEventsComponent implements OnInit {
   }
 
   IAccept(evenement: Evenement) {
-    const ref = this.customModalService.open("Etes vous sûr de venir ?", 'lg');
+    const ref = this.customModalService.open("Etes vous sûr de venir ?", 'md', {buttonDanger:"fuck"});
     ref.result.then(res => {
       if (res) {
         this.imComingService.addUser(evenement, this.user);
@@ -86,4 +86,5 @@ export class UpcomingEventsComponent implements OnInit {
       }
     })
   }
+
 }
