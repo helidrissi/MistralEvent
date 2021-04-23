@@ -7,14 +7,17 @@ export interface buttonsLibelle  {
   buttonDanger?: string
 }
 
+enum buttonsType {
+  yesNo= "yesNo",
+  validerAnnuler= "validerAnnuler"
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class ModalService {
-  buttonsLibelle: buttonsLibelle = {
-    buttonSuccess: "oui",
-    buttonDanger: "non"
-  }
+
+  eButtonType = buttonsType;
 
   modalOption: NgbModalOptions = {
     size: 'md'
@@ -22,7 +25,8 @@ export class ModalService {
 
   constructor(private NgbModal: NgbModal) { }
 
-  open(title: string , size?:string,  buttons?: buttonsLibelle) {
+  open(title: string ,  typeButtons?: string, size?:string,) {
+    console.log(typeButtons)
     if (size) {
       this.modalOption.size = size;
     }
@@ -31,11 +35,12 @@ export class ModalService {
 
     modalRef.componentInstance.title = title;
 
-    if (buttons) {
-      modalRef.componentInstance.buttonsLibelle = buttons;
+    if(typeButtons && typeButtons === "validerAnnuler") {
+      modalRef.componentInstance.buttonsType = this.eButtonType.validerAnnuler;
     } else {
-      modalRef.componentInstance.buttonsLibelle = this.buttonsLibelle
+      modalRef.componentInstance.buttonsType = this.eButtonType.yesNo;
     }
+
     return modalRef;
   }
 

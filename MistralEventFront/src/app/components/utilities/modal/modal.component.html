@@ -6,7 +6,11 @@
   <div class="modal-body">
     <h3 class="modal-title">{{title}}</h3>
   </div>
-  <div class="modal-footer">
-      <button *ngIf="buttonsLibelle.buttonSuccess && buttonsLibelle.buttonSuccess.length > 0" type="button" class="btn btn-success" (click)="activeModal.close(true)">{{buttonsLibelle.buttonSuccess}}</button>
-      <button *ngIf="buttonsLibelle.buttonDanger && buttonsLibelle.buttonDanger.length > 0" type="button" class="btn btn-danger" (click)="activeModal.close(false)">{{buttonsLibelle.buttonDanger}}</button>
+  <div class="modal-footer" *ngIf="buttonsType === 'yesNo'">
+      <button  type="button" class="btn btn-success" (click)="activeModal.close(true)">Oui</button>
+      <button  type="button" class="btn btn-danger" (click)="activeModal.close(false)">Non</button>
+  </div>
+  <div class="modal-footer" *ngIf="buttonsType === 'validerAnnuler'">
+      <button  type="button" class="btn btn-primary" (click)="activeModal.close(true)">Valider</button>
+      <button  type="button" class="btn btn-danger" (click)="activeModal.close(false)">Annuler</button>
   </div>

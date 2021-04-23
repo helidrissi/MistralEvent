@@ -2,9 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   faClock,
   faImages,
-  faMapMarked,
+  faMapMarked
 } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { take } from 'rxjs/operators';
 import { Evenement } from 'src/app/models/evenement';
 import { File } from 'src/app/models/file';
 import { Location } from 'src/app/models/location';
@@ -14,10 +15,8 @@ import { DEFAULT_IMG } from 'src/environments/environment';
 import { User } from '../../models/user';
 // Services
 import { FilesService } from '../../services/files.service';
-import { ImComingService } from '../../services/im-coming.service';
 import { DetailEventComponent } from '../detail-event/detail-event.component';
 import { GalleryLocationComponent } from '../gallery-location/gallery-location.component';
-import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-eventCard',
@@ -28,6 +27,7 @@ export class EventCardComponent implements OnInit {
   @Input() evenement: Evenement;
 
   @Input() user: User;
+  @Input() imComing: boolean;
 
   /**
    * @example
@@ -46,19 +46,17 @@ export class EventCardComponent implements OnInit {
   mapMarkerIcon = faMapMarked;
   listLocations: Location[] = [];
   location: Location;
-  imComing: boolean;
   base64: String = DEFAULT_IMG.image_location_default;
 
   constructor(
     private modalService: NgbModal,
     public editedLocation: EditedLocationService,
     private filesService: FilesService,
-    private imComingService: ImComingService
   ) {}
 
   ngOnInit() {
     this.location = this.evenement.location;
-    this.imComing = this.imComingService.imComing(this.evenement, this.user);
+    // this.imComing = this.imComingService.imComing(this.evenement, this.user);
     if (this.location != null) {
       this.filesService
         .getFile('location' + this.location.id)
@@ -91,10 +89,8 @@ export class EventCardComponent implements OnInit {
 
   sendResponseEvent(bool: boolean) {
     if (bool) {
-      this.imComing = true;
       this.IAccept.emit(this.evenement);
     } else {
-      this.imComing = false;
       this.IRefuse.emit(this.evenement);
     }
   }

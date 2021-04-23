@@ -65,7 +65,7 @@ export class UpcomingEventsComponent implements OnInit {
   }
 
   IAccept(evenement: Evenement) {
-    const ref = this.customModalService.open("Etes vous sûr de venir ?", 'md', {buttonDanger:"fuck"});
+    const ref = this.customModalService.open("Etes vous sûr de venir ?");
     ref.result.then(res => {
       if (res) {
         this.imComingService.addUser(evenement, this.user);
@@ -76,7 +76,7 @@ export class UpcomingEventsComponent implements OnInit {
     })
   }
   IRefuse(evenement: Evenement) {
-    const ref = this.customModalService.open('Etes-vous sûr de ne pas venir ?');
+    const ref = this.customModalService.open('Etes-vous sûr de ne pas venir ?', 'validerAnnuler', 'lg');
     ref.result.then(res =>{
       if (res) {
         this.imComingService.removeUser(evenement, this.user);
@@ -85,6 +85,9 @@ export class UpcomingEventsComponent implements OnInit {
         return
       }
     })
+  }
+  imComing(event: Evenement) {
+    return this.imComingService.imComing(event, this.user);
   }
 
 }
