@@ -28,7 +28,6 @@ export class UpcomingEventsComponent implements OnInit {
     private evenementService: EvenementService,
     private tokenservice: TokenService,
     private usersService: UsersService,
-    private modalService: NgbModal,
     private imComingService: ImComingService,
     private toasterService: ToasterService,
     private customModalService: ModalService
@@ -56,12 +55,6 @@ export class UpcomingEventsComponent implements OnInit {
         }
       });
     }
-  }
-  openDetailEvent() {
-    const modalRef = this.modalService.open(DetailEventComponent, {
-      size: 'lg',
-      backdrop: true,
-    });
   }
 
   IAccept(evenement: Evenement) {

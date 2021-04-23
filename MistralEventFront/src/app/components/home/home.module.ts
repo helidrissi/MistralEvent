@@ -24,6 +24,7 @@ import { HomeComponent } from './home.component';
 import { ToasterComponent } from '../utilities/toaster/toaster.component';
 import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from '../utilities/modal/modal.component';
+import { DetailEventComponent } from '../detail-event/detail-event.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ModalComponent } from '../utilities/modal/modal.component';
     CreateLocationComponent,
     PictureGalleryLocationComponent,
     ToasterComponent,
-    ModalComponent
+    ModalComponent,
+    DetailEventComponent
   ],
   imports: [
     CommonModule,

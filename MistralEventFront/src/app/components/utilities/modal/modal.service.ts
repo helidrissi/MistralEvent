@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from './modal.component';
+import { Evenement } from '../../../models/evenement';
+import { DetailEventComponent } from '../../detail-event/detail-event.component';
 
 export interface buttonsLibelle  {
   buttonSuccess?: string,
@@ -44,6 +46,12 @@ export class ModalService {
     return modalRef;
   }
 
-  
+  openModalEventDetail(event: Evenement) {
+    const modalRefDetailEvent = this.NgbModal.open(DetailEventComponent, {
+      size: 'lg'
+    })
+    modalRefDetailEvent.componentInstance.evenement = event;
+    return modalRefDetailEvent;
+  }
 
 }

@@ -17,6 +17,8 @@ import { User } from '../../models/user';
 import { FilesService } from '../../services/files.service';
 import { DetailEventComponent } from '../detail-event/detail-event.component';
 import { GalleryLocationComponent } from '../gallery-location/gallery-location.component';
+import { ModalService } from '../utilities/modal/modal.service';
+import { ImComingService } from '../../services/im-coming.service';
 
 @Component({
   selector: 'app-eventCard',
@@ -52,6 +54,8 @@ export class EventCardComponent implements OnInit {
     private modalService: NgbModal,
     public editedLocation: EditedLocationService,
     private filesService: FilesService,
+    private customModalService: ModalService,
+    private imComingService: ImComingService,
   ) {}
 
   ngOnInit() {
@@ -74,10 +78,18 @@ export class EventCardComponent implements OnInit {
   }
 
   openDetailEvent() {
-    const modalRef = this.modalService.open(DetailEventComponent, {
-      windowClass : "modalEvent",
-    });
-    modalRef.componentInstance.evenement = this.evenement;
+    // const modalRef = this.modalService.open(DetailEventComponent, {
+    //   windowClass : "modalEvent",
+    // });
+    // modalRef.componentInstance.evenement = this.evenement;
+   const modalEventRef = this.customModalService.openModalEventDetail(this.evenement);
+   modalEventRef.result.then(res => {
+    if (res) {
+      this.imComingService.addUser(this.evenement, this.user);
+    } else {
+      this.imComingService.removeUser(this.evenement, this.user);
+    }
+  })
   }
 
   showGallery(location: Location) {

@@ -40,8 +40,8 @@
               <fa-icon [icon]="picturesIcon"></fa-icon>
             </button>
           </a>
-        <button class="btn btn-success">Je viens</button>
-        <button class="btn btn-danger">J'annule</button>
+        <button class="btn btn-success" (click)="activeModal.close(true)">Je viens</button>
+        <button class="btn btn-danger" (click)="activeModal.close(false)">J'annule</button>
     </div>
 </div>
 
@@ -86,7 +86,7 @@
        {{ evenement?.description }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque voluptates ex, nisi corrupti facilis voluptate magni placeat consequatur provident voluptatem dolorem, voluptas, rerum inventore reprehenderit nesciunt ratione consectetur repelrem ipsum dolor sit amet consectetur adipisicing elit. Neque voluptates ex, nisi corrupti facilis voluptate magni placeat consequatur provident voluptatem dolorem, voluptas, rerum inventore reprehenderit nesciunt ratione consectetur repellat dilat dignissimos!Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque voluptates ex, nisi corrupti facilis voluptate magni placeat consequatur provident voluptatem dolorem, voluptas, rerum inventore reprehenderit nesciunt ratione consectetur repelrem ipsum dolor sit amet consectetur adipisicing elit. Neque voluptates ex, nisi corrupti facilis voluptate magni placeat consequatur provident voluptatem dolorem, voluptas, rerum inventore reprehenderit nesciunt ratione consectetur repellat dilat dign test
     </p>
     <div class="modal-footer">
-        <button class="btn btn-success">Je viens</button>
-        <button class="btn btn-danger">J'annule</button>
+        <button type="button"  class="btn btn-success">Je viens</button>
+        <button type="button"  class="btn btn-danger">J'annule</button>
     </div>
 </div>
