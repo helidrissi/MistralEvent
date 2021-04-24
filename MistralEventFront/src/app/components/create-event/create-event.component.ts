@@ -42,10 +42,11 @@ export class CreateEventComponent implements OnInit {
 
   locations: Location[] = [];
 
-  groups: Group[] = [];
+  allGroups: Group[] = [];
+
+  eventGroups: Group[] = [];
 
   author?: User;
-
 
   form: FormGroup = new FormGroup({
     eventName: this.eventNameControl,
@@ -74,18 +75,17 @@ export class CreateEventComponent implements OnInit {
     this.usersService.getUser(this.tokenService.getId()).subscribe(result =>
       this.author = result
     );
+    if (this.editedEvenement.evenement != null) {
+      this.eventGroups = this.editedEvenement.evenement.groups;
+    }
+
+
     this.groupsService.getGroups().subscribe(result => {
-      if (result.length == 0) {
-        // this.groupsService.addGroup({ "name": "bamboche" }).subscribe()
-        // this.groupsService.addGroup({ "name": "tralala" }).subscribe()
-        // this.groupsService.addGroup({ "name": "karadoc" }).subscribe()
-      }
-      else {
-        this.groups = result
-        this.groups.forEach((group) => { this.isChecked.push(false) })
-      }
+      this.allGroups = result
+      this.allGroups.forEach(group => this.isChecked.push(this.eventGroups.some(eventGroup => eventGroup.id === group.id)));
     })
   }
+
 
   ngOnInit(): void {
 
@@ -95,8 +95,8 @@ export class CreateEventComponent implements OnInit {
     this.disableLocationControls()
 
     if (this.editedEvenement.evenement != null) {
+      alert("groups" + JSON.stringify(this.editedEvenement.evenement.groups))
       const event = this.editedEvenement.evenement
-      alert("edited" + JSON.stringify(this.editedEvenement.evenement))
       const location = event.location;
       this.eventNameControl.setValue(event.name);
       this.locationControl.setValue(location.id)
@@ -104,10 +104,9 @@ export class CreateEventComponent implements OnInit {
       this.streetAddressControl.setValue(location.adress)
       this.cityControl.setValue(location.city)
       this.datetimeControl.setValue(event.date)
-      alert(JSON.stringify(event.date))
-      alert(JSON.stringify(event.description))
       this.descriptionControl.setValue(event.description)
-      alert(event.date.toISOString())
+
+
     }
 
     this.locationControl.valueChanges.subscribe(value => {
@@ -164,7 +163,7 @@ export class CreateEventComponent implements OnInit {
   }
 
   addEvenement(location: Location) {
-    const groups: Group[] = this.groups.filter((group, index) => this.isChecked[index])
+    const groups: Group[] = this.allGroups.filter((group, index) => this.isChecked[index])
     console.log(JSON.stringify(this.author))
     let evenement: Evenement = {
       name: this.eventNameControl.value,
