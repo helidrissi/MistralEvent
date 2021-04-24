@@ -81,7 +81,6 @@ export class CreateEventComponent implements OnInit {
 
     if (this.isEditing) {
       this.eventGroups = this.editedEvenement.evenement.groups;
-      alert(JSON.stringify(this.editedEvenement.evenement.date))
     }
 
     this.groupsService.getGroups().subscribe(result => {
