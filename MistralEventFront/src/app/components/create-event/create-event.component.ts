@@ -48,6 +48,8 @@ export class CreateEventComponent implements OnInit {
 
   author?: User;
 
+  isEditing = false;
+
   form: FormGroup = new FormGroup({
     eventName: this.eventNameControl,
     location: this.locationControl,
@@ -71,14 +73,16 @@ export class CreateEventComponent implements OnInit {
     private router: Router,
     private editedEvenement: EditedEvenementService) {
     this.locationService.getAllLocations().subscribe(result => this.locations = result)
+    this.isEditing = this.editedEvenement.evenement != null
 
     this.usersService.getUser(this.tokenService.getId()).subscribe(result =>
       this.author = result
     );
-    if (this.editedEvenement.evenement != null) {
-      this.eventGroups = this.editedEvenement.evenement.groups;
-    }
 
+    if (this.isEditing) {
+      this.eventGroups = this.editedEvenement.evenement.groups;
+      alert(JSON.stringify(this.editedEvenement.evenement.date))
+    }
 
     this.groupsService.getGroups().subscribe(result => {
       this.allGroups = result
@@ -94,8 +98,7 @@ export class CreateEventComponent implements OnInit {
 
     this.disableLocationControls()
 
-    if (this.editedEvenement.evenement != null) {
-      alert("groups" + JSON.stringify(this.editedEvenement.evenement.groups))
+    if (this.isEditing) {
       const event = this.editedEvenement.evenement
       const location = event.location;
       this.eventNameControl.setValue(event.name);
@@ -105,8 +108,6 @@ export class CreateEventComponent implements OnInit {
       this.cityControl.setValue(location.city)
       this.datetimeControl.setValue(event.date)
       this.descriptionControl.setValue(event.description)
-
-
     }
 
     this.locationControl.valueChanges.subscribe(value => {
@@ -149,7 +150,6 @@ export class CreateEventComponent implements OnInit {
     else {
       location = this.getLocationById(this.locationControl.value);
       this.addEvenement(location)
-
     }
   }
 
@@ -167,7 +167,7 @@ export class CreateEventComponent implements OnInit {
     console.log(JSON.stringify(this.author))
     let evenement: Evenement = {
       name: this.eventNameControl.value,
-      date: new Date(this.datetimeControl.value + ":00"),
+      date: this.datetimeControl.value,
       description: this.descriptionControl.value,
       type: 'resto',
       location: location,

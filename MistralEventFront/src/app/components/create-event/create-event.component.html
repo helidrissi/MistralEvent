@@ -1,5 +1,7 @@
 <form class="mt-5 mx-auto" [formGroup]="form" (submit)="onSubmit()">
-    <h1>Créer un événement</h1>
+    <h1 *ngIf="!isEditing">Créer un événement</h1>
+    <h1 *ngIf="isEditing">Modifier un évenement</h1>
+
     <div class="form-group">
         <label for="event-name">Nom</label>
         <input name="event-name" formControlName="eventName" class="form-control" />
