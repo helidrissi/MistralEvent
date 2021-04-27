@@ -36,16 +36,19 @@ export class CreateEventComponent implements OnInit {
 
   now = this.formatDate(new Date())
 
-  isChecked: boolean[] =[];
+  isChecked: boolean[] = [];
 
   isNewEvent = false;
 
   locations: Location[] = [];
 
-  groups: Group[] =[];
+  allGroups: Group[] = [];
+
+  eventGroups: Group[] = [];
 
   author?: User;
 
+  isEditing = false;
 
   form: FormGroup = new FormGroup({
     eventName: this.eventNameControl,
@@ -57,56 +60,53 @@ export class CreateEventComponent implements OnInit {
     description: this.descriptionControl
   });
 
-  formatDate(date: Date)
-  {
+  formatDate(date: Date) {
     return date.toISOString().substring(0, 16)
   }
 
   constructor(
-    private evenementService: EvenementService, 
-    private locationService: LocationService, 
-    private groupsService: GroupsService, 
-    private usersService: UsersService, 
+    private evenementService: EvenementService,
+    private locationService: LocationService,
+    private groupsService: GroupsService,
+    private usersService: UsersService,
     private tokenService: TokenService,
-     private router: Router,
-     private editedEvenement: EditedEvenementService) {
+    private router: Router,
+    private editedEvenement: EditedEvenementService) {
     this.locationService.getAllLocations().subscribe(result => this.locations = result)
+    this.isEditing = this.editedEvenement.evenement != null
 
-    this.usersService.getUser(this.tokenService.getId()).subscribe(result => 
+    this.usersService.getUser(this.tokenService.getId()).subscribe(result =>
       this.author = result
     );
+
+    if (this.isEditing) {
+      this.eventGroups = this.editedEvenement.evenement.groups;
+    }
+
     this.groupsService.getGroups().subscribe(result => {
-      if (result.length == 0) {
-        // this.groupsService.addGroup({ "name": "bamboche" }).subscribe()
-        // this.groupsService.addGroup({ "name": "tralala" }).subscribe()
-        // this.groupsService.addGroup({ "name": "karadoc" }).subscribe()
-      }
-      else {
-        this.groups = result
-        this.groups.forEach((group) => { this.isChecked.push(false) })
-      }
+      this.allGroups = result
+      this.allGroups.forEach(group => this.isChecked.push(this.eventGroups.some(eventGroup => eventGroup.id === group.id)));
     })
   }
 
+
   ngOnInit(): void {
     this.locationService.getAllLocations().subscribe()
+
+
     this.disableLocationControls()
 
-   if(this.editedEvenement.evenement != null)
-   { const event = this.editedEvenement.evenement
-    alert("edited" + JSON.stringify(this.editedEvenement.evenement))
-     const location = event.location;
-     this.eventNameControl.setValue(event.name);
-     this.locationControl.setValue(location.id)
-     this.locationNameControl.setValue(location.name)
-     this.streetAddressControl.setValue(location.adress)
-     this.cityControl.setValue(location.city)
-     this.datetimeControl.setValue(event.date)
-     alert(JSON.stringify(event.date))
-     alert(JSON.stringify(event.description))
-     this.descriptionControl.setValue(event.description)
-     alert(event.date.toISOString())
-   }
+    if (this.isEditing) {
+      const event = this.editedEvenement.evenement
+      const location = event.location;
+      this.eventNameControl.setValue(event.name);
+      this.locationControl.setValue(location.id)
+      this.locationNameControl.setValue(location.name)
+      this.streetAddressControl.setValue(location.adress)
+      this.cityControl.setValue(location.city)
+      this.datetimeControl.setValue(event.date)
+      this.descriptionControl.setValue(event.description)
+    }
 
     this.locationControl.valueChanges.subscribe(value => {
       if (this.locationControl.value === 'new') {
@@ -123,13 +123,13 @@ export class CreateEventComponent implements OnInit {
         this.locationNameControl.setValue(location.name)
         this.streetAddressControl.setValue(location.adress)
         this.cityControl.setValue(location.city)
-        
+
       }
     })
   }
 
   onSubmit() {
-    console.log(JSON.stringify(this.author)) 
+    console.log(JSON.stringify(this.author))
     let location: Location;
     if (this.locationControl.value === "new") {
       location = {
@@ -140,7 +140,7 @@ export class CreateEventComponent implements OnInit {
       }
       this.locationService.addLocation(location).subscribe(result => {
         location = result
-/*         console.log(JSON.stringify(location)) */
+        /*         console.log(JSON.stringify(location)) */
         this.addEvenement(location)
 
       })
@@ -148,7 +148,6 @@ export class CreateEventComponent implements OnInit {
     else {
       location = this.getLocationById(this.locationControl.value);
       this.addEvenement(location)
-
     }
   }
 
@@ -162,31 +161,32 @@ export class CreateEventComponent implements OnInit {
   }
 
   addEvenement(location: Location) {
-    const groups: Group[] = this.groups.filter((group, index) => this.isChecked[index])
-    console.log(JSON.stringify(this.author)) 
+    const groups: Group[] = this.allGroups.filter((group, index) => this.isChecked[index])
+    console.log(JSON.stringify(this.author))
     let evenement: Evenement = {
       name: this.eventNameControl.value,
-      date: new Date(this.datetimeControl.value + ":00"),
+      date: this.datetimeControl.value,
       description: this.descriptionControl.value,
       type: 'resto',
       location: location,
       groups: groups,
       author: this.author
     }
-    if(this.editedEvenement.evenement == null)
-    {
-         this.evenementService.addEvenement(evenement).subscribe(result => {
-    /*    console.log(JSON.stringify(result))  */
-      this.router.navigate(['/home/agenda'])
-    })
+    if (this.editedEvenement.evenement == null) {
+      this.evenementService.addEvenement(evenement).subscribe(result => {
+        console.log(JSON.stringify(result))
+        this.router.navigate(['/home/agenda'])
+      })
     }
-    else{
-      console.log("edit")
+    else {
       evenement.id = this.editedEvenement.evenement.id;
-      this.evenementService.updateEvenementById(evenement).subscribe(result => alert(JSON.stringify(result)))
+      this.evenementService.updateEvenementById(evenement).subscribe(result => {
+        console.log(JSON.stringify(result))
+        this.editedEvenement.loadEvenement(null)
+      })
       this.router.navigate(['/home/agenda'])
     }
- 
+
   }
 
   disableLocationControls() {
