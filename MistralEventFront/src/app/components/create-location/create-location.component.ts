@@ -21,7 +21,7 @@ import { File } from '../../models/file';
 
 // Components
 import { FileUploadComponent } from '../fileupload/fileupload.component';
-import { ToasterService } from '../toaster/toaster.service';
+import { ToasterService } from '../utilities/toaster/toaster.service';
 
 @Component({
   selector: 'app-create-location',

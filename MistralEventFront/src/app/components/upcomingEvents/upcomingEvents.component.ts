@@ -13,8 +13,9 @@ import { Router } from '@angular/router';
 
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { ImComingService } from 'src/app/services/im-coming.service';
-import { ToasterService } from '../toaster/toaster.service';
 import { take } from 'rxjs/operators';
+import { ModalService } from '../utilities/modal/modal.service';
+import { ToasterService } from '../utilities/toaster/toaster.service';
 
 @Component({
   selector: 'app-upcomingEvents',
@@ -30,12 +31,14 @@ export class UpcomingEventsComponent implements OnInit {
     private evenementService: EvenementService,
     private tokenservice: TokenService,
     private usersService: UsersService,
-    private modalService: NgbModal,
     private imComingService: ImComingService,
     private toasterService: ToasterService
     private editedEvenement: EditedEvenementService,
     private router: Router,
   ) { }
+    private toasterService: ToasterService,
+    private customModalService: ModalService
+  ) {}
 
   ngOnInit() {
     forkJoin({
@@ -60,21 +63,33 @@ export class UpcomingEventsComponent implements OnInit {
       });
     }
   }
-  openDetailEvent() {
-    const modalRef = this.modalService.open(DetailEventComponent, {
-      size: 'lg',
-      backdrop: true,
-    });
-  }
 
   IAccept(evenement: Evenement) {
-    this.imComingService.addUser(evenement, this.user);
-    this.toasterService.showSucces("Vous participez à l'événément")
+    const ref = this.customModalService.open("Etes vous sûr de venir ?");
+    ref.result.then(res => {
+      if (res) {
+        this.imComingService.addUser(evenement, this.user);
+        this.toasterService.showSucces("Vous participez à l'événément")
+      } else {
+        return
+      }
+    })
   }
   IRefuse(evenement: Evenement) {
-    this.imComingService.removeUser(evenement, this.user);
-    this.toasterService.showError("Vous ne venez pas =(")
+    const ref = this.customModalService.open('Etes-vous sûr de ne pas venir ?', 'validerAnnuler', 'lg');
+    ref.result.then(res =>{
+      if (res) {
+        this.imComingService.removeUser(evenement, this.user);
+        this.toasterService.showError("Vous ne venez pas =(")
+      } else {
+        return
+      }
+    })
   }
 
+
+  imComing(event: Evenement) {
+    return this.imComingService.imComing(event, this.user);
+  }
 
 }

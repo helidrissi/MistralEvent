@@ -20,7 +20,6 @@ import { JwtInterceptor } from './services/jwt.interceptor';
     LoginComponent,
     PageNotFoundComponent,
     LocationsComponent,
-    DetailEventComponent,
   ],
   imports: [
     BrowserModule,
