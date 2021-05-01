@@ -30,6 +30,8 @@ export class DetailEventComponent implements OnInit {
   currentUser: User;
   userIsAuthor = false;
 
+
+
   picturesIcon = faImages;
   listLocations: Location[] = [];
   location: Location;
@@ -55,9 +57,9 @@ export class DetailEventComponent implements OnInit {
     const modalRef = this.modalService.open(GalleryLocationComponent, { size: 'lg', backdrop: true });
   }
 
-  modify() {
-
+  async modify() {
     this.editedEvenement.loadEvenement(this.evenement)
-    this.router.navigate(['/home/create-event'])
+    await this.router.navigate(['/home/create-event'])
+    this.ngbActiveModal.close()
   }
 }
