@@ -43,7 +43,9 @@
         <fa-icon [icon]="picturesIcon"></fa-icon>
       </button>
         </a>
-        <button class="btn btn-primary" (click)="modify()">Modifier</button>
+        <button class="btn btn-primary" (click)="modify()" *ngIf="userIsAuthor">
+      Modifier
+    </button>
         <button class="btn btn-success">Je viens</button>
         <button class="btn btn-danger">J'annule</button>
     </div>

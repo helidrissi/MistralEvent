@@ -38,8 +38,8 @@ export class DetailEventComponent implements OnInit {
     private locationService: LocationService, public editedLocation: EditedLocationService, private galleryLocationService: GalleryLocationService, private modalService: NgbModal, private editedEvenement: EditedEvenementService) {
     this.usersService.getUser(this.tokenService.getId()).subscribe(result => {
       this.currentUser = result
-
-      this.userIsAuthor = (this.currentUser.id === this.evenementId)
+      console.log(this.evenement.author.id)
+      this.userIsAuthor = (this.currentUser.id === this.evenement.author.id)
     }
 
     );
