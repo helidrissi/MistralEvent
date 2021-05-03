@@ -1,6 +1,7 @@
 package fr.mistral.services;
 
 import fr.mistral.domain.Event;
+import fr.mistral.domain.UserEntity;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ public interface EventService {
 
     List<Event> getAllEvents();
 
+    List<Event> getEvents(boolean isAgenda, boolean withOld, UserEntity user);
 
     Event getEventById(Long id);
 

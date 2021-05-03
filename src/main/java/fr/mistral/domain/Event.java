@@ -32,23 +32,26 @@ public class Event {
     @Basic
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime date;
-
-
     private String type;
-    @JsonIgnore
+    private String comment;
+
+    //@JsonIgnore
     @ManyToOne
     private UserEntity author;
+
     @ManyToMany
     @JoinTable(name = "users_event",
             joinColumns = @JoinColumn(name = "users_id"),
             inverseJoinColumns = @JoinColumn(name = "event_id"))
-             @JsonIgnoreProperties("events")
+             //@JsonIgnoreProperties("events")
     private Set<UserEntity> users=new HashSet<>();
+
     @ManyToMany
     @JoinTable(name = "event_groups",
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "group_id"))
     private Set<Group> groups=new HashSet<>();
+
     @ManyToOne
     private Location location;
 

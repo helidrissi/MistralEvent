@@ -1,10 +1,14 @@
 package fr.mistral.services.impl;
 
 import fr.mistral.domain.Event;
+import fr.mistral.domain.Group;
+import fr.mistral.domain.UserEntity;
 import fr.mistral.repositories.EventRepository;
 import fr.mistral.services.EventService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +32,56 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    public List<Event> getEvents(boolean isAgenda, boolean withOld, UserEntity user) {
+        List<Event> list = eventRepository.findAll();
+        ArrayList<Event> retour = new ArrayList<Event> ();
+
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime dateRef = LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(), 0, 0);
+
+        for (Event event : list) {
+            if (isAgenda) {
+                if (withOld) {
+                    if (event.getUsers().contains(user)) {
+                        retour.add(event);
+                    }
+                } else {
+                    if (event.getUsers().contains(user) && event.getDate().isAfter(dateRef)) {
+                        retour.add(event);
+                    }
+                }
+            } else {
+                if (withOld) {
+                    boolean test = false;
+                    for (Group group : event.getGroups()) {
+                        if (user.getGroups().contains(group)) {
+                            test = true;
+                            break;
+                        }
+                    }
+                    if (test) {
+                        retour.add(event);
+                    }
+                } else if (event.getDate().isAfter(dateRef)) {
+                    boolean test = false;
+                    for (Group group : event.getGroups()) {
+                        if (user.getGroups().contains(group)) {
+                            test = true;
+                            break;
+                        }
+                    }
+                    if (test) {
+                        retour.add(event);
+                    }
+                }
+            }
+        }
+
+        return retour.stream()
+                     .collect(Collectors.toList());
+    }
+
+    @Override
     public Event getEventById(Long id) {
         return eventRepository.findById(id)
                 .orElseThrow(ResourceNotFoundException::new);
@@ -39,10 +93,7 @@ public class EventServiceImpl implements EventService {
     }
 
     private Event saveAndReturn(Event event) {
-        System.err.println("On rentre ici");
-        System.err.println("nb=" + (event.getUsers() != null ? event.getUsers().size() : "null"));
         Event savedEvent = eventRepository.save(event);
-
 
         return savedEvent;
     }
@@ -58,7 +109,6 @@ public class EventServiceImpl implements EventService {
     @Override
     public Event patchEvent(Long id, Event event) {
         return eventRepository.findById(id).map(ev -> {
-            System.err.println("On rentre dedans");
             if (event.getName() != null) {
                 ev.setName(event.getName());
             }

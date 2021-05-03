@@ -43,13 +43,11 @@ public class LocationServiceImpl implements LocationService {
     private Location saveAndReturn(Location location) {
         Location savedLocation = locationRepository.save(location);
 
-
         return savedLocation;
     }
 
     @Override
     public Location saveLocation(Long id, Location location) {
-
         location.setId(id);
 
         return saveAndReturn(location);
@@ -58,7 +56,6 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public Location patchLocation(Long id, Location location) {
         return locationRepository.findById(id).map(loc -> {
-            System.err.println("On rentre dedans");
             if (location.getName() != null) {
                 loc.setName(location.getName());
             }
@@ -71,13 +68,7 @@ public class LocationServiceImpl implements LocationService {
                 loc.setCity(location.getCity());
             }
 
-          /*  System.err.println("nb=" + (location.getImages() != null ? location.getImages().size() : "null"));
-            if (location.getImages() != null) {
-                loc.setImages(location.getImages());
-            }*/
-
             Location locationUpdated = locationRepository.save(loc);
-
 
             return locationUpdated;
 

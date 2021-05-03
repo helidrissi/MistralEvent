@@ -28,9 +28,11 @@ public class Group {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
     @JsonIgnore
     @ManyToMany(mappedBy = "groups")
     private Set<UserEntity> users=new HashSet<>();
+
     @JsonIgnore
     @ManyToMany(mappedBy = "groups")
     private Set<Event> events=new HashSet<>();
