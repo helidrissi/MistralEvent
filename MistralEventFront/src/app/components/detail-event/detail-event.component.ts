@@ -15,6 +15,7 @@ import { EvenementService } from 'src/app/services/evenement.service';
 import { TokenService } from '../../services/token.service';
 import { AccountService } from '../../services/account.service';
 import { UsersService } from '../../services/users.service';
+import { EditedEvenementService } from 'src/app/services/edited-evenement.service';
 @Component({
   selector: 'app-detail-event',
   templateUrl: './detail-event.component.html',
@@ -43,14 +44,13 @@ export class DetailEventComponent implements OnInit {
     private route: ActivatedRoute,
     private locationService: LocationService,
     public editedLocation: EditedLocationService,
+    private editedEvenement: EditedEvenementService,
     private galleryLocationService: GalleryLocationService,
     private modalService: NgbModal
-  ) {}
-
-      this.userIsAuthor = (this.currentUser.id === this.evenementId)
-    }
-    );
+  ) {
+    this.userIsAuthor = (this.currentUser.id === this.evenementId)
   }
+
   ngOnInit(): void {
     console.log(this.evenement);
   }

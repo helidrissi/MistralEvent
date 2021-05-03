@@ -32,11 +32,9 @@ export class UpcomingEventsComponent implements OnInit {
     private tokenservice: TokenService,
     private usersService: UsersService,
     private imComingService: ImComingService,
-    private toasterService: ToasterService
+    private toasterService: ToasterService,
     private editedEvenement: EditedEvenementService,
     private router: Router,
-  ) { }
-    private toasterService: ToasterService,
     private customModalService: ModalService
   ) {}
 
