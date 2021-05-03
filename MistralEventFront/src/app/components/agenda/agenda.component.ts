@@ -7,6 +7,8 @@ import { Evenement } from 'src/app/models/evenement';
 import { User } from 'src/app/models/user';
 import { UsersService } from 'src/app/services/users.service';
 import { ImComingService } from '../../services/im-coming.service';
+import { EvenementService } from '../../services/evenement.service';
+import { AccountService } from '../../services/account.service';
 import { TokenService } from '../../services/token.service';
 import { DetailEventComponent } from '../detail-event/detail-event.component';
 @Component({
@@ -22,6 +24,8 @@ export class AgendaComponent implements OnInit {
   listEvents: Evenement[] = [];
   id: number;
   constructor(
+    private evenementService: EvenementService,
+    private accountService: AccountService,
     private tokenservice: TokenService,
     private usersService: UsersService,
     private modalService: NgbModal,
@@ -29,11 +33,25 @@ export class AgendaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.usersService.getUser(this.tokenservice.getId()).pipe(take(1)).subscribe((data) => {
-      this.user = data;
-      this.listEvents = data.events;
-    });
+    this.refreshList();
   }
+
+  refreshList() {
+    if (this.accountService.user != null) {
+      this.evenementService.getAgendaEvenements(false, this.accountService.user.userId).subscribe((res: Evenement[]) => {
+        this.listEvents = res;
+      });
+    } else {
+      // On passe par là quand le code est rechargé suite à une modif dans le code dans Visual Studio, cas de figure propre au dév
+      this.usersService.getUser(this.tokenservice.getId()).subscribe((userLoaded:User) => {
+        this.evenementService.getAgendaEvenements(false, userLoaded.userId).subscribe((res: Evenement[]) => {
+          this.listEvents = res;
+          this.accountService.refreshUser(userLoaded);
+        });
+      }); 
+    }
+  }
+  
   openDetailEvent() {
     const modalRef = this.modalService.open(DetailEventComponent, {
       size: 'lg',

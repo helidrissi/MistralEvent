@@ -31,6 +31,7 @@ import { JwtInterceptor } from './services/jwt.interceptor';
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
+    FontAwesomeModule,
   ],
   providers: [
     {

@@ -3,7 +3,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { BASE_URL_API } from '../../environments/environment';
+
+// Models
 import { Evenement } from '../models/evenement';
+import { EventsRequest } from '../models/eventsRequest';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +19,23 @@ export class EvenementService {
 
   getEvenements(): Observable<Evenement[]> {
     return this.http.get<Evenement[]>(this.SERVER_URL).pipe(
-      map((res: Evenement[]) => res),
+      map((res: Evenement[]) => res)
+    );
+  }
+
+  getAgendaEvenements(withOldSearch: boolean, userIdSearch: string): Observable<Evenement[]> {
+    let request:EventsRequest = {withOld: withOldSearch, userId: userIdSearch};
+
+    return this.http.post<Evenement[]>(this.SERVER_URL + "/agenda", request).pipe(
+      map((res: Evenement[]) => res)
+    );
+  }
+
+  getNextEvenements(withOldSearch: boolean, userIdSearch: string): Observable<Evenement[]> {
+    let request:EventsRequest = {withOld: withOldSearch, userId: userIdSearch};
+
+    return this.http.post<Evenement[]>(this.SERVER_URL + "/next", request).pipe(
+      map((res: Evenement[]) => res)
     );
   }
 

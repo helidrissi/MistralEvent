@@ -16,23 +16,7 @@ import { EvenementService } from 'src/app/services/evenement.service';
 import { TokenService } from '../../services/token.service';
 import { AccountService } from '../../services/account.service';
 import { UsersService } from '../../services/users.service';
-=========
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { faImages } from '@fortawesome/free-solid-svg-icons';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { take } from 'rxjs/operators';
-import { Evenement } from 'src/app/models/evenement';
-import { Location } from 'src/app/models/location';
-import { EditedLocationService } from 'src/app/services/edited-location.service';
-import { EvenementService } from 'src/app/services/evenement.service';
-import { AccountService } from '../../services/account.service';
-import { GalleryLocationService } from '../../services/gallery-location.service';
-import { LocationService } from '../../services/location.service';
-import { TokenService } from '../../services/token.service';
-import { GalleryLocationComponent } from '../gallery-location/gallery-location.component';
 
->>>>>>>>> Temporary merge branch 2
 @Component({
   selector: 'app-detail-event',
   templateUrl: './detail-event.component.html',
@@ -48,7 +32,6 @@ export class DetailEventComponent implements OnInit {
   picturesIcon = faImages;
   listLocations: Location[] = [];
   location: Location;
-<<<<<<<<< Temporary merge branch 1
   evenementId: number;
   constructor(
     public activeModal: NgbActiveModal,

@@ -13,12 +13,14 @@ import { User } from 'src/app/models/user';
     constructor( private evenementService: EvenementService ) { }
 
     imComing(event: Evenement, user: User): boolean {
+      if (user != null) {
         if(event.users.some(row => row.id == user.id)){
           return true;
         } else{
           return false;
         }
       }
+    }
 
     addUser(event: Evenement, user: User) {
         event.users.push(user);

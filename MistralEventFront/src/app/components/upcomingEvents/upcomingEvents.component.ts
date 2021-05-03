@@ -7,6 +7,7 @@ import { TokenService } from '../../services/token.service';
 import { UsersService } from '../../services/users.service';
 import { DetailEventComponent } from '../detail-event/detail-event.component';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AccountService } from '../../services/account.service';
 
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { ImComingService } from 'src/app/services/im-coming.service';
@@ -28,32 +29,31 @@ export class UpcomingEventsComponent implements OnInit {
     private evenementService: EvenementService,
     private tokenservice: TokenService,
     private usersService: UsersService,
+    private accountService: AccountService,
     private imComingService: ImComingService,
     private toasterService: ToasterService,
     private customModalService: ModalService
   ) {}
 
   ngOnInit() {
-    forkJoin({
-      user: this.usersService.getUser(this.tokenservice.getId()),
-      events: this.evenementService.getEvenements(),
-    }).pipe(take(1)).subscribe(({ user, events }) => {
-      this.user = user;
-      this.filterEventByUserGroup(user, events);
-    });
+    this.refreshList();
   }
 
-  filterEventByUserGroup(user: User, events: Evenement[]) {
-    for (let userGroup of user.groups) {
-      const result = events.filter((event: Evenement) => {
-        if (
-          event.groups.find(
-            (eventGroups) => eventGroups.name === userGroup.name
-          )
-        ) {
-          this.events.push(event);
-        }
+  refreshList() {
+    if (this.accountService.user != null) {
+      this.evenementService.getNextEvenements(false, this.accountService.user.userId).subscribe((res: Evenement[]) => {
+        alert(JSON.stringify(res));
+        this.events = res;
       });
+    } else {
+      // On passe par là quand le code est rechargé suite à une modif dans le code dans Visual Studio, cas de figure propre au dév
+      this.usersService.getUser(this.tokenservice.getId()).subscribe((userLoaded:User) => {
+        this.evenementService.getNextEvenements(false, userLoaded.userId).subscribe((res: Evenement[]) => {
+          alert(JSON.stringify(res));
+          this.events = res;
+          this.accountService.refreshUser(userLoaded);
+        });
+      }); 
     }
   }
 
