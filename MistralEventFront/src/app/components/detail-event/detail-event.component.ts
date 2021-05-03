@@ -30,25 +30,21 @@ export class DetailEventComponent implements OnInit {
   currentUser: User;
   userIsAuthor = false;
 
+
+
   picturesIcon = faImages;
   listLocations: Location[] = [];
   location: Location;
   evenementId: number;
-  constructor(
-    public activeModal: NgbActiveModal,
-    private usersService: UsersService,
-    public account: AccountService,
-    private tokenService: TokenService,
-    private evenementService: EvenementService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private locationService: LocationService,
-    public editedLocation: EditedLocationService,
-    private editedEvenement: EditedEvenementService,
-    private galleryLocationService: GalleryLocationService,
-    private modalService: NgbModal
-  ) {
-    this.userIsAuthor = (this.currentUser.id === this.evenementId)
+  constructor(private ngbActiveModal: NgbActiveModal, private usersService: UsersService, public account: AccountService, private tokenService: TokenService, private evenementService: EvenementService, private router: Router, private route: ActivatedRoute,
+    private locationService: LocationService, public editedLocation: EditedLocationService, private galleryLocationService: GalleryLocationService, private modalService: NgbModal, private editedEvenement: EditedEvenementService) {
+    this.usersService.getUser(this.tokenService.getId()).subscribe(result => {
+      this.currentUser = result
+      console.log(this.evenement.author.id)
+      this.userIsAuthor = (this.currentUser.id === this.evenement.author.id)
+    }
+
+    );
   }
 
   ngOnInit(): void {
@@ -63,9 +59,9 @@ export class DetailEventComponent implements OnInit {
     });
   }
 
-  modify() {
-
+  async modify() {
     this.editedEvenement.loadEvenement(this.evenement)
-    this.router.navigate(['/home/create-event'])
+    await this.router.navigate(['/home/create-event'])
+    this.ngbActiveModal.close()
   }
 }

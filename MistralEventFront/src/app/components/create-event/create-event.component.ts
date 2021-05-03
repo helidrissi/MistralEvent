@@ -105,7 +105,7 @@ export class CreateEventComponent implements OnInit {
       this.streetAddressControl.setValue(location.adress)
       this.cityControl.setValue(location.city)
       this.datetimeControl.setValue(event.date)
-      this.descriptionControl.setValue(event.description)
+      this.descriptionControl.setValue(event.comment)
     }
 
     this.locationControl.valueChanges.subscribe(value => {
@@ -129,7 +129,6 @@ export class CreateEventComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(JSON.stringify(this.author))
     let location: Location;
     if (this.locationControl.value === "new") {
       location = {
@@ -166,22 +165,23 @@ export class CreateEventComponent implements OnInit {
     let evenement: Evenement = {
       name: this.eventNameControl.value,
       date: this.datetimeControl.value,
-      description: this.descriptionControl.value,
+      comment: this.descriptionControl.value,
       type: 'resto',
       location: location,
       groups: groups,
       author: this.author
+
     }
     if (this.editedEvenement.evenement == null) {
       this.evenementService.addEvenement(evenement).subscribe(result => {
-        console.log(JSON.stringify(result))
+        console.log(result)
         this.router.navigate(['/home/agenda'])
       })
     }
     else {
       evenement.id = this.editedEvenement.evenement.id;
       this.evenementService.updateEvenementById(evenement).subscribe(result => {
-        console.log(JSON.stringify(result))
+        console.log(result)
         this.editedEvenement.loadEvenement(null)
       })
       this.router.navigate(['/home/agenda'])

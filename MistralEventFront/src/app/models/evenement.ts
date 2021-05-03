@@ -6,7 +6,7 @@ export interface Evenement {
     id?: number,
     name: string,
     date: Date,
-    description: string,
+    comment: string,
     type: string,
     author?: User,
     location?: Location,
