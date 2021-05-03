@@ -27,7 +27,7 @@ export class ModalService {
 
   constructor(private NgbModal: NgbModal) { }
 
-  open(title: string ,  typeButtons?: string, size?:string,) {
+  open(title: string ,  question: string ,  typeButtons?: string, size?:string,) {
     console.log(typeButtons)
     if (size) {
       this.modalOption.size = size;
@@ -36,6 +36,7 @@ export class ModalService {
     const modalRef = this.NgbModal.open(ModalComponent, this.modalOption);
 
     modalRef.componentInstance.title = title;
+    modalRef.componentInstance.question = question;
 
     if(typeButtons && typeButtons === "validerAnnuler") {
       modalRef.componentInstance.buttonsType = this.eButtonType.validerAnnuler;

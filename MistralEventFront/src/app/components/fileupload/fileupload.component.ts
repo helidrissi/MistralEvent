@@ -70,17 +70,14 @@ export class FileUploadComponent implements OnInit {
           alert(JSON.stringify(retour));
           this.filesService.getFile(this.fileName).subscribe((fileLoaded:File) => {
             if (fileLoaded.name != null) {
-              alert(JSON.stringify(fileLoaded));
               this.editedLocation.location.images.push(fileLoaded);
 
               this.locationService.updateLocationById(this.editedLocation.location).subscribe(result => {
-                alert(JSON.stringify(result));
                 this.closeModal();
               })
             }
           })
         } else if (this.uploadService.type_file == this.uploadService.TYPE_LOCATION) {
-          alert(JSON.stringify(retour));
           this.editedLocation.loadImage();
           this.closeModal();
         }

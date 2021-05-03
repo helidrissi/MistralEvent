@@ -8,7 +8,7 @@
                     <img  [src]='account.avatar64' alt="Photo de profil">
                   </div>
                 <!--<img src="https://uifaces.co/our-content/donated/yn7PKqTT.jpg" alt="Avatar" class="avatar profile-avatar" />-->
-                <button type="button" class="btn btn-link change-avatar-btn" (click)="openAvatarUpload()">Changer votre avatar</button>
+                <button type="button" class="btn btn-link change-avatar-btn" (click)="openAvatarUpload()"><fa-icon [icon]="avatarIcon"></fa-icon>&nbsp;Changer votre avatar</button>
             </div>
             <div class="col-xs-12 col-sm-6  col-md-8 col-lg-8 col-xl-9 col-xxl-9" style="text-align: right;">
                 <label class="profile-title">{{account.firstname}} {{account.lastname}}</label><br>
@@ -22,7 +22,7 @@
         <div class="card">
             <form id="selectGroups" role="form" (ngSubmit)="selectGroups()" [formGroup]="selectGroupsForm">
                 <div class="card-header">
-                    S'inscrire aux groupes
+                    <fa-icon [icon]="groupesIcon" size="2x" style=" vertical-align: middle;"></fa-icon>&nbsp;Groupes
                 </div>
                 
                 <div class="card-body">
@@ -51,7 +51,7 @@
         <div class="card">
             <form id="changePasswordform" role="form" (ngSubmit)="changePassword()" [formGroup]="changePasswordForm">
                 <div class="card-header">
-                    Changer votre mot de passe
+                    <fa-icon [icon]="passwordIcon" size="2x" style=" vertical-align: middle;"></fa-icon>&nbsp;Changer votre mot de passe
                 </div>
                 
                 <div class="card-body">

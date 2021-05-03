@@ -7,5 +7,6 @@ export interface Location {
     adress: string;
     city: string;
     events?: Evenement[];
+    phone?: string;
     images: File[];
 }

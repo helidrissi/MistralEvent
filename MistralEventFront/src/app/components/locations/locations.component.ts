@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faPlus, faImages, faTrash, faPen } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faImages, faTrash, faPen, faMapMarkedAlt, faPhoneAlt } from '@fortawesome/free-solid-svg-icons';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 // Modèles
@@ -25,6 +25,9 @@ export class LocationsComponent implements OnInit {
   picturesIcon = faImages
   deleteIcon = faTrash
   editIcon = faPen
+  addressIcon = faMapMarkedAlt
+  phoneIcon = faPhoneAlt
+
   listLocations: Location[] = [];
   location: Location;
 

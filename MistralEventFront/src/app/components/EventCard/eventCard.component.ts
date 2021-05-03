@@ -2,23 +2,31 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   faClock,
   faImages,
-  faMapMarked
+  faMapMarked,
+  faGrin,
+  faSadTear,
+  faInfoCircle
 } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { take } from 'rxjs/operators';
+
+// Environnement
+import { DEFAULT_IMG } from 'src/environments/environment';
+
+// Models
+import { User } from '../../models/user';
 import { Evenement } from 'src/app/models/evenement';
 import { File } from 'src/app/models/file';
 import { Location } from 'src/app/models/location';
-import { EditedLocationService } from 'src/app/services/edited-location.service';
-// Environnement
-import { DEFAULT_IMG } from 'src/environments/environment';
-import { User } from '../../models/user';
+
 // Services
 import { FilesService } from '../../services/files.service';
 import { DetailEventComponent } from '../detail-event/detail-event.component';
 import { GalleryLocationComponent } from '../gallery-location/gallery-location.component';
 import { ModalService } from '../utilities/modal/modal.service';
 import { ImComingService } from '../../services/im-coming.service';
+import { AccountService } from '../../services/account.service';
+import { EditedLocationService } from 'src/app/services/edited-location.service';
 
 @Component({
   selector: 'app-eventCard',
@@ -46,6 +54,10 @@ export class EventCardComponent implements OnInit {
   picturesIcon = faImages;
   clockIcon = faClock;
   mapMarkerIcon = faMapMarked;
+  grinIcon = faGrin;
+  tearIcon = faSadTear;
+  infoIcon = faInfoCircle;
+
   listLocations: Location[] = [];
   location: Location;
   base64: String = DEFAULT_IMG.image_location_default;
@@ -56,11 +68,12 @@ export class EventCardComponent implements OnInit {
     private filesService: FilesService,
     private customModalService: ModalService,
     private imComingService: ImComingService,
+    private accountService: AccountService,
   ) {}
 
   ngOnInit() {
     this.location = this.evenement.location;
-    // this.imComing = this.imComingService.imComing(this.evenement, this.user);
+    this.imComing = this.imComingService.imComing(this.evenement, this.user);
     if (this.location != null) {
       this.filesService
         .getFile('location' + this.location.id)
@@ -78,18 +91,21 @@ export class EventCardComponent implements OnInit {
   }
 
   openDetailEvent() {
-    // const modalRef = this.modalService.open(DetailEventComponent, {
-    //   windowClass : "modalEvent",
-    // });
-    // modalRef.componentInstance.evenement = this.evenement;
-   const modalEventRef = this.customModalService.openModalEventDetail(this.evenement);
-   modalEventRef.result.then(res => {
-    if (res) {
-      this.imComingService.addUser(this.evenement, this.user);
-    } else {
-      this.imComingService.removeUser(this.evenement, this.user);
-    }
-  })
+      const modalEventRef = this.customModalService.openModalEventDetail(this.evenement);
+      modalEventRef.result.then(res => {
+          console.log("Listen modal");
+          if (res) {
+              console.log("AddUserResponse");
+              console.log(JSON.stringify(this.user));
+              this.imComingService.addUser(this.evenement, this.user);
+              this.imComing = true;
+          } else {
+              console.log("RemoveUserResponse");
+              console.log(JSON.stringify(this.user));
+              this.imComingService.removeUser(this.evenement, this.user);
+              this.imComing = false;
+          }
+      })
   }
 
   showGallery(location: Location) {

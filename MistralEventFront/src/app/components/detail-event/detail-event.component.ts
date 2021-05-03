@@ -11,6 +11,7 @@ import { User } from 'src/app/models/user';
 // Services
 import { GalleryLocationService } from '../../services/gallery-location.service';
 import { EditedLocationService } from 'src/app/services/edited-location.service';
+import { EditedEvenementService } from 'src/app/services/edited-evenement.service';
 import { LocationService } from '../../services/location.service';
 import { EvenementService } from 'src/app/services/evenement.service';
 import { TokenService } from '../../services/token.service';
@@ -28,27 +29,28 @@ export class DetailEventComponent implements OnInit {
   @Input() author: User;
   listUsers: User[] = [];
   evenements: Evenement[];
+  currentUser: User;
+  userIsAuthor = false;
+
+
 
   picturesIcon = faImages;
   listLocations: Location[] = [];
   location: Location;
   evenementId: number;
-  constructor(
-    public activeModal: NgbActiveModal,
-    private usersService: UsersService,
-    public account: AccountService,
-    private tokenService: TokenService,
-    private evenementService: EvenementService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private locationService: LocationService,
-    public editedLocation: EditedLocationService,
-    private galleryLocationService: GalleryLocationService,
-    private modalService: NgbModal
-  ) {}
+  constructor(private ngbActiveModal: NgbActiveModal, private usersService: UsersService, public account: AccountService, private tokenService: TokenService, private evenementService: EvenementService, private router: Router, private route: ActivatedRoute,
+    private locationService: LocationService, public editedLocation: EditedLocationService, private galleryLocationService: GalleryLocationService, private modalService: NgbModal, private editedEvenement: EditedEvenementService) {
+    this.usersService.getUser(this.tokenService.getId()).subscribe(result => {
+      this.currentUser = result
+      console.log(this.evenement.author.id)
+      this.userIsAuthor = (this.currentUser.id === this.evenement.author.id)
+    }
+
+    );
+  }
 
   ngOnInit(): void {
-    console.log(this.evenement);
+    console.log(this.evenement)
   }
   showGallery(location: Location) {
     this.editedLocation.loadLocation(location);
@@ -57,5 +59,11 @@ export class DetailEventComponent implements OnInit {
       size: 'lg',
       backdrop: true,
     });
+  }
+
+  async modify() {
+    this.editedEvenement.loadEvenement(this.evenement)
+    await this.router.navigate(['/home/create-event'])
+    this.ngbActiveModal.close()
   }
 }
