@@ -1,7 +1,6 @@
 <div class="webModalDiv">
     <div class="header">
         <h1>{{ evenement?.name }}</h1>
-        <!--         <h1> {{ evenement?.author?.firstName}}</h1> -->
     </div>
     <div class="modal-body">
         <div class="div-img-location">
@@ -11,10 +10,8 @@
             <div class="image-organisateur-groupes">
                 <img [src]="account.avatar64" alt="photo de profil" />
                 <div>
-                    <!--                     <h2 *ngFor="let author of evenement.author">  {{ author?.firstName}}</h2> -->
-                    <h2 *ngFor="let user of evenement.users">
-                        {{ user?.firstName }} {{ user?.lastName }}
-                    </h2>
+                    <h1> {{ evenement?.author?.firstName}}  {{ evenement?.author?.lastName}}</h1>
+
                     <h3 *ngFor="let group of evenement.groups">{{ group.name }}</h3>
                 </div>
             </div>
@@ -24,6 +21,9 @@
                 <img [src]="account.avatar64" alt="photo de profil" />
                 <img [src]="account.avatar64" alt="photo de profil" />
                 <img [src]="account.avatar64" alt="photo de profil" />
+                <h2 *ngFor="let user of evenement.users">
+                        {{ user?.firstName }} {{ user?.lastName }}
+                </h2>
             </div>
             <h4>X places restantes</h4>
         </div>
@@ -35,19 +35,29 @@
     </div>
     <p>
         {{ evenement?.comment }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque voluptates ex, nisi corrupti facilis voluptate magni placeat consequatur provident voluptatem dolorem, voluptas, rerum inventore reprehenderit nesciunt ratione consectetur
-        repellat dignissimos!
+        repellat dignissimos!Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque voluptates ex, nisi corrupti facilis voluptate magni placeat consequatur provident voluptatem dolorem, voluptas, rerum inventore reprehenderit nesciunt ratione consectetur
+
     </p>
-    <div class="modal-footer">
-        <a class="galleryLocation" (click)="showGallery(location)">
-            <button class="btn btn-primary">
-        <fa-icon [icon]="picturesIcon"></fa-icon>
-      </button>
-        </a>
-        <button class="btn btn-primary" (click)="modify()" *ngIf="userIsAuthor">
-      Modifier
-    </button>
-        <button class="btn btn-success">Je viens</button>
-        <button class="btn btn-danger">J'annule</button>
+    <div class="modale-footer">
+        <div class="left-side-modal-footer">
+            <a class="galleryLocation" (click)="showGallery(location)">
+                <button class="btn btn-primary">
+                    <fa-icon [icon]="picturesIcon"></fa-icon>
+                </button>
+                </a>
+                <button class="btn btn-primary btn-update" (click)="modify()" *ngIf="userIsAuthor">
+                     Modifier
+                </button>
+        </div>
+        <div class="right-side-modal-footer">
+            <button  class="btn btn-success" [disabled]="imComing" (click)="sendResponseEvent(true)">
+                <fa-icon [icon]="grinIcon"></fa-icon>&nbsp;Je viens
+            </button>
+            <button type="button"  class="btn btn-danger">
+                <fa-icon [icon]="tearIcon"></fa-icon>&nbsp;Je viens pas
+            </button>
+        </div>
+
     </div>
 </div>
 
@@ -93,8 +103,25 @@
         repelrem ipsum dolor sit amet consectetur adipisicing elit. Neque voluptates ex, nisi corrupti facilis voluptate magni placeat consequatur provident voluptatem dolorem, voluptas, rerum inventore reprehenderit nesciunt ratione consectetur repellat
         dilat dign test
     </p>
-    <div class="modal-footer">
-        <button type="button"  class="btn btn-success">Je viens</button>
-        <button type="button"  class="btn btn-danger">J'annule</button>
+    <div class="modale-footer">
+        <div class="left-side-modal-footer">
+            <a class="galleryLocation" (click)="showGallery(location)">
+                <button class="btn btn-primary">
+                    <fa-icon [icon]="picturesIcon"></fa-icon>
+                </button>
+                </a>
+                <button class="btn btn-primary btn-update" (click)="modify()" *ngIf="userIsAuthor">
+                     Modifier
+                </button>
+        </div>
+        <div class="right-side-modal-footer">
+            <button  class="btn btn-success" [disabled]="imComing" (click)="sendResponseEvent(true)">
+                <fa-icon [icon]="grinIcon"></fa-icon>&nbsp;Je viens
+            </button>
+            <button type="button"  class="btn btn-danger">
+                <fa-icon [icon]="tearIcon"></fa-icon>&nbsp;Je viens pas
+            </button>
+        </div>
+
     </div>
 </div>

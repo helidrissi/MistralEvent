@@ -82,16 +82,57 @@
       margin: 0 10px;
     }
 
-    .modal-footer {
+    .modale-footer {
       position: sticky;
       bottom: 0;
       background-color: white;
+      padding: 10px;
+      .left-side-modal-footer {
+        display: inline-block;
+        width: 40%;
+        .btn-update {
+          margin-left: 10px;
+        }
+      }
+      .right-side-modal-footer {
+        display: inline-block;
+        width: 60%;
+        text-align: right;
+        padding-right: 10px;
+        .btn-success {
+          margin-right: 10px;
+        }
+      }
     }
   }
 }
 @media screen and (min-width: 993px) {
   .phoneModalDiv {
     display: none;
+  }
+  .modale-footer {
+    /*     position: sticky;
+    bottom: 0;
+    background-color: white;
+    width: 100%; */
+    display: flex;
+    padding: 0 20px 10px 20px;
+    .left-side-modal-footer {
+      .btn-update {
+        margin-left: 20px;
+      }
+      width: 50%;
+      display: flex;
+      align-self: flex-start;
+    }
+    .right-side-modal-footer {
+      .btn-success {
+        margin-right: 20px;
+      }
+      width: 50%;
+      display: flex;
+      justify-content: flex-end;
+    }
   }
   #modal-footer {
     justify-self: right;
@@ -163,7 +204,7 @@
   }
 
   p {
-    margin-left: 20px;
+    margin: 20px;
     font-size: 1.2rem;
   }
   .eventSiteLink {

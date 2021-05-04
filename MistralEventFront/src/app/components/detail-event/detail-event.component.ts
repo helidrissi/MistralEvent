@@ -1,5 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { faImages } from '@fortawesome/free-solid-svg-icons';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import {
+  faClock,
+  faImages,
+  faMapMarked,
+  faGrin,
+  faSadTear,
+  faInfoCircle
+} from '@fortawesome/free-solid-svg-icons';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GalleryLocationComponent } from '../gallery-location/gallery-location.component';
@@ -27,12 +34,18 @@ export class DetailEventComponent implements OnInit {
   @Input() evenement: Evenement;
   @Input() user: User;
   @Input() author: User;
+  @Input() imComing: boolean;
+
+  @Output() IRefuse = new EventEmitter<Evenement>();
+  @Output() IAccept = new EventEmitter<Evenement>();
+
   listUsers: User[] = [];
   evenements: Evenement[];
   currentUser: User;
   userIsAuthor = false;
 
-
+  grinIcon = faGrin;
+  tearIcon = faSadTear;
 
   picturesIcon = faImages;
   listLocations: Location[] = [];
@@ -65,5 +78,13 @@ export class DetailEventComponent implements OnInit {
     this.editedEvenement.loadEvenement(this.evenement)
     await this.router.navigate(['/home/create-event'])
     this.ngbActiveModal.close()
+  }
+
+  sendResponseEvent(bool: boolean) {
+    if (bool) {
+      this.IAccept.emit(this.evenement);
+    } else {
+      this.IRefuse.emit(this.evenement);
+    }
   }
 }
