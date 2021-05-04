@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { faAt, faSave } from '@fortawesome/free-solid-svg-icons';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { faAt, faSave, faUsers, faUserCircle, faKey } from '@fortawesome/free-solid-svg-icons';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { FormsModule, FormBuilder } from '@angular/forms';
@@ -17,16 +17,22 @@ import { Group } from 'src/app/models/group';
 
 // Components
 import { FileUploadComponent } from '../fileupload/fileupload.component';
+import { take, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss']
 })
-export class AccountComponent implements OnInit {
+export class AccountComponent implements OnInit, OnDestroy {
+  $subscription = new Subject();
   
+  avatarIcon = faUserCircle;
   atIcon = faAt;
   saveIcon = faSave;
+  groupesIcon = faUsers;
+  passwordIcon = faKey;
 
   selectGroupsForm: FormGroup;
   changePasswordForm: FormGroup;
@@ -55,7 +61,7 @@ export class AccountComponent implements OnInit {
       newpassword2: new FormControl('', [Validators.required, Validators.minLength(6)])
     });
 
-    this.groupsService.getGroups().subscribe((data: Group[]) => {
+    this.groupsService.getGroups().pipe(take(1)).subscribe((data: Group[]) => {
       this.listGroups = data;
 /*       console.log (this.listGroups); */
     });
@@ -65,7 +71,7 @@ export class AccountComponent implements OnInit {
   }
 
   selectGroups() {
-    this.account.saveGroups().subscribe((userLoaded:User) => {
+    this.account.saveGroups().pipe(takeUntil(this.$subscription)).subscribe((userLoaded:User) => {
       this.errorMessage2 = "";
       this.groupsSave = true;
       this.account.refreshUser(userLoaded);
@@ -82,7 +88,7 @@ export class AccountComponent implements OnInit {
   changePassword() {
     this.newPwdSave = false;
     if (this.changePasswordForm.get('newpassword').value == this.changePasswordForm.get('newpassword2').value) {
-      this.authService.login(this.account.email, this.changePasswordForm.get('oldpassword').value).subscribe(res => this.handleResponse(res), error => {
+      this.authService.login(this.account.email, this.changePasswordForm.get('oldpassword').value).pipe(takeUntil(this.$subscription)).subscribe(res => this.handleResponse(res), error => {
         if (error.status === 403) {
           this.errorMessage = "Le mot de passe actuel est incorrect";
         }
@@ -96,12 +102,14 @@ export class AccountComponent implements OnInit {
   }
 
   handleResponse(res:{}) {
-    this.account.changePassword(this.changePasswordForm.get('newpassword').value).subscribe(res => {
-      this.changePasswordForm.get('oldpassword').setValue("");
-      this.changePasswordForm.get('newpassword').setValue("");
-      this.changePasswordForm.get('newpassword2').setValue("");
-      this.errorMessage = "";
-      this.newPwdSave = true;
+    this.account.changePassword(this.changePasswordForm.get('newpassword').value).pipe(takeUntil(this.$subscription)).subscribe(res => {
+      if(res) {
+        this.changePasswordForm.get('oldpassword').setValue("");
+        this.changePasswordForm.get('newpassword').setValue("");
+        this.changePasswordForm.get('newpassword2').setValue("");
+        this.errorMessage = "";
+        this.newPwdSave = true;
+      }
     }, error => {
       if (error.status === 403) {
         this.errorMessage = "Le mot de passe actuel est incorrect";
@@ -115,6 +123,11 @@ export class AccountComponent implements OnInit {
   openAvatarUpload() {
     this.uploadService.type_file = this.uploadService.TYPE_AVATAR;
     const modalRef = this.modalService.open(FileUploadComponent);
+  }
+
+  ngOnDestroy() {
+    this.$subscription.next();
+    this.$subscription.complete();
   }
 
 }

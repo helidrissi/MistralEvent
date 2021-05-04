@@ -21,6 +21,10 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 import { UpcomingEventsComponent } from '../upcomingEvents/upcomingEvents.component';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
+import { ToasterComponent } from '../utilities/toaster/toaster.component';
+import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalComponent } from '../utilities/modal/modal.component';
+import { DetailEventComponent } from '../detail-event/detail-event.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +43,9 @@ import { HomeComponent } from './home.component';
     CreateEventComponent,
     CreateLocationComponent,
     PictureGalleryLocationComponent,
+    ToasterComponent,
+    ModalComponent,
+    DetailEventComponent
   ],
   imports: [
     CommonModule,
@@ -48,6 +55,7 @@ import { HomeComponent } from './home.component';
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
+    NgbToastModule
   ],
   providers: [
     /*{

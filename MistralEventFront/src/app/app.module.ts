@@ -13,6 +13,7 @@ import { LocationsComponent } from './components/locations/locations.component';
 import { LoginComponent } from './components/login/login.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { JwtInterceptor } from './services/jwt.interceptor';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,6 @@ import { JwtInterceptor } from './services/jwt.interceptor';
     LoginComponent,
     PageNotFoundComponent,
     LocationsComponent,
-    DetailEventComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,6 +32,7 @@ import { JwtInterceptor } from './services/jwt.interceptor';
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
+    FontAwesomeModule,
   ],
   providers: [
     {
@@ -39,7 +40,9 @@ import { JwtInterceptor } from './services/jwt.interceptor';
       useClass: JwtInterceptor,
       multi: true,
     },
+    DatePipe
   ],
   bootstrap: [AppComponent],
+  entryComponents: [ DetailEventComponent ]
 })
 export class AppModule {}

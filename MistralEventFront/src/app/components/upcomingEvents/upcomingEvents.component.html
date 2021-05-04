@@ -3,7 +3,7 @@
     <h3>Cette semaine</h3>
     <div class="card-list row">
       <div class="col col-md-4" *ngFor="let event of events">
-        <app-eventCard [evenement]=event type="upCommingCard" [user]=user (IAccept)="IAccept($event)" (IRefuse)="IRefuse($event)"></app-eventCard>
+        <app-eventCard [evenement]=event type="upCommingCard" [user]=user [imComing]="imComing(event)"  (IAccept)="IAccept($event)" (IRefuse)="IRefuse($event)"></app-eventCard>
       </div>
     </div>
   </div>
@@ -21,3 +21,4 @@
 </div>
 
 
+<app-toaster aria-live="polite" aria-atomic="true"></app-toaster>

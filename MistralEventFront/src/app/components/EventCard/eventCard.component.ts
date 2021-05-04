@@ -1,25 +1,32 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
-  faClock, faImages,
-  faMapMarked
+  faClock,
+  faImages,
+  faMapMarked,
+  faGrin,
+  faSadTear,
+  faInfoCircle
 } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { take } from 'rxjs/operators';
+
+// Environnement
+import { DEFAULT_IMG } from 'src/environments/environment';
+
+// Models
+import { User } from '../../models/user';
 import { Evenement } from 'src/app/models/evenement';
 import { File } from 'src/app/models/file';
 import { Location } from 'src/app/models/location';
-import { EditedLocationService } from 'src/app/services/edited-location.service';
-// Environnement
-import { DEFAULT_IMG } from 'src/environments/environment';
-import { User } from '../../models/user';
+
 // Services
 import { FilesService } from '../../services/files.service';
-import { GalleryLocationService } from '../../services/gallery-location.service';
-import { ImComingService } from '../../services/im-coming.service';
-import { LocationService } from '../../services/location.service';
 import { DetailEventComponent } from '../detail-event/detail-event.component';
 import { GalleryLocationComponent } from '../gallery-location/gallery-location.component';
-
-
+import { ModalService } from '../utilities/modal/modal.service';
+import { ImComingService } from '../../services/im-coming.service';
+import { AccountService } from '../../services/account.service';
+import { EditedLocationService } from 'src/app/services/edited-location.service';
 
 @Component({
   selector: 'app-eventCard',
@@ -30,6 +37,7 @@ export class EventCardComponent implements OnInit {
   @Input() evenement: Evenement;
 
   @Input() user: User;
+  @Input() imComing: boolean;
 
   /**
    * @example
@@ -46,18 +54,21 @@ export class EventCardComponent implements OnInit {
   picturesIcon = faImages;
   clockIcon = faClock;
   mapMarkerIcon = faMapMarked;
+  grinIcon = faGrin;
+  tearIcon = faSadTear;
+  infoIcon = faInfoCircle;
+
   listLocations: Location[] = [];
   location: Location;
-  imComing: boolean;
   base64: String = DEFAULT_IMG.image_location_default;
 
   constructor(
     private modalService: NgbModal,
-    private locationService: LocationService,
     public editedLocation: EditedLocationService,
-    private galleryLocationService: GalleryLocationService,
     private filesService: FilesService,
+    private customModalService: ModalService,
     private imComingService: ImComingService,
+    private accountService: AccountService,
   ) {}
 
   ngOnInit() {
@@ -66,6 +77,7 @@ export class EventCardComponent implements OnInit {
     if (this.location != null) {
       this.filesService
         .getFile('location' + this.location.id)
+        .pipe(take(1))
         .subscribe((fileLoaded: File) => {
           if (
             fileLoaded != null &&
@@ -79,7 +91,21 @@ export class EventCardComponent implements OnInit {
   }
 
   openDetailEvent() {
-    const modalRef = this.modalService.open(DetailEventComponent);
+      const modalEventRef = this.customModalService.openModalEventDetail(this.evenement);
+      modalEventRef.result.then(res => {
+          console.log("Listen modal");
+          if (res) {
+              console.log("AddUserResponse");
+              console.log(JSON.stringify(this.user));
+              this.imComingService.addUser(this.evenement, this.user);
+              this.imComing = true;
+          } else {
+              console.log("RemoveUserResponse");
+              console.log(JSON.stringify(this.user));
+              this.imComingService.removeUser(this.evenement, this.user);
+              this.imComing = false;
+          }
+      })
   }
 
   showGallery(location: Location) {
@@ -94,10 +120,8 @@ export class EventCardComponent implements OnInit {
 
   sendResponseEvent(bool: boolean) {
     if (bool) {
-      this.imComing = true;
       this.IAccept.emit(this.evenement);
     } else {
-      this.imComing = false;
       this.IRefuse.emit(this.evenement);
     }
   }

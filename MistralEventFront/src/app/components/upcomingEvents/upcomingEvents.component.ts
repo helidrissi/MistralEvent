@@ -7,9 +7,17 @@ import { TokenService } from '../../services/token.service';
 import { UsersService } from '../../services/users.service';
 import { DetailEventComponent } from '../detail-event/detail-event.component';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AccountService } from '../../services/account.service';
+import { EditedEvenementService } from 'src/app/services/edited-evenement.service';
+import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common'
+
 
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { ImComingService } from 'src/app/services/im-coming.service';
+import { take } from 'rxjs/operators';
+import { ModalService } from '../utilities/modal/modal.service';
+import { ToasterService } from '../utilities/toaster/toaster.service';
 
 @Component({
   selector: 'app-upcomingEvents',
@@ -20,49 +28,67 @@ export class UpcomingEventsComponent implements OnInit {
   events: Evenement[] = [];
   plusIcon = faPlus;
   user: User;
-
+  evenement: Evenement;
   constructor(
     private evenementService: EvenementService,
     private tokenservice: TokenService,
     private usersService: UsersService,
-    private modalService: NgbModal,
+    private accountService: AccountService,
     private imComingService: ImComingService,
+    private editedEvenement: EditedEvenementService,
+    private router: Router,
+    private toasterService: ToasterService,
+    private customModalService: ModalService,
+    public datepipe: DatePipe
   ) {}
 
   ngOnInit() {
-    forkJoin({
-      user: this.usersService.getUser(this.tokenservice.getId()),
-      events: this.evenementService.getEvenements(),
-    }).subscribe(({ user, events }) => {
-      this.user = user;
-      this.filterEventByUserGroup(user, events);
-    });
+    this.refreshList();
   }
 
-  filterEventByUserGroup(user: User, events: Evenement[]) {
-    for (let userGroup of user.groups) {
-      const result = events.filter((event: Evenement) => {
-        if (
-          event.groups.find(
-            (eventGroups) => eventGroups.name === userGroup.name
-          )
-        ) {
-          this.events.push(event);
-        }
+  refreshList() {
+    if (this.accountService.user != null) {
+      this.user = this.accountService.user;
+      this.evenementService.getNextEvenements(false, this.accountService.user.userId).subscribe((res: Evenement[]) => {
+        this.events = res;
       });
+    } else {
+      // On passe par là quand le code est rechargé suite à une modif dans le code dans Visual Studio, cas de figure propre au dév
+      this.usersService.getUser(this.tokenservice.getId()).subscribe((userLoaded:User) => {
+        this.user = userLoaded;
+        this.accountService.refreshUser(userLoaded);
+        this.evenementService.getNextEvenements(false, userLoaded.userId).subscribe((res: Evenement[]) => {
+          this.events = res;
+        });
+      }); 
     }
-  }
-  openDetailEvent() {
-    const modalRef = this.modalService.open(DetailEventComponent, {
-      size: 'lg',
-      backdrop: true,
-    });
   }
 
   IAccept(evenement: Evenement) {
-    this.imComingService.addUser(evenement, this.user);
+    const ref = this.customModalService.open(evenement.name,"Etes vous sûr de venir le " + this.datepipe.transform(evenement.date, 'dd/MM/yyyy à H:mm') + " ?");
+    ref.result.then(res => {
+      if (res) {
+        this.imComingService.addUser(evenement, this.user);
+        this.toasterService.showSucces("Vous participez à l'événément")
+      } else {
+        return
+      }
+    })
   }
   IRefuse(evenement: Evenement) {
-    this.imComingService.removeUser(evenement, this.user);
+    const ref = this.customModalService.open(evenement.name, 'Etes-vous sûr de ne pas venir le ' + this.datepipe.transform(evenement.date, 'dd/MM/yyyy à H:mm') + ' ?');
+    ref.result.then(res =>{
+      if (res) {
+        this.imComingService.removeUser(evenement, this.user);
+        this.toasterService.showError("Vous ne venez pas =(")
+      } else {
+        return
+      }
+    })
   }
+  
+  imComing(event: Evenement) {
+    return this.imComingService.imComing(event, this.user);
+  }
+
 }
