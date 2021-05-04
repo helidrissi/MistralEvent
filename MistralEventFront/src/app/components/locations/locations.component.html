@@ -3,35 +3,36 @@
     <div class="tableDiv">
     <h1> Les bonnes adresses</h1>
       <table class="table table-striped">
-        <thead>
+        <!--<thead style="background-color: #154194;">
           <tr>
-            <th scope="col">Nom du lieu</th>
-            <th scope="col">Adresse</th>
-            <th scope="col">Télephone</th>
+            <th scope="col" style="width:25%;">Nom du lieu</th>
+            <th scope="col" style="width:50%;">Adresse</th>
+            <th scope="col" style="width:25%;">Télephone</th>
             <th scope="col"></th>
             <th scope="col"></th>
             <th scope="col"></th>
           </tr>
-        </thead>
+        </thead>-->
         <tbody>
-          <tr *ngFor="let location of listLocations">
-            <td scope="row" >{{ location.name}} </td>
-            <td scope="row">{{ location.adress}}, {{ location.city}}</td>
-            <td scope="row">
+          <tr *ngFor="let location of listLocations" style="vertical-align: middle;">
+            <td scope="row" style="width:25%; vertical-align: middle;"><h2>{{location.name}}</h2></td>
+            <td scope="row" style="width:50%; vertical-align: middle;"><fa-icon [icon]="addressIcon"></fa-icon>&nbsp;{{location.adress}}, {{ location.city}}</td>
+            <td scope="row" style="width:25%; vertical-align: middle;"><fa-icon [icon]="phoneIcon"></fa-icon>&nbsp;{{location.phone}}</td>
+            <td scope="row" style="vertical-align: middle;">
               <a class="galleryLocation" (click)="showGallery(location)">
                 <button class="btn btn-primary">
                   <fa-icon [icon]="picturesIcon"></fa-icon>
                 </button>
               </a>
             </td>
-            <td scope="row">
+            <td scope="row" style="vertical-align: middle;">
               <a class="editLocation" (click)="openLocation(location)">
                 <button class="btn btn-success">
                   <fa-icon [icon]="editIcon"></fa-icon>
                 </button>
               </a>
             </td>
-            <td scope="row">
+            <td scope="row" style="vertical-align: middle;">
               <a class="deleteLocation" (click)="deleteLocation(location)">
                   <button class="btn btn-danger">
                     <fa-icon [icon]="deleteIcon"></fa-icon>

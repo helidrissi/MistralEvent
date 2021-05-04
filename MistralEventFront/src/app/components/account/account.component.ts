@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { faAt, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faAt, faSave, faUsers, faUserCircle, faKey } from '@fortawesome/free-solid-svg-icons';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { FormsModule, FormBuilder } from '@angular/forms';
@@ -28,8 +28,11 @@ import { Subject } from 'rxjs';
 export class AccountComponent implements OnInit, OnDestroy {
   $subscription = new Subject();
   
+  avatarIcon = faUserCircle;
   atIcon = faAt;
   saveIcon = faSave;
+  groupesIcon = faUsers;
+  passwordIcon = faKey;
 
   selectGroupsForm: FormGroup;
   changePasswordForm: FormGroup;

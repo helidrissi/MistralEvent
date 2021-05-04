@@ -4,7 +4,7 @@
         <div class="card">
             <form role="form" [formGroup]="form" (submit)="onSubmit()">
                 <div class="card-header">
-                    Créer une adresse
+                    <fa-icon [icon]="addressIcon" size="2x" style=" vertical-align: middle;"></fa-icon>&nbsp;Adresse
                 </div>
                 
                 <div class="card-body">
@@ -43,14 +43,14 @@
         
         <div class="card">
             <div class="card-header">
-                Image de l'adresse
+                <fa-icon [icon]="avatarIcon" size="2x" style=" vertical-align: middle;"></fa-icon>&nbsp;Image de l'adresse
             </div>
             
             <div class="card-body card-body-avatar">
                 <img  [src]='editedLocation.avatar64' class="img-location" >
             </div>
             <div class="card-footer">
-                <button type="button" class="btn btn-primary" (click)="openAvatarUpload()" [disabled]="!form.valid"><fa-icon [icon]="avatarIcon"></fa-icon>&nbsp;Changer l'image</button>
+                <button type="button" class="btn btn-primary" (click)="openAvatarUpload()" [disabled]="!form.valid"><fa-icon [icon]="changeAvatarIcon"></fa-icon>&nbsp;Changer l'image</button>
             </div>
         </div>
         
@@ -58,7 +58,7 @@
         
         <div class="card">
             <div class="card-header">
-                Photos attachées
+                <fa-icon [icon]="picturesIcon" size="2x" style=" vertical-align: middle;"></fa-icon>&nbsp;Photos attachées
             </div>
             
             <div class="card-body">
@@ -69,7 +69,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                <button type="button" class="btn btn-primary" (click)="addImageUpload()" [disabled]="!form.valid"><fa-icon [icon]="pictureIcon"></fa-icon>&nbsp;Ajouter une photo</button>
+                <button type="button" class="btn btn-primary" (click)="addImageUpload()" [disabled]="!form.valid"><fa-icon [icon]="addPictureIcon"></fa-icon>&nbsp;Ajouter une photo</button>
             </div>
         </div>
     </div>

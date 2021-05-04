@@ -2,7 +2,7 @@
     <img src="{{ base64 }}" class="card-img-top" alt="..." (click)="openDetailEvent()" />
     <div class="card-body">
         <div class="card-informations">
-            <h4 class="card-title">{{ evenement.name }}</h4>
+            <h2 class="card-title">{{ evenement.name }}</h2>
             <p class="card-text">
                 <fa-icon [icon]="clockIcon"></fa-icon>&nbsp;{{ evenement.date | date: "dd/MM/yyyy H:mm" }}
                 <br />
@@ -12,15 +12,15 @@
         <!-- {{evenement.description.length > 200 ? (evenement.description | slice:0:200)+'...' : evenement.description }} -->
         {{ evenement.comment }}
         <div class="btn-card-agenda">
+            <button  class="btn btn-primary" (click)="openDetailEvent()">
+                <fa-icon [icon]="infoIcon"></fa-icon>&nbsp;Détails
+            </button>
             <button *ngIf="type === 'upCommingCard'" class="btn btn-success" [disabled]="imComing" (click)="sendResponseEvent(true)">
-        Je viens !
-      </button>
-            <button *ngIf="type === 'agendaCard'" class="btn btn-primary" (click)="openDetailEvent()">
-        Afficher
-      </button>
+                <fa-icon [icon]="grinIcon"></fa-icon>&nbsp;Je viens
+            </button>
             <button class="btn btn-danger" [disabled]="!imComing" (click)="sendResponseEvent(false)">
-        Je peux pas
-      </button>
+                <fa-icon [icon]="tearIcon"></fa-icon>&nbsp;Je viens pas
+            </button>
         </div>
     </div>
 </div>

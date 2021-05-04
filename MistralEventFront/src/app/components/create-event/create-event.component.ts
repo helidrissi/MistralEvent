@@ -91,6 +91,7 @@ export class CreateEventComponent implements OnInit {
 
 
   ngOnInit(): void {
+
     this.locationService.getAllLocations().subscribe()
 
 

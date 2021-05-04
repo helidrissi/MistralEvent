@@ -4,8 +4,11 @@ import { Validators } from '@angular/forms';
 import {
   faTimes,
   faSave,
+  faPlusSquare,
   faImage,
   faImages,
+  faCamera,
+  faMapMarkedAlt
 } from '@fortawesome/free-solid-svg-icons';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -31,8 +34,11 @@ import { ToasterService } from '../utilities/toaster/toaster.service';
 export class CreateLocationComponent implements OnInit {
   saveIcon = faSave;
   cancelIcon = faTimes;
-  pictureIcon = faImages;
+  addPictureIcon = faPlusSquare;
+  picturesIcon = faImages;
   avatarIcon = faImage;
+  changeAvatarIcon = faCamera;
+  addressIcon = faMapMarkedAlt;
 
   name = new FormControl('', Validators.required)
   streetAddress = new FormControl('', Validators.required)
@@ -78,6 +84,7 @@ export class CreateLocationComponent implements OnInit {
         location.images = this.editedLocation.location.images;
       }
     }
+
     this.locationService.addLocation(location).subscribe(result => {
       console.log(JSON.stringify(result))
       this.router.navigate(['home/locations'])
@@ -104,6 +111,7 @@ export class CreateLocationComponent implements OnInit {
       this.uploadService.type_file = this.uploadService.TYPE_LOCATION;
       const modalRef = this.modalService.open(FileUploadComponent);
     })
+
   }
 
   addImageUpload() {
@@ -125,6 +133,7 @@ export class CreateLocationComponent implements OnInit {
       this.uploadService.type_file = this.uploadService.TYPE_ATTACHED_PICTURE_LOCATION;
       const modalRef = this.modalService.open(FileUploadComponent);
     })
+
   }
 
   cancel() {

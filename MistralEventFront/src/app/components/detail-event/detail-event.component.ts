@@ -3,6 +3,7 @@ import { faImages } from '@fortawesome/free-solid-svg-icons';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GalleryLocationComponent } from '../gallery-location/gallery-location.component';
+import { take } from 'rxjs/operators';
 // Modèles
 import { Evenement } from 'src/app/models/evenement';
 import { Location } from 'src/app/models/location';
@@ -15,7 +16,7 @@ import { EvenementService } from 'src/app/services/evenement.service';
 import { TokenService } from '../../services/token.service';
 import { AccountService } from '../../services/account.service';
 import { UsersService } from '../../services/users.service';
-import { EditedEvenementService } from 'src/app/services/edited-evenement.service';
+
 @Component({
   selector: 'app-detail-event',
   templateUrl: './detail-event.component.html',
@@ -48,7 +49,7 @@ export class DetailEventComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.evenement);
+    console.log(this.evenement)
   }
   showGallery(location: Location) {
     this.editedLocation.loadLocation(location);
