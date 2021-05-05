@@ -1,51 +1,83 @@
 package fr.mistral.bootstrap;
 
 import fr.mistral.domain.Event;
+import fr.mistral.domain.Group;
 import fr.mistral.domain.Location;
+import fr.mistral.domain.UserEntity;
 import fr.mistral.repositories.EventRepository;
+import fr.mistral.repositories.GroupRepository;
 import fr.mistral.repositories.LocationRepository;
+import fr.mistral.repositories.UserRepository;
+import fr.mistral.shared.Utils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 
 @Component
+@Transactional
 public class Bootstrap implements CommandLineRunner {
 
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    Utils util;
 
     private final EventRepository eventRepository;
     private final LocationRepository locationRepository;
+    private final GroupRepository groupRepository;
+    private final UserRepository userRepository;
 
-    public Bootstrap(EventRepository eventRepository, LocationRepository locationRepository) {
+    public Bootstrap(EventRepository eventRepository, LocationRepository locationRepository, GroupRepository groupRepository, UserRepository userRepository) {
         this.eventRepository = eventRepository;
         this.locationRepository = locationRepository;
+        this.groupRepository = groupRepository;
+        this.userRepository = userRepository;
     }
 
 
     @Override
     public void run(String... args) throws Exception {
         loadEvent();
+        util.formatDate();
     }
 
     private void loadEvent() {
 
+        Group group = new Group();
+        group.setName("Mistral");
 
-        Date date =new Date(System.currentTimeMillis());
+        UserEntity user = new UserEntity();
+        user.setFirstName("Anthony");
+        user.setLastName("Pfeifer");
+        user.setEmail("anthony.pfeifer@mistral.fr");
+        user.setPassword(bCryptPasswordEncoder.encode("Cookies"));
+        user.setUserId(util.generateStringId(32));
+        user.getGroups().add(group);
+
+        LocalDateTime datetime = LocalDateTime.now();
         Location location = new Location();
-
-        location.setAdress("NDSM");
-        location.setName("Awakenings");
-
-
-
+        location.setAdress("40 Boulevard Charles de Gaulle");
+        location.setName("L'Univers");
+        location.setCity("Clermont-Ferrand");
 
         Event fest=new Event();
-        fest.setDate(date);
-        fest.setType("Festival");
-        fest.setName("Awakenings");
+        fest.setDate(datetime);
+        fest.setType("Restaurant");
+        fest.setName("Resto du vendredi midi");
         fest.setLocation(location);
+        fest.getGroups().add(group);
+        fest.setAuthor(user);
+        fest.getUsers().add(user);
 
+        userRepository.save(user);
+        groupRepository.save(group);
         locationRepository.save(location);
         eventRepository.save(fest);
 

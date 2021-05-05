@@ -39,6 +39,8 @@ public class EventServiceImpl implements EventService {
     }
 
     private Event saveAndReturn(Event event) {
+        System.err.println("On rentre ici");
+        System.err.println("nb=" + (event.getUsers() != null ? event.getUsers().size() : "null"));
         Event savedEvent = eventRepository.save(event);
 
 
@@ -56,16 +58,25 @@ public class EventServiceImpl implements EventService {
     @Override
     public Event patchEvent(Long id, Event event) {
         return eventRepository.findById(id).map(ev -> {
-
+            System.err.println("On rentre dedans");
             if (event.getName() != null) {
                 ev.setName(event.getName());
             }
-
             if (event.getType() != null) {
                 ev.setType(event.getType());
             }
             if (event.getDate() != null) {
                 ev.setDate(event.getDate());
+            }
+            if (event.getGroups() != null) {
+                ev.setGroups(event.getGroups());
+            }
+            if (event.getAuthor() != null) {
+                ev.setAuthor(event.getAuthor());
+            }
+            System.err.println("nb=" + (event.getUsers() != null ? event.getUsers().size() : "null"));
+            if (event.getUsers() != null) {
+                ev.setUsers(event.getUsers());
             }
             Event eventUpdated = eventRepository.save(ev);
 

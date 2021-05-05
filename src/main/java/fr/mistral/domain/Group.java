@@ -1,6 +1,7 @@
 package fr.mistral.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,8 +28,10 @@ public class Group {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @JsonIgnore
     @ManyToMany(mappedBy = "groups")
     private Set<UserEntity> users=new HashSet<>();
+    @JsonIgnore
     @ManyToMany(mappedBy = "groups")
     private Set<Event> events=new HashSet<>();
 }

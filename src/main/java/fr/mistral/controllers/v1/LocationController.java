@@ -2,6 +2,7 @@ package fr.mistral.controllers.v1;
 
 import fr.mistral.domain.Group;
 import fr.mistral.domain.Location;
+import fr.mistral.repositories.ImageRepository;
 import fr.mistral.services.LocationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

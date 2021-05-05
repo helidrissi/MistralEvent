@@ -29,7 +29,7 @@ public class EventServiceImplTest {
 
     }
 
-    @Test
+  /*  @Test
     public void getAllEvents() throws Exception {
         //given
         Event lunch = new Event();
@@ -54,7 +54,7 @@ public class EventServiceImplTest {
         //then
         assertEquals(2, events.size());
 
-    }
+    }*/
 
     /*@Test
     public void getCustomerById() throws Exception {

@@ -1,6 +1,8 @@
 package fr.mistral.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +10,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,9 +29,20 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private Date date;
+    @Basic
+    @Column(columnDefinition = "TIMESTAMP")
+    private LocalDateTime date;
+
+
     private String type;
-    @ManyToMany(mappedBy = "events")
+    @JsonIgnore
+    @ManyToOne
+    private UserEntity author;
+    @ManyToMany
+    @JoinTable(name = "users_event",
+            joinColumns = @JoinColumn(name = "users_id"),
+            inverseJoinColumns = @JoinColumn(name = "event_id"))
+             @JsonIgnoreProperties("events")
     private Set<UserEntity> users=new HashSet<>();
     @ManyToMany
     @JoinTable(name = "event_groups",
@@ -36,7 +50,7 @@ public class Event {
             inverseJoinColumns = @JoinColumn(name = "group_id"))
     private Set<Group> groups=new HashSet<>();
     @ManyToOne
-    private Location Location;
+    private Location location;
 
 
 }
