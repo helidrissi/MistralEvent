@@ -13,6 +13,7 @@ import { LocationService } from '../../services/location.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { GalleryLocationService } from '../../services/gallery-location.service';
 import { EditedLocationService } from 'src/app/services/edited-location.service';
+import { ModalService } from '../utilities/modal/modal.service';
 
 @Component({
   selector: 'app-locations',
@@ -31,7 +32,12 @@ export class LocationsComponent implements OnInit {
   listLocations: Location[] = [];
   location: Location;
 
-  constructor(private locationService: LocationService,  public editedLocation: EditedLocationService, private galleryLocationService: GalleryLocationService, private modalService: NgbModal, private router: Router) { 
+  constructor(private locationService: LocationService,  
+              public editedLocation: EditedLocationService,
+              private galleryLocationService: GalleryLocationService, 
+              private modalService: NgbModal, 
+              private router: Router,
+              private customModalService: ModalService) { 
 
   }
 
@@ -41,14 +47,7 @@ export class LocationsComponent implements OnInit {
       this.listLocations = data;
     })
   }
-  deleteLocation(location: Location): void {
-    this.locationService.deleteLocationById(location).subscribe(then => {
-      this.locationService.getAllLocations().subscribe((data: Location[]) => {
-        this.listLocations = data;
-      });
-      this.router.navigate(['/home/locations']);
-    });
-  }
+
 
   showGallery(location: Location) {
     this.editedLocation.loadLocation(location);
@@ -63,5 +62,21 @@ export class LocationsComponent implements OnInit {
   openLocation(location: Location) {
     this.editedLocation.loadLocation(location);
     this.router.navigate(['/home/create-location']);
+  }
+
+  deleteLocation(location: Location): void {
+    const ref = this.customModalService.open(location.name,"Etes vous sûr de supprimer vette adresse ?");
+    ref.result.then(res => {
+      if (res) {
+        this.locationService.deleteLocationById(location).subscribe(then => {
+          this.locationService.getAllLocations().subscribe((data: Location[]) => {
+            this.listLocations = data;
+          });
+          this.router.navigate(['/home/locations']);
+        });
+      } else {
+        return
+      }
+    })
   }
 }

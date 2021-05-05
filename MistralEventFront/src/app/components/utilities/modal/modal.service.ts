@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from './modal.component';
 import { Evenement } from '../../../models/evenement';
+import { Location } from '../../../models/location';
 import { DetailEventComponent } from '../../detail-event/detail-event.component';
 
 export interface buttonsLibelle  {

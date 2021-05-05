@@ -5,7 +5,7 @@
           <span id="applicationNameSidebar">Mistral Event</span>
         </div>
         <div class="profilSidebar">
-          <img [src]='account.avatar64' alt="Photo de profil">
+          <img [src]='account.avatar64' alt="Photo de profil" (click)="goToAccount()">
           <h3> {{account.firstname}} {{account.lastname}} </h3>
         </div>
         <div class="list-group list-group-flush">
