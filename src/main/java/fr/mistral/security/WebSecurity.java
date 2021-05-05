@@ -35,17 +35,20 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .cors().and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(SecurityConstants.SIGN_UP_URL,"/v2/api-docs","/swagger-ui.html","/swagger-resources/**",
+                .antMatchers(SecurityConstants.SIGN_UP_URL,"/h2-console/**","/v2/api-docs","/swagger-ui.html","/swagger-resources/**",
                         "/swagger-ui.html",
                         "/v2/api-docs",
                         "/webjars/**")
                 .permitAll()
+
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(getAuthenticationFilter())
                 .addFilter(new AuthorizationFilter(authenticationManager()))
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        http.headers().frameOptions().disable();
     }
 
 
