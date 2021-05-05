@@ -19,7 +19,7 @@
                 </div>
             </div>
             <h3>{{ evenement?.date | date: "dd/MM/yyyy H:mm" }}</h3>
-            <h3>{{ evenement?.location.adress }} à {{ evenement?.location.city }}</h3>
+            <h3><a [href]="'http://maps.google.com/?q=' + evenement.location.adress + evenement.location.city">{{ evenement?.location.adress }} à {{ evenement?.location.city }}</a></h3>
             <div id="participantsPhotos">
                 <img [src]="account.avatar64" alt="photo de profil" />
                 <img [src]="account.avatar64" alt="photo de profil" />
