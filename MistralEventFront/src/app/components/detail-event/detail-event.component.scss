@@ -187,6 +187,10 @@
         margin-top: 15px;
         font-weight: bold;
         font-size: 1.5rem;
+        a {
+          color: inherit;
+          text-decoration: none;
+        }
       }
       h4 {
         color: grey;
@@ -212,3 +216,4 @@
     font-size: 0.8rem;
   }
 }
+
