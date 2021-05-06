@@ -42,13 +42,9 @@ export class CreateEventComponent implements OnInit {
 
   allGroups: Group[] = [];
 
-  author?: User;
-
   isEditing = false;
 
   isNewLocation = false;
-
-  name = "Nicola"
 
   evenement: Evenement = {
     name: "",
@@ -88,13 +84,15 @@ export class CreateEventComponent implements OnInit {
     private editedEvenement: EditedEvenementService) {
     this.locationService.getAllLocations().subscribe(result => this.allLocations = result)
     this.isEditing = this.editedEvenement.evenement != null
-    this.usersService.getUser(this.tokenService.getId()).subscribe(result =>
-      this.author = result
-    );
+  
 
     if (this.isEditing) {
       this.evenement = this.editedEvenement.evenement;
     }
+
+    this.usersService.getUser(this.tokenService.getId()).subscribe(result =>
+      this.evenement.author = result
+    );
 
     this.groupsService.getGroups().subscribe(result => {
       this.allGroups = result
@@ -162,20 +160,20 @@ export class CreateEventComponent implements OnInit {
 
   addEvenement() {
     const groups: Group[] = this.allGroups.filter((group, index) => this.isChecked[index])
-    console.log(JSON.stringify(this.author))
-
-    if (this.editedEvenement.evenement == null) {
-      this.evenementService.addEvenement(this.evenement).subscribe(result => {
-        console.log(result)
-        this.router.navigate(['/home/agenda'])
-      })
-    }
-    else {
+    console.log(JSON.stringify(this.evenement.author))
+   if(this.isEditing) {
       this.evenementService.updateEvenementById(this.evenement).subscribe(result => {
         console.log(result)
         this.editedEvenement.loadEvenement(null)
         this.router.navigate(['/home/agenda'])
       })     
+    }
+    else
+    {
+      this.evenementService.addEvenement(this.evenement).subscribe(result => {
+        console.log(result)
+        this.router.navigate(['/home/agenda'])
+      })
     }
   }
 

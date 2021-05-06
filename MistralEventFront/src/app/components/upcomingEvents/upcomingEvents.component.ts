@@ -40,6 +40,7 @@ export class UpcomingEventsComponent implements OnInit {
       events: this.evenementService.getEvenements(),
     }).subscribe(({ user, events }) => {
       this.user = user;
+      console.log(events)
       this.filterEventByUserGroup(user, events);
     });
   }
