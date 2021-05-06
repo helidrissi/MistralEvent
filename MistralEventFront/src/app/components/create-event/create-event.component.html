@@ -4,7 +4,7 @@
 
     <div class="form-group">
         <label for="event-name">Nom</label>
-        <input name="event-name" formControlName="eventName" class="form-control" />
+        <input name="event-name" formControlName="eventName" class="form-control" [(ngModel)]="name" />
     </div>
     <form id="selectGroups">
         <div>Groupes</div>
@@ -25,35 +25,35 @@
 
     <div class="form-group">
         <label for="location">Lieu</label>
-        <select name="location" formControlName="location" class="form-control" [class.font-weight-bold]="this.locationControl.value === 'new'" list="location-list">
+        <select name="location" formControlName="location" class="form-control" [class.font-weight-bold]="this.locationControl.value === 'new'" list="location-list" (change)= "onLocationChange()">
       <option value="new" class="font-weight-bold">
         &lt; --nouveau lieu-- &gt;
       </option>
-      <option *ngFor="let location of locations" [value]="location.id">
+      <option *ngFor="let location of allLocations" [value]="location.id">
         {{ location.name }}
       </option>
     </select>
     </div>
-    <div *ngIf="isNewEvent" class="form-group">
+    <div *ngIf="isNewLocation" class="form-group">
         <label for="location-name">Nom du lieu</label>
-        <input name="location-name" formControlName="locationName" class="form-control" />
+        <input name="location-name" formControlName="locationName" class="form-control" [(ngModel)]="evenement.location.name"  />
     </div>
     <div class="form-group">
         <label for="street-address">Adresse</label>
-        <input name="street-address" formControlName="streetAddress" class="form-control" />
+        <input name="street-address" formControlName="streetAddress" class="form-control" [(ngModel)]="evenement.location.adress"/>
     </div>
 
     <div class="form-group">
         <label for="city">Ville</label>
-        <input name="city" formControlName="city" class="form-control" />
+        <input name="city" formControlName="city" class="form-control"  [(ngModel)]="evenement.location.city"/>
     </div>
     <div class="form-group">
         <label for="datetime">Heure</label>
-        <input type="datetime-local" name="datetime" min="{{ now }}" formControlName="datetime" class="form-control" />
+        <input type="datetime-local" name="datetime" min="{{ now }}" formControlName="datetime" class="form-control"  [(ngModel)]="evenement.date" />
     </div>
     <div class="form-group">
         <label for="description">Commentaires, Menu du jour...</label>
-        <textarea name="description" maxlength="200" formControlName="description" class="form-control"></textarea>
+        <textarea name="description" maxlength="200" formControlName="description" class="form-control" [(ngModel)]="evenement.comment"></textarea>
     </div>
     <input type="submit" [disabled]="!form.valid" class="btn btn-primary" />
 </form>

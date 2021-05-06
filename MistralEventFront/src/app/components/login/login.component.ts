@@ -6,6 +6,7 @@ import { TokenService } from '../../services/token.service';
 import { AuthService } from '../../services/auth.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 import { AppComponent } from '../../app.component';
 import { typeofExpr } from '@angular/compiler/src/output/output_ast';
@@ -19,6 +20,8 @@ import { FormsModule, FormBuilder } from '@angular/forms';
 export class LoginComponent implements OnInit {
 
   errorMessage: any;
+
+  connexionIcon = faCheck;
 
   env: any;
   class: any;

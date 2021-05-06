@@ -34,4 +34,7 @@ export class SidebarComponent implements OnInit {
     this.router.navigateByUrl("/login");
   }
 
+  goToAccount() {
+    this.router.navigateByUrl("/home/account");
+  }
 }

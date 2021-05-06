@@ -34,21 +34,35 @@ export class CreateEventComponent implements OnInit {
 
   descriptionControl = new FormControl('')
 
-  now = this.formatDate(new Date())
+  now = new Date()
 
   isChecked: boolean[] = [];
 
-  isNewEvent = false;
-
-  locations: Location[] = [];
+  allLocations: Location[] = [];
 
   allGroups: Group[] = [];
-
-  eventGroups: Group[] = [];
 
   author?: User;
 
   isEditing = false;
+
+  isNewLocation = false;
+
+  name = "Nicola"
+
+  evenement: Evenement = {
+    name: "",
+    date: new (Date),
+    comment: "",
+    type: 'resto',
+    location: {
+      name: "",
+      adress: "",
+      city: "",
+      images: []
+    },
+    groups: [],
+  }
 
   form: FormGroup = new FormGroup({
     eventName: this.eventNameControl,
@@ -72,122 +86,97 @@ export class CreateEventComponent implements OnInit {
     private tokenService: TokenService,
     private router: Router,
     private editedEvenement: EditedEvenementService) {
-    this.locationService.getAllLocations().subscribe(result => this.locations = result)
+    this.locationService.getAllLocations().subscribe(result => this.allLocations = result)
     this.isEditing = this.editedEvenement.evenement != null
-
     this.usersService.getUser(this.tokenService.getId()).subscribe(result =>
       this.author = result
     );
 
     if (this.isEditing) {
-      this.eventGroups = this.editedEvenement.evenement.groups;
+      this.evenement = this.editedEvenement.evenement;
     }
 
     this.groupsService.getGroups().subscribe(result => {
       this.allGroups = result
-      this.allGroups.forEach(group => this.isChecked.push(this.eventGroups.some(eventGroup => eventGroup.id === group.id)));
+      this.allGroups.forEach(group => this.isChecked.push(
+        this.evenement.groups.some(
+          eventGroup => eventGroup.id === group.id)
+          )
+        );
     })
   }
 
-
   ngOnInit(): void {
-
     this.locationService.getAllLocations().subscribe()
-
-
     this.disableLocationControls()
+  }
 
-    if (this.isEditing) {
-      const event = this.editedEvenement.evenement
-      const location = event.location;
-      this.eventNameControl.setValue(event.name);
-      this.locationControl.setValue(location.id)
-      this.locationNameControl.setValue(location.name)
-      this.streetAddressControl.setValue(location.adress)
-      this.cityControl.setValue(location.city)
-      this.datetimeControl.setValue(event.date)
-      this.descriptionControl.setValue(event.comment)
+
+  onLocationChange(){
+    if (this.locationControl.value === 'new') {
+      this.evenement.location = {
+        name: "",
+        adress: "",
+        city: "Clermont-Ferrand",
+        images: []
+      }
+      this.isNewLocation = true;
     }
-
-    this.locationControl.valueChanges.subscribe(value => {
-      if (this.locationControl.value === 'new') {
-        this.isNewEvent = true;
-        this.enableLocationControls()
-        this.locationNameControl.setValue('')
-        this.streetAddressControl.setValue('')
-        this.cityControl.setValue('Clermont-Ferrand')
-      }
-      else {
-        this.isNewEvent = false;
-        const location = this.getLocationById(this.locationControl.value)
-        this.disableLocationControls()
-        this.locationNameControl.setValue(location.name)
-        this.streetAddressControl.setValue(location.adress)
-        this.cityControl.setValue(location.city)
-
-      }
-    })
+    else {
+      this.evenement.location = this.getLocationById(this.locationControl.value)
+      this.isNewLocation = false;
+    }
   }
 
   onSubmit() {
     let location: Location;
     if (this.locationControl.value === "new") {
-      location = {
-        name: this.locationNameControl.value,
-        adress: this.streetAddressControl.value,
-        city: this.cityControl.value,
-        images: []
-      }
       this.locationService.addLocation(location).subscribe(result => {
         location = result
         /*         console.log(JSON.stringify(location)) */
-        this.addEvenement(location)
-
+        this.addEvenement()
       })
     }
     else {
       location = this.getLocationById(this.locationControl.value);
-      this.addEvenement(location)
+      this.addEvenement()
     }
   }
 
   toggleGroup(groupIndex: number, group: Group) {
     this.isChecked[groupIndex] = !this.isChecked[groupIndex]
+    if(this.evenement.groups.some(g => g.id === group.id))
+    {
+      this.evenement.groups.push(group)
+    }
+    else
+    {
+      this.evenement.groups = this.evenement.groups.filter(g => g.id !== group.id)
+    }
   }
 
   getLocationById(id: string) {
-    const location = this.locations.filter(location => location.id === parseInt(id))[0]
+    const location = this.allLocations.filter(location => location.id === parseInt(id))[0]
     return location
   }
 
-  addEvenement(location: Location) {
+  addEvenement() {
     const groups: Group[] = this.allGroups.filter((group, index) => this.isChecked[index])
     console.log(JSON.stringify(this.author))
-    let evenement: Evenement = {
-      name: this.eventNameControl.value,
-      date: this.datetimeControl.value,
-      comment: this.descriptionControl.value,
-      type: 'resto',
-      location: location,
-      groups: groups,
-      author: this.author
 
-    }
     if (this.editedEvenement.evenement == null) {
-      this.evenementService.addEvenement(evenement).subscribe(result => {
+      this.evenementService.addEvenement(this.evenement).subscribe(result => {
         console.log(result)
         this.router.navigate(['/home/agenda'])
       })
     }
     else {
-      evenement.id = this.editedEvenement.evenement.id;
-      this.evenementService.updateEvenementById(evenement).subscribe(result => {
+      this.evenementService.updateEvenementById(this.evenement).subscribe(result => {
         console.log(result)
         this.editedEvenement.loadEvenement(null)
-      })
-      this.router.navigate(['/home/agenda'])
+        this.router.navigate(['/home/agenda'])
+      })     
     }
-
   }
 
   disableLocationControls() {
