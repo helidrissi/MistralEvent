@@ -26,6 +26,10 @@ import { ToasterService } from '../utilities/toaster/toaster.service';
 })
 export class UpcomingEventsComponent implements OnInit {
   events: Evenement[] = [];
+  eventsSemaine: Evenement[] = [];
+  eventsMois: Evenement[] = [];
+  eventsApres: Evenement[] = [];
+
   plusIcon = faPlus;
   user: User;
   evenement: Evenement;
@@ -47,10 +51,15 @@ export class UpcomingEventsComponent implements OnInit {
   }
 
   refreshList() {
+    this.eventsSemaine = [];
+    this.eventsMois = [];
+    this.eventsApres = [];
+
     if (this.accountService.user != null) {
       this.user = this.accountService.user;
       this.evenementService.getNextEvenements(false, this.accountService.user.userId).subscribe((res: Evenement[]) => {
         this.events = res;
+        this.refreshLists();
       });
     } else {
       // On passe par là quand le code est rechargé suite à une modif dans le code dans Visual Studio, cas de figure propre au dév
@@ -59,8 +68,37 @@ export class UpcomingEventsComponent implements OnInit {
         this.accountService.refreshUser(userLoaded);
         this.evenementService.getNextEvenements(false, userLoaded.userId).subscribe((res: Evenement[]) => {
           this.events = res;
+          this.refreshLists();
         });
       }); 
+    }
+  }
+
+  refreshLists() {
+    let semaine = new Date(Date.now());
+    semaine.setHours(23);
+    semaine.setMinutes(59);
+    semaine.setSeconds(59);
+    semaine.setDate(semaine.getDate() + 6);
+    var semaineInt: number = +this.datepipe.transform(semaine, 'yyyyMMddHHmm');
+
+    let mois = new Date(Date.now());
+    mois.setHours(23);
+    mois.setMinutes(59);
+    mois.setSeconds(59);
+    mois.setMonth(mois.getMonth() + 1);
+    var moisInt: number = +this.datepipe.transform(mois, 'yyyyMMddHHmm');
+
+    for (let event of this.events) {
+      var dateInt: number = +this.datepipe.transform(event.date, 'yyyyMMddHHmm');
+
+      if (dateInt <= semaineInt) {
+        this.eventsSemaine.push(event);
+      } else if (dateInt <= moisInt) {
+        this.eventsMois.push(event);
+      } else {
+        this.eventsApres.push(event);
+      }
     }
   }
 
@@ -89,6 +127,11 @@ export class UpcomingEventsComponent implements OnInit {
   
   imComing(event: Evenement) {
     return this.imComingService.imComing(event, this.user);
+  }
+
+  async add() {
+    this.editedEvenement.loadEvenement(undefined)
+    await this.router.navigate(['/home/create-event'])
   }
 
 }

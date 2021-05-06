@@ -1,4 +1,10 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
+import {
+  faTimes,
+  faSave,
+  faGlassCheers,
+  faTrash
+} from '@fortawesome/free-solid-svg-icons';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { EvenementService } from '../../services/evenement.service';
@@ -20,6 +26,11 @@ import { EditedEvenementService } from 'src/app/services/edited-evenement.servic
   styleUrls: ['./create-event.component.scss']
 })
 export class CreateEventComponent implements OnInit {
+  saveIcon = faSave;
+  cancelIcon = faTimes;
+  eventIcon = faGlassCheers;
+  deleteIcon = faTrash;
+
   eventNameControl = new FormControl('', Validators.required)
 
   locationControl = new FormControl('', Validators.required)
@@ -29,6 +40,8 @@ export class CreateEventComponent implements OnInit {
   streetAddressControl = new FormControl('', Validators.required)
 
   cityControl = new FormControl('', Validators.required)
+
+  phoneControl = new FormControl('')
 
   datetimeControl = new FormControl('', Validators.required)
 
@@ -48,7 +61,7 @@ export class CreateEventComponent implements OnInit {
 
   isNewLocation = false;
 
-  name = "Nicola"
+  name = "Nouvel évènement"
 
   evenement: Evenement = {
     name: "",
@@ -59,9 +72,11 @@ export class CreateEventComponent implements OnInit {
       name: "",
       adress: "",
       city: "",
+      phone: "",
       images: []
     },
     groups: [],
+    users: []
   }
 
   form: FormGroup = new FormGroup({
@@ -70,6 +85,7 @@ export class CreateEventComponent implements OnInit {
     locationName: this.locationNameControl,
     streetAddress: this.streetAddressControl,
     city: this.cityControl,
+    phone: this.phoneControl,
     datetime: this.datetimeControl,
     description: this.descriptionControl
   });
@@ -118,27 +134,27 @@ export class CreateEventComponent implements OnInit {
         name: "",
         adress: "",
         city: "Clermont-Ferrand",
+        phone: "",
         images: []
       }
       this.isNewLocation = true;
-    }
-    else {
+      this.enableLocationControls();
+    } else {
       this.evenement.location = this.getLocationById(this.locationControl.value)
       this.isNewLocation = false;
+      this.disableLocationControls();
     }
   }
 
   onSubmit() {
-    let location: Location;
     if (this.locationControl.value === "new") {
-      this.locationService.addLocation(location).subscribe(result => {
-        location = result
-        /*         console.log(JSON.stringify(location)) */
+      this.locationService.addLocation(this.evenement.location).subscribe(result => {
+        this.evenement.location = result
         this.addEvenement()
       })
     }
     else {
-      location = this.getLocationById(this.locationControl.value);
+      this.evenement.location = this.getLocationById(this.locationControl.value);
       this.addEvenement()
     }
   }
@@ -162,17 +178,16 @@ export class CreateEventComponent implements OnInit {
 
   addEvenement() {
     const groups: Group[] = this.allGroups.filter((group, index) => this.isChecked[index])
-    console.log(JSON.stringify(this.author))
-
+    this.evenement.groups = groups;
+    
     if (this.editedEvenement.evenement == null) {
+      this.evenement.author = this.author;
       this.evenementService.addEvenement(this.evenement).subscribe(result => {
-        console.log(result)
         this.router.navigate(['/home/agenda'])
       })
     }
     else {
       this.evenementService.updateEvenementById(this.evenement).subscribe(result => {
-        console.log(result)
         this.editedEvenement.loadEvenement(null)
         this.router.navigate(['/home/agenda'])
       })     
@@ -183,11 +198,21 @@ export class CreateEventComponent implements OnInit {
     this.locationNameControl.disable()
     this.cityControl.disable()
     this.streetAddressControl.disable()
+    this.phoneControl.disable()
   }
 
   enableLocationControls() {
     this.locationNameControl.enable()
     this.cityControl.enable()
     this.streetAddressControl.enable()
+    this.phoneControl.enable()
+  }
+
+  cancel() {
+    this.router.navigate(['/home/agenda'])
+  }
+
+  supprimer() {
+
   }
 }

@@ -15,9 +15,9 @@
         </thead>-->
         <tbody>
           <tr *ngFor="let location of listLocations" style="vertical-align: middle;">
-            <td scope="row" style="width:25%; vertical-align: middle;"><h2>{{location.name}}</h2></td>
-            <td scope="row" style="width:50%; vertical-align: middle;"><fa-icon [icon]="addressIcon"></fa-icon>&nbsp;{{location.adress}}, {{ location.city}}</td>
-            <td scope="row" style="width:25%; vertical-align: middle;"><fa-icon [icon]="phoneIcon"></fa-icon>&nbsp;{{location.phone}}</td>
+            <td scope="row" style="width:40%; vertical-align: middle;"><h2>{{location.name}}</h2></td>
+            <td scope="row" style="width:40%; vertical-align: middle;"><fa-icon [icon]="addressIcon"></fa-icon>&nbsp;{{location.adress}}, {{ location.city}}</td>
+            <td scope="row" style="width:20%; vertical-align: middle;"><fa-icon [icon]="phoneIcon"></fa-icon>&nbsp;{{location.phone}}</td>
             <td scope="row" style="vertical-align: middle;">
               <a class="galleryLocation" (click)="showGallery(location)">
                 <button class="btn btn-primary">

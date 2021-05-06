@@ -1,20 +1,54 @@
 <div class="main-screen">
-  <div *ngIf="events?.length > 0; else noEvent">
-    <h3>Cette semaine</h3>
+  <h3>Aujourd'hui et les prochains jours</h3>
+  <div *ngIf="eventsSemaine?.length > 0; else noEvent">
     <div class="card-list row">
-      <div class="col col-md-4" *ngFor="let event of events">
+      <div class="col col-md-4" *ngFor="let event of eventsSemaine">
         <app-eventCard [evenement]=event type="upCommingCard" [user]=user [imComing]="imComing(event)"  (IAccept)="IAccept($event)" (IRefuse)="IRefuse($event)"></app-eventCard>
       </div>
     </div>
   </div>
   <ng-template #noEvent>
     <div class="noEvent">
-      <h3 class="alert alert-danger">Vous n'avez pas d'événement à venir</h3>
+      <h3 class="alert alert-danger">Vous n'avez pas d'événement aujourd'hui et les prochains jours</h3>
     </div>
   </ng-template>
 
+  <div style="height: 20px;"></div>
+
+  <h3>Dans le mois qui vient</h3>
+  <div *ngIf="eventsMois?.length > 0; else noEvent2">
+    <div class="card-list row">
+      <div class="col col-md-4" *ngFor="let event of eventsMois">
+        <app-eventCard [evenement]=event type="upCommingCard" [user]=user [imComing]="imComing(event)"  (IAccept)="IAccept($event)" (IRefuse)="IRefuse($event)"></app-eventCard>
+      </div>
+    </div>
+  </div>
+  <ng-template #noEvent2>
+    <div class="noEvent">
+      <h3 class="alert alert-danger">Vous n'avez pas d'événement à venir dans le mois qui vient</h3>
+    </div>
+  </ng-template>
+
+  <div style="height: 20px;"></div>
+
+  <h3>Autres évènements</h3>
+  <div *ngIf="eventsApres?.length > 0; else noEvent3">
+    <div class="card-list row">
+      <div class="col col-md-4" *ngFor="let event of eventsApres">
+        <app-eventCard [evenement]=event type="upCommingCard" [user]=user [imComing]="imComing(event)"  (IAccept)="IAccept($event)" (IRefuse)="IRefuse($event)"></app-eventCard>
+      </div>
+    </div>
+  </div>
+  <ng-template #noEvent3>
+    <div class="noEvent">
+      <h3 class="alert alert-danger">Vous n'avez pas d'autres événement à venir</h3>
+    </div>
+  </ng-template>
+  
+  <div style="height: 40px;"></div>
+
   <div class="addButtonDiv">
-    <a [routerLink]="['/home', 'create-event']" routerLinkActive="active-link" class="btn btn-success addButton">
+    <a (click)="add()" class="btn btn-success addButton">
       <fa-icon [icon]="plusIcon" class="mx-auto plusIcon"></fa-icon>
     </a>
   </div>

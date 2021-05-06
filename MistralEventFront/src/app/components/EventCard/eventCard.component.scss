@@ -9,14 +9,30 @@
   }
   .btn-card-agenda {
     display: flex;
-    justify-content: space-between;
+    //justify-content: space-between;
     
-    margin-top: 15px;
-
-    a {
-      width: 120px;
-      padding: auto;
+    //display: flex;
+    //padding: 0 20px 10px 20px;
+    .left-side-card-agenda {
+      .btn-update {
+        margin-left: 20px;
+      }
+      width: 50%;
+      display: flex;
+      align-self: flex-start;
     }
+    .right-side-card-agenda {
+      .btn-success {
+        margin-right: 20px;
+      }
+      .btn {
+        white-space: nowrap;
+      }
+      width: 50%;
+      display: flex;
+      justify-content: flex-end;
+    }
+
   }
 
   
@@ -43,6 +59,19 @@
       height: 300px;
       object-fit: cover;
     }
+  }
+  
+
+  .btn-success.disabled, .btn-success:disabled {
+    color: #198754;
+    background-color: transparent;
+    border: 1px solid #198754;
+  }
+
+  .btn-danger.disabled, .btn-danger:disabled {
+    color: #dc3545;
+    background-color: transparent;
+    border: 1px solid #dc3545;
   }
 }
 

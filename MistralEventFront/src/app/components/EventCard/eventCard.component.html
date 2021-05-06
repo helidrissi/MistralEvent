@@ -12,15 +12,19 @@
         <!-- {{evenement.description.length > 200 ? (evenement.description | slice:0:200)+'...' : evenement.description }} -->
         {{ evenement.comment }}
         <div class="btn-card-agenda">
-            <button  class="btn btn-primary" (click)="openDetailEvent()">
-                <fa-icon [icon]="infoIcon"></fa-icon>&nbsp;Détails
-            </button>
-            <button *ngIf="type === 'upCommingCard'" class="btn btn-success" [disabled]="imComing" (click)="sendResponseEvent(true)">
-                <fa-icon [icon]="grinIcon"></fa-icon>&nbsp;Je viens
-            </button>
-            <button class="btn btn-danger" [disabled]="!imComing" (click)="sendResponseEvent(false)">
-                <fa-icon [icon]="tearIcon"></fa-icon>&nbsp;Je viens pas
-            </button>
+            <div class="left-side-card-agenda">
+                <button  class="btn btn-primary" (click)="openDetailEvent()">
+                    <fa-icon [icon]="infoIcon"></fa-icon>&nbsp;Détails
+                </button>
+            </div>
+            <div class="right-side-card-agenda">
+                <button *ngIf="type === 'upCommingCard'" class="btn btn-success" [disabled]="imComing" (click)="sendResponseEvent(true)">
+                    <fa-icon [icon]="grinIcon"></fa-icon>&nbsp;Je viens
+                </button>
+                <button class="btn btn-danger" [disabled]="!imComing" (click)="sendResponseEvent(false)">
+                    <fa-icon [icon]="tearIcon"></fa-icon>&nbsp;Je viens pas
+                </button>
+            </div>
         </div>
     </div>
 </div>

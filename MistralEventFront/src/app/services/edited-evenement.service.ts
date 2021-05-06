@@ -12,9 +12,9 @@ export class EditedEvenementService {
   loadEvenement(evenement: Evenement) {
     if (evenement == null) {
       this.evenement = null;
-
     } else {
       this.evenement = evenement;
+      console.log(JSON.stringify(evenement));
     }
   }
 }
