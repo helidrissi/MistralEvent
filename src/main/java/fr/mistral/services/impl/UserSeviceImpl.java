@@ -1,58 +1,53 @@
 package fr.mistral.services.impl;
 
 
-import fr.mistral.domain.Event;
-import fr.mistral.domain.UserEntity;
+import fr.mistral.domain.User;
 import fr.mistral.repositories.UserRepository;
 import fr.mistral.services.UserService;
 import fr.mistral.shared.Utils;
 import fr.mistral.shared.dto.UserDto;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
- * Created by hel on 27/02/2021.
+ * @author hamza.elidrissi  27/02/2021.
  */
+@AllArgsConstructor
 @Service
 public class UserSeviceImpl implements UserService {
 
-    @Autowired
     UserRepository userRepository;
-
-    @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    @Autowired
+    PasswordEncoder bCryptPasswordEncoder;
     Utils util;
 
 
     @Override
     public UserDto createUser(UserDto user) {
 
-        UserEntity checkUser = userRepository.findByEmail(user.getEmail());
+        Optional<User> checkUser = userRepository.findByEmail(user.getEmail());
 
-        if (checkUser != null) throw new RuntimeException("User Alrady Exists !");
+        if (checkUser.isPresent()) throw new RuntimeException("User Alrady Exists !");
 
 
         ModelMapper modelMapper = new ModelMapper();
 
-        UserEntity userEntity = modelMapper.map(user, UserEntity.class);
+        User userEntity = modelMapper.map(user, User.class);
 
 
         userEntity.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
         userEntity.setUserId(util.generateStringId(32));
 
-        UserEntity newUser = userRepository.save(userEntity);
+        User newUser = userRepository.save(userEntity);
 
         UserDto userDto = modelMapper.map(newUser, UserDto.class);
 
@@ -61,47 +56,36 @@ public class UserSeviceImpl implements UserService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-
-        UserEntity userEntity = userRepository.findByEmail(email);
-
-        if (userEntity == null) throw new UsernameNotFoundException(email);
-
-        return new User(userEntity.getEmail(), userEntity.getPassword(), new ArrayList<>());
-    }
-
-
-    @Override
     public UserDto getUser(String email) {
 
-        UserEntity userEntity = userRepository.findByEmail(email);
-
-        if (userEntity == null) throw new UsernameNotFoundException(email);
+        User user = userRepository.findByEmail(email).orElseThrow(()->{
+            return new UsernameNotFoundException("Email : "+ email + "Not found");
+        });
 
         UserDto userDto = new UserDto();
 
-        BeanUtils.copyProperties(userEntity, userDto);
+        BeanUtils.copyProperties(user, userDto);
 
         return userDto;
     }
 
 
     @Override
-    public UserEntity getUserByUserId(String userId) {
+    public User getUserByUserId(String userId) {
 
-        UserEntity userEntity = userRepository.findByUserId(userId);
+        User user = userRepository.findByUserId(userId);
 
-        if (userEntity == null) throw new UsernameNotFoundException(userId);
+        if (user == null) throw new UsernameNotFoundException(userId);
 
         /*UserDto userDto = new UserDto();
 
         BeanUtils.copyProperties(userEntity, userDto);*/
         //userEntity.setPassword(bCryptPasswordEncoder.encode(userEntity.getPassword()));
-        return userEntity;
+        return user;
     }
 
     @Override
-    public UserEntity patchUser(Long id, UserEntity user) {
+    public User patchUser(Long id, User user) {
         return userRepository.findById(id).map(us -> {
 
             if (user.getFirstName() != null) {
@@ -119,7 +103,7 @@ public class UserSeviceImpl implements UserService {
             if (user.getGroups() != null) {
                 us.setGroups(user.getGroups());
             }
-            UserEntity userUpdated = userRepository.save(us);
+            User userUpdated = userRepository.save(us);
 
 
             return userUpdated;
@@ -129,10 +113,10 @@ public class UserSeviceImpl implements UserService {
 
 
     @Override
-    public List<UserEntity> getUsers() {
+    public List<User> getUsers() {
 
 
-        return (List<UserEntity>) userRepository.findAll();
+        return (List<User>) userRepository.findAll();
     }
 
 }

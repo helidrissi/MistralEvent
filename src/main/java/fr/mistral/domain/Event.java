@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,13 +35,13 @@ public class Event {
     private String type;
     @JsonIgnore
     @ManyToOne
-    private UserEntity author;
+    private User author;
     @ManyToMany
     @JoinTable(name = "users_event",
             joinColumns = @JoinColumn(name = "users_id"),
             inverseJoinColumns = @JoinColumn(name = "event_id"))
              @JsonIgnoreProperties("events")
-    private Set<UserEntity> users=new HashSet<>();
+    private Set<User> users=new HashSet<>();
     @ManyToMany
     @JoinTable(name = "event_groups",
             joinColumns = @JoinColumn(name = "event_id"),

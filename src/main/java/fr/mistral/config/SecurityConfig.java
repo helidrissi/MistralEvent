@@ -1,26 +1,28 @@
-package fr.mistral.security;
+package fr.mistral.config;
 
+import fr.mistral.security.AuthenticationFilter;
+import fr.mistral.security.AuthorizationFilter;
+import fr.mistral.security.MevPasswordEncoderFactories;
+import fr.mistral.security.SecurityConstants;
 import fr.mistral.services.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * Created by hel on 27/02/2021.
  */
+@RequiredArgsConstructor
 @EnableWebSecurity
-public class WebSecurity extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserService userDetailsService;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public WebSecurity(UserService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.userDetailsService = userDetailsService;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
 
 
     @Override
@@ -30,13 +32,15 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http
                 .cors().and()
                 .csrf().disable()
-                .authorizeRequests()
-                .antMatchers(SecurityConstants.SIGN_UP_URL, "/h2-console/**", "/v2/api-docs", "/swagger-ui.html", "/swagger-resources/**",
-                        "/swagger-ui.html",
-                        "/v2/api-docs",
-                        "/webjars/**", "/h2-console/**")
-                .permitAll()
-
+                .authorizeRequests(authorize -> {
+                    authorize.antMatchers("/h2-console/**").permitAll();// ne pas faire ça en prod
+                    authorize.antMatchers("/v2/api-docs", "/swagger-ui.html", "/swagger-resources/**",
+                            "/swagger-ui.html",
+                            "/v2/api-docs",
+                            "/webjars/**", "/h2-console/**").permitAll();
+                    authorize.antMatchers(HttpMethod.POST, SecurityConstants.SIGN_UP_URL).permitAll();
+                    authorize.mvcMatchers(HttpMethod.GET, "/api/v1/events/**").permitAll();
+                }).authorizeRequests()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(getAuthenticationFilter())
@@ -44,7 +48,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
 
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
+        //h2 conf
         http.headers().frameOptions().disable();
 
     }
@@ -55,10 +59,14 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         filter.setFilterProcessesUrl("/users/login");
         return filter;
     }
+    @Bean
+    PasswordEncoder passwordEncoder() {
 
+        return MevPasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
 
-    @Override
+    /*@Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
-    }
+    }*/
 }

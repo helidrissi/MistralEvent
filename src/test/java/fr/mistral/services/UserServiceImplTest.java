@@ -1,6 +1,6 @@
 package fr.mistral.services;
 
-import fr.mistral.domain.UserEntity;
+import fr.mistral.domain.User;
 import fr.mistral.repositories.UserRepository;
 import fr.mistral.services.impl.UserSeviceImpl;
 import org.aspectj.lang.annotation.Before;
@@ -27,20 +27,20 @@ public class UserServiceImplTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        userService = new UserSeviceImpl();
+       // userService = new UserSeviceImpl();
     }
 
     @Test
     public void getAllUsers() throws Exception {
         //given
-        UserEntity user1 = new UserEntity();
+        User user1 = new User();
         user1.setId(1l);
         user1.setFirstName("hamza");
         user1.setLastName("eli");
         user1.setEmail("hamza.elidrissi@mistral.fr");
         user1.setPassword("123456");
 
-        UserEntity user2 = new UserEntity();
+        User user2 = new User();
         user2.setId(1l);
         user2.setFirstName("Sam");
         user2.setLastName("eli");
@@ -50,7 +50,7 @@ public class UserServiceImplTest {
         when(userRepository.findAll()).thenReturn(Arrays.asList(user1, user2));
 
         //when
-        List<UserEntity> users = userService.getUsers();
+        List<User> users = userService.getUsers();
 
         //then
         assertEquals(2, users.size());

@@ -30,7 +30,7 @@ public class Group {
     private String name;
     @JsonIgnore
     @ManyToMany(mappedBy = "groups")
-    private Set<UserEntity> users=new HashSet<>();
+    private Set<User> users=new HashSet<>();
     @JsonIgnore
     @ManyToMany(mappedBy = "groups")
     private Set<Event> events=new HashSet<>();

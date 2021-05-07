@@ -1,7 +1,6 @@
 package fr.mistral.controllers.v1;
 
-import fr.mistral.domain.Location;
-import fr.mistral.domain.UserEntity;
+import fr.mistral.domain.User;
 import fr.mistral.exceptions.UserException;
 import fr.mistral.requests.UserRequest;
 import fr.mistral.responses.ErrorMessages;
@@ -9,7 +8,6 @@ import fr.mistral.responses.UserResponse;
 import fr.mistral.services.UserService;
 import fr.mistral.shared.dto.UserDto;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -31,22 +29,22 @@ public class UserController {
     UserService userService;
 
     @GetMapping(path = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<UserEntity> getUser(@PathVariable String id) {
+    public ResponseEntity<User> getUser(@PathVariable String id) {
 
-        UserEntity user = userService.getUserByUserId(id);
+        User user = userService.getUserByUserId(id);
 
         /*UserResponse userResponse = new UserResponse();
 
         BeanUtils.copyProperties(userDto, userResponse);*/
 
-        return new ResponseEntity<UserEntity>(user, HttpStatus.OK);
+        return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    public List<UserEntity> getAllUsers() {
+    public List<User> getAllUsers() {
 
-        List<UserEntity> userEntities = userService.getUsers();
+        List<User> userEntities = userService.getUsers();
 
 
         return userEntities;
@@ -77,8 +75,8 @@ public class UserController {
     }
     @PatchMapping({"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-    public UserEntity patchLocation(@PathVariable Long id, @RequestBody UserEntity userEntity) {
-        return userService.patchUser(id, userEntity);
+    public User patchLocation(@PathVariable Long id, @RequestBody User user) {
+        return userService.patchUser(id, user);
     }
 
 }

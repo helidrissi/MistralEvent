@@ -3,43 +3,44 @@ package fr.mistral.bootstrap;
 import fr.mistral.domain.Event;
 import fr.mistral.domain.Group;
 import fr.mistral.domain.Location;
-import fr.mistral.domain.UserEntity;
+import fr.mistral.domain.User;
 import fr.mistral.repositories.EventRepository;
 import fr.mistral.repositories.GroupRepository;
 import fr.mistral.repositories.LocationRepository;
 import fr.mistral.repositories.UserRepository;
 import fr.mistral.shared.Utils;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 
+
+@Slf4j
+@RequiredArgsConstructor
 @Component
 @Transactional
+@Profile("dev")
 public class Bootstrap implements CommandLineRunner {
 
-    @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Autowired
-    Utils util;
 
+
+    private final PasswordEncoder bCryptPasswordEncoder;
+    private final Utils util;
     private final EventRepository eventRepository;
     private final LocationRepository locationRepository;
     private final GroupRepository groupRepository;
     private final UserRepository userRepository;
 
-    public Bootstrap(EventRepository eventRepository, LocationRepository locationRepository, GroupRepository groupRepository, UserRepository userRepository) {
-        this.eventRepository = eventRepository;
-        this.locationRepository = locationRepository;
-        this.groupRepository = groupRepository;
-        this.userRepository = userRepository;
-    }
+
 
 
     @Override
@@ -53,7 +54,7 @@ public class Bootstrap implements CommandLineRunner {
         Group group = new Group();
         group.setName("Mistral");
 
-        UserEntity user = new UserEntity();
+        User user = new User();
         user.setFirstName("Anthony");
         user.setLastName("Pfeifer");
         user.setEmail("anthony.pfeifer@mistral.fr");
@@ -81,6 +82,6 @@ public class Bootstrap implements CommandLineRunner {
         locationRepository.save(location);
         eventRepository.save(fest);
 
-        System.out.println("Event Loaded: " + eventRepository.count());
+        log.debug("Event Loaded: " + eventRepository.count());
     }
 }
