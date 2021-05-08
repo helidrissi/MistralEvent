@@ -1,7 +1,7 @@
 package fr.mistral.controllers.v1;
 
 import fr.mistral.domain.Event;
-import fr.mistral.domain.UserEntity;
+import fr.mistral.domain.User;
 import fr.mistral.requests.EventsRequest;
 import fr.mistral.services.EventService;
 import fr.mistral.services.UserService;
@@ -37,14 +37,14 @@ public class EventController {
     @PostMapping({"/agenda"})
     @ResponseStatus(HttpStatus.OK)
     public List<Event> getListAgenda(@RequestBody EventsRequest request) {
-        UserEntity user = userService.getUserByUserId(request.getUserId());
+        User user = userService.getUserByUserId(request.getUserId());
         return eventService.getEvents(true, request.isWithOld(), user);
     }
 
     @PostMapping({"/next"})
     @ResponseStatus(HttpStatus.OK)
     public List<Event> getListNextEvents(@RequestBody EventsRequest request) {
-        UserEntity user = userService.getUserByUserId(request.getUserId());
+        User user = userService.getUserByUserId(request.getUserId());
         return eventService.getEvents(false, request.isWithOld(), user);
     }
 

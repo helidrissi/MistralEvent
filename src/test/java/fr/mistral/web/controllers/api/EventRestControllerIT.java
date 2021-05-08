@@ -68,7 +68,7 @@ public class EventRestControllerIT {
 
 
 
-    @Test
+    /*@Test
     void deleteEventHttpBasic() throws Exception{
         mockMvc.perform(delete("/api/v1/events/1")
                 .with(httpBasic("anthony.pfeifer@mistral.fr", "Cookies")))
@@ -93,6 +93,6 @@ public class EventRestControllerIT {
     void findEventById() throws Exception{
         mockMvc.perform(get("/api/v1/events/1"))
                 .andExpect(status().isOk());
-    }
+    }*/
 
 }

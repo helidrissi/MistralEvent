@@ -73,7 +73,7 @@ public class Bootstrap implements CommandLineRunner {
         user.getGroups().add(group2);
         userRepository.save(user);
 
-        UserEntity user2 = new UserEntity();
+        User user2 = new User();
         user2.setFirstName("Orianne");
         user2.setLastName("Ferré");
         user2.setEmail("orianne.ferre@mistral.fr");

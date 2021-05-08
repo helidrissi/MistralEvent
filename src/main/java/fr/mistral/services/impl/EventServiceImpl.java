@@ -2,7 +2,7 @@ package fr.mistral.services.impl;
 
 import fr.mistral.domain.Event;
 import fr.mistral.domain.Group;
-import fr.mistral.domain.UserEntity;
+import fr.mistral.domain.User;
 import fr.mistral.repositories.EventRepository;
 import fr.mistral.services.EventService;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<Event> getEvents(boolean isAgenda, boolean withOld, UserEntity user) {
+    public List<Event> getEvents(boolean isAgenda, boolean withOld, User user) {
         List<Event> list = eventRepository.findAll();
         ArrayList<Event> retour = new ArrayList<Event> ();
 

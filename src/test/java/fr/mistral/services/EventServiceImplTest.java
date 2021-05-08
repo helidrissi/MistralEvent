@@ -116,7 +116,7 @@ public class EventServiceImplTest {
         assertEquals("/api/v1/customers/1", savedDto.getCustomerUrl());
     }
 */
-    @Test
+/*    @Test
     public void deleteEventById() throws Exception {
 
         Long id = 1L;
@@ -124,5 +124,5 @@ public class EventServiceImplTest {
         eventRepository.deleteById(id);
 
         verify(eventRepository, times(1)).deleteById(anyLong());
-    }
+    }*/
 }
