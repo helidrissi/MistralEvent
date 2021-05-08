@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "image_table")
 @Data
 @AllArgsConstructor
-@NoArgsConstructor(access= AccessLevel.PUBLIC, force=true)
+@NoArgsConstructor(access = AccessLevel.PUBLIC, force = true)
 @ToString
 public class ImageModel {
 
@@ -22,10 +22,9 @@ public class ImageModel {
     @Column(name = "picByte", length = 1000)
     @Lob
     private byte[] picByte;
-   /* @JsonIgnore
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name="loc_id", nullable=false)
-    private Location location;*/
+    private Location location;
 
     public ImageModel(String name, String type, byte[] picByte) {
         this.name = name;
