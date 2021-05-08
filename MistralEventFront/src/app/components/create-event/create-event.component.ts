@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
 import { TokenService } from 'src/app/services/token.service';
 import { EditedEvenementService } from 'src/app/services/edited-evenement.service';
+import { ModalService } from '../utilities/modal/modal.service';
 
 
 @Component({
@@ -101,7 +102,8 @@ export class CreateEventComponent implements OnInit {
     private usersService: UsersService,
     private tokenService: TokenService,
     private router: Router,
-    private editedEvenement: EditedEvenementService) {
+    private editedEvenement: EditedEvenementService,
+    private customModalService: ModalService) {
     this.locationService.getAllLocations().subscribe(result => this.allLocations = result)
     this.isEditing = this.editedEvenement.evenement != null
     this.usersService.getUser(this.tokenService.getId()).subscribe(result =>
@@ -183,13 +185,13 @@ export class CreateEventComponent implements OnInit {
     if (this.editedEvenement.evenement == null) {
       this.evenement.author = this.author;
       this.evenementService.addEvenement(this.evenement).subscribe(result => {
-        this.router.navigate(['/home/agenda'])
+        this.cancel()
       })
     }
     else {
       this.evenementService.updateEvenementById(this.evenement).subscribe(result => {
         this.editedEvenement.loadEvenement(null)
-        this.router.navigate(['/home/agenda'])
+        this.cancel()
       })     
     }
   }
@@ -213,6 +215,15 @@ export class CreateEventComponent implements OnInit {
   }
 
   supprimer() {
-
+    const ref = this.customModalService.open(this.editedEvenement.evenement.name,"Etes vous sûr de supprimer cet évènement ?");
+    ref.result.then(res => {
+      if (res) {
+        this.evenementService.deleteEvenementById(this.editedEvenement.evenement).subscribe(then => {
+          this.cancel();
+        });
+      } else {
+        return
+      }
+    })
   }
 }

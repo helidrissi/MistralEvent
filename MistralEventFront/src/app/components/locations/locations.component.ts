@@ -65,7 +65,7 @@ export class LocationsComponent implements OnInit {
   }
 
   deleteLocation(location: Location): void {
-    const ref = this.customModalService.open(location.name,"Etes vous sûr de supprimer vette adresse ?");
+    const ref = this.customModalService.open(location.name,"Etes vous sûr de supprimer cette adresse ?");
     ref.result.then(res => {
       if (res) {
         this.locationService.deleteLocationById(location).subscribe(then => {
