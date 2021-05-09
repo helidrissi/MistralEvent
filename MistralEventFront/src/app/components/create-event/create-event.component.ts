@@ -5,7 +5,6 @@ import { EvenementService } from '../../services/evenement.service';
 import { Evenement } from '../../models/evenement';
 import { Location } from '../../models/location';
 import { Group } from '../../models/group';
-import { User } from '../../models/user';
 import { LocationService } from 'src/app/services/location.service';
 import { GroupsService } from 'src/app/services/groups.service';
 import { Router } from '@angular/router';
@@ -20,6 +19,8 @@ import { EditedEvenementService } from 'src/app/services/edited-evenement.servic
   styleUrls: ['./create-event.component.scss']
 })
 export class CreateEventComponent implements OnInit {
+
+  newLocationId = "$new"
   eventNameControl = new FormControl('', Validators.required)
 
   locationControl = new FormControl('', Validators.required)
@@ -46,12 +47,15 @@ export class CreateEventComponent implements OnInit {
 
   isNewLocation = false;
 
+
+
   evenement: Evenement = {
     name: "",
     date: new (Date),
     comment: "",
     type: 'resto',
     location: {
+      id: 0,
       name: "",
       adress: "",
       city: "",
@@ -84,34 +88,57 @@ export class CreateEventComponent implements OnInit {
     private editedEvenement: EditedEvenementService) {
     this.locationService.getAllLocations().subscribe(result => this.allLocations = result)
     this.isEditing = this.editedEvenement.evenement != null
-  
 
     if (this.isEditing) {
       this.evenement = this.editedEvenement.evenement;
     }
-
     this.usersService.getUser(this.tokenService.getId()).subscribe(result =>
       this.evenement.author = result
     );
 
     this.groupsService.getGroups().subscribe(result => {
       this.allGroups = result
-      this.allGroups.forEach(group => this.isChecked.push(
-        this.evenement.groups.some(
-          eventGroup => eventGroup.id === group.id)
-          )
-        );
+      this.allGroups.forEach(g => this.isChecked.push(this.evenement.groups.some(eventGroup => eventGroup.id === g.id)
+      )
+      );
     })
   }
 
   ngOnInit(): void {
     this.locationService.getAllLocations().subscribe()
+    if (this.isEditing) {
+      this.locationControl.setValue(this.evenement.location.id)
+    }
     this.disableLocationControls()
   }
 
+  onSubmit() {
+    if (this.locationControl.value === this.newLocationId) {
+      console.log(this.evenement.location)
+      this.locationService.addLocation(this.evenement.location).subscribe(result => {
+        this.evenement.location = result
+        console.log(JSON.stringify(this.evenement.location))
+        this.addEvenement()
+      })
+    }
+    else {
+      this.addEvenement()
+    }
+  }
 
-  onLocationChange(){
-    if (this.locationControl.value === 'new') {
+  onGroupValueChange(groupIndex: number, group: Group) {
+    this.isChecked[groupIndex] = !this.isChecked[groupIndex]
+    if (this.evenement.groups.some(g => g.id === group.id)) {
+      this.evenement.groups = this.evenement.groups.filter(g => g.id !== group.id)
+    }
+    else {
+      this.evenement.groups.push(group)
+    }
+    console.log(this.evenement.groups);
+  }
+
+  onLocationChange() {
+    if (this.locationControl.value === this.newLocationId) {
       this.evenement.location = {
         name: "",
         adress: "",
@@ -119,38 +146,15 @@ export class CreateEventComponent implements OnInit {
         images: []
       }
       this.isNewLocation = true;
+      this.enableLocationControls()
     }
     else {
+      const location = this.getLocationById(this.locationControl.value)
       this.evenement.location = this.getLocationById(this.locationControl.value)
       this.isNewLocation = false;
+      this.disableLocationControls()
     }
-  }
-
-  onSubmit() {
-    let location: Location;
-    if (this.locationControl.value === "new") {
-      this.locationService.addLocation(location).subscribe(result => {
-        location = result
-        /*         console.log(JSON.stringify(location)) */
-        this.addEvenement()
-      })
-    }
-    else {
-      location = this.getLocationById(this.locationControl.value);
-      this.addEvenement()
-    }
-  }
-
-  toggleGroup(groupIndex: number, group: Group) {
-    this.isChecked[groupIndex] = !this.isChecked[groupIndex]
-    if(this.evenement.groups.some(g => g.id === group.id))
-    {
-      this.evenement.groups.push(group)
-    }
-    else
-    {
-      this.evenement.groups = this.evenement.groups.filter(g => g.id !== group.id)
-    }
+    console.log(this.evenement.location)
   }
 
   getLocationById(id: string) {
@@ -160,16 +164,14 @@ export class CreateEventComponent implements OnInit {
 
   addEvenement() {
     const groups: Group[] = this.allGroups.filter((group, index) => this.isChecked[index])
-    console.log(JSON.stringify(this.evenement.author))
-   if(this.isEditing) {
+    if (this.isEditing) {
       this.evenementService.updateEvenementById(this.evenement).subscribe(result => {
         console.log(result)
         this.editedEvenement.loadEvenement(null)
         this.router.navigate(['/home/agenda'])
-      })     
+      })
     }
-    else
-    {
+    else {
       this.evenementService.addEvenement(this.evenement).subscribe(result => {
         console.log(result)
         this.router.navigate(['/home/agenda'])
