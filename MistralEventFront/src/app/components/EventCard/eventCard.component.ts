@@ -93,7 +93,7 @@ export class EventCardComponent implements OnInit {
   openDetailEvent() {
       const modalEventRef = this.customModalService.openModalEventDetail(this.evenement);
       modalEventRef.result.then(res => {
-          console.log("Listen modal");
+          /*console.log("Listen modal");
           if (res) {
               console.log("AddUserResponse");
               console.log(JSON.stringify(this.user));
@@ -104,7 +104,7 @@ export class EventCardComponent implements OnInit {
               console.log(JSON.stringify(this.user));
               this.imComingService.removeUser(this.evenement, this.user);
               this.imComing = false;
-          }
+          }*/
       })
   }
 

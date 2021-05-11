@@ -14,6 +14,8 @@ import { DetailEventComponent } from '../detail-event/detail-event.component';
 import { ModalService } from '../utilities/modal/modal.service';
 import { ToasterService } from '../utilities/toaster/toaster.service';
 import { DatePipe } from '@angular/common'
+import { Router } from '@angular/router';
+import { EditedEvenementService } from 'src/app/services/edited-evenement.service';
 @Component({
   selector: 'app-agenda',
   templateUrl: './agenda.component.html',
@@ -25,6 +27,9 @@ export class AgendaComponent implements OnInit {
 
   user: User;
   listEvents: Evenement[] = [];
+  eventsSemaine: Evenement[] = [];
+  eventsMois: Evenement[] = [];
+  eventsApres: Evenement[] = [];
   id: number;
   constructor(
     private evenementService: EvenementService,
@@ -33,8 +38,10 @@ export class AgendaComponent implements OnInit {
     private usersService: UsersService,
     private modalService: NgbModal,
     private imComingService: ImComingService,
+    private router: Router,
     private toasterService: ToasterService,
     private customModalService: ModalService,
+    private editedEvenement: EditedEvenementService,
     public datepipe: DatePipe
   ) {}
 
@@ -47,6 +54,7 @@ export class AgendaComponent implements OnInit {
       this.user = this.accountService.user;
       this.evenementService.getAgendaEvenements(false, this.user.userId).subscribe((res: Evenement[]) => {
         this.listEvents = res;
+        this.refreshLists();
       });
     } else {
       // On passe par là quand le code est rechargé suite à une modif dans le code dans Visual Studio, cas de figure propre au dév
@@ -55,8 +63,37 @@ export class AgendaComponent implements OnInit {
         this.accountService.refreshUser(userLoaded);
         this.evenementService.getAgendaEvenements(false, userLoaded.userId).subscribe((res: Evenement[]) => {
           this.listEvents = res;
+          this.refreshLists();
         });
       }); 
+    }
+  }
+
+  refreshLists() {
+    let semaine = new Date(Date.now());
+    semaine.setHours(23);
+    semaine.setMinutes(59);
+    semaine.setSeconds(59);
+    semaine.setDate(semaine.getDate() + 6);
+    var semaineInt: number = +this.datepipe.transform(semaine, 'yyyyMMddHHmm');
+
+    let mois = new Date(Date.now());
+    mois.setHours(23);
+    mois.setMinutes(59);
+    mois.setSeconds(59);
+    mois.setMonth(mois.getMonth() + 1);
+    var moisInt: number = +this.datepipe.transform(mois, 'yyyyMMddHHmm');
+
+    for (let event of this.listEvents) {
+      var dateInt: number = +this.datepipe.transform(event.date, 'yyyyMMddHHmm');
+
+      if (dateInt <= semaineInt) {
+        this.eventsSemaine.push(event);
+      } else if (dateInt <= moisInt) {
+        this.eventsMois.push(event);
+      } else {
+        this.eventsApres.push(event);
+      }
     }
   }
   
@@ -82,5 +119,10 @@ export class AgendaComponent implements OnInit {
         return
       }
     })
+  }
+
+  async add() {
+    this.editedEvenement.loadEvenement(undefined)
+    await this.router.navigate(['/home/create-event'])
   }
 }

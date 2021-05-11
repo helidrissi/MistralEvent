@@ -65,6 +65,7 @@ export class DetailEventComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.evenement)
   }
+  
   showGallery(location: Location) {
     this.editedLocation.loadLocation(location);
     this.router.navigate(['/home/upcommingEvent']);

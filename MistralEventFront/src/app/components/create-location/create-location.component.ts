@@ -97,6 +97,7 @@ export class CreateLocationComponent implements OnInit {
       name: this.name.value,
       adress: this.streetAddress.value,
       city: this.city.value,
+      phone: this.phone.value,
       images: [],
     };
     if (this.editedLocation.location != null) {
@@ -119,6 +120,7 @@ export class CreateLocationComponent implements OnInit {
       name: this.name.value,
       adress: this.streetAddress.value,
       city: this.city.value,
+      phone: this.phone.value,
       images: [],
     };
     if (this.editedLocation.location != null) {
