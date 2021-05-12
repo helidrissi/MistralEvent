@@ -100,7 +100,7 @@ export class AgendaComponent implements OnInit {
   openDetailEvent() {
     const modalRef = this.modalService.open(DetailEventComponent, {
       size: 'lg',
-      backdrop: true,
+      backdrop: true
     });
   }
   

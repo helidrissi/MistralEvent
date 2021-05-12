@@ -91,7 +91,8 @@ export class EventCardComponent implements OnInit {
   }
 
   openDetailEvent() {
-      const modalEventRef = this.customModalService.openModalEventDetail(this.evenement);
+      console.log("coucou12");
+      const modalEventRef = this.customModalService.openModalEventDetail(this.evenement, "detail-event-modal");
       modalEventRef.result.then(res => {
           /*console.log("Listen modal");
           if (res) {

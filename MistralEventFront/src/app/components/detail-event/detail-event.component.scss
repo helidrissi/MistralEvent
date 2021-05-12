@@ -106,10 +106,144 @@
     }
   }
 }
+
+
 @media screen and (min-width: 993px) {
   .phoneModalDiv {
     display: none;
   }
+
+  .header {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    h1 {
+      font-size: 2rem;
+    }
+  }
+
+  .modal-body {
+    display: flex;
+    flex-direction: row;
+
+    .div-img-location {
+      flex: 50%;
+      width: 100%;
+
+      img {
+        border-radius: 3px;
+        width: 100%;
+        height: 350px;
+        object-fit: cover;
+      }
+    }
+
+    .details {
+      flex: 50%;
+      width: 100%;
+      margin: 10px 20px;
+
+      .image-organisateur-groupes {
+        display: flex;
+        flex-direction: row;
+        justify-content: left;
+
+        img {
+          border-radius: 50%;
+          width: 100px;
+          height: 100px;
+          margin-right: 20px;
+          object-fit: cover;
+        }
+
+        .author-detail {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+
+          .author-name {
+            font-weight: bold;
+            font-size: 25px;
+            margin-bottom: 3px;
+          }
+          .author-group {
+            margin-top: 3px;
+            color: grey;
+          }
+        }
+      }   
+
+      .event-date {
+        margin-top: 15px;
+        font-weight: bold;
+        font-size: 25px;
+      }
+
+      .event-address{
+        margin-top: 15px;
+        font-size: 18px;
+
+        a{
+          text-decoration: none;
+          color: dimgray;
+        }
+      }
+
+      .icon{
+        margin-right: 10px;
+        
+        svg{
+          width: 25px !important;
+        }
+      }
+    }
+  }
+  #participantsPhotos {
+    margin-top: 15px;
+    display: flex;
+
+    .participantsListe{
+      display: flex;
+      flex-direction: row-reverse;
+
+      .participant{
+        width: 40px;
+
+        img{
+          width: 50px;
+          height: 50px;
+          border-radius: 50px;
+          border: solid 2px white;
+        }
+      }
+
+      .participantCaches{
+        width: 50px;
+        height: 50px;
+        border-radius: 50px;
+        border: solid 1px black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        z-index: 1000;
+      }
+    }
+
+    .placesRestantes{
+      margin-top: 10px;
+    }
+  }
+
+  p {
+    margin: 20px;
+    font-size: 1.2rem;
+  }
+  .eventSiteLink {
+    margin-left: 20px;
+    font-size: 0.8rem;
+  }
+
   .modale-footer {
     /*     position: sticky;
     bottom: 0;
@@ -141,79 +275,6 @@
 
   #modal-action-button {
     margin-right: 30px;
-  }
-  .header {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    h1 {
-      font-size: 2rem;
-    }
-  }
-  .modal-body {
-    display: flex;
-    flex-direction: row;
-    .div-img-location {
-      width: 100%;
-      img {
-        max-width: 100%;
-        height: auto;
-        max-height: 300px;
-      }
-    }
-    .details {
-      width: 100%;
-      margin: 10px 20px;
-      .image-organisateur-groupes {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        img {
-          border-radius: 50%;
-          width: 100px;
-          height: 100px;
-          margin-right: 20px;
-        }
-        div {
-          h2 {
-            font-size: 2rem;
-          }
-          h3 {
-            color: grey;
-          }
-        }
-      }
-      h3 {
-        margin-top: 15px;
-        font-weight: bold;
-        font-size: 1.5rem;
-        a {
-          color: inherit;
-          text-decoration: none;
-        }
-      }
-      h4 {
-        color: grey;
-      }
-    }
-  }
-  #participantsPhotos {
-    margin-left: 20px;
-    img {
-      width: 50px;
-      height: 50px;
-      margin-left: -20px;
-      border-radius: 50px;
-    }
-  }
-
-  p {
-    margin: 20px;
-    font-size: 1.2rem;
-  }
-  .eventSiteLink {
-    margin-left: 20px;
-    font-size: 0.8rem;
   }
 }
 

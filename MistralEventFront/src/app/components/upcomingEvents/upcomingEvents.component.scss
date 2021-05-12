@@ -1,7 +1,7 @@
 .main-screen {
-  h3 {
-    margin-left: 20px;
-    font-size: 2rem;
+  h2 {
+    margin: 0 20px;
+    border-bottom: solid 1px gray;
   }
  
   .cardList {
@@ -18,11 +18,6 @@
   .noEvent {
     width: 50%;
     margin: auto;
-
-    h3{
-      text-align: center;
-      font-size: 1rem;
-    }
   }
 
   .card-title{
@@ -33,20 +28,20 @@
 
 
   //Button add event
-  .addButton {
-    bottom: 30px;
-    right: 30px;
-    border-radius: 100%;
-    position: fixed;
-    width: 70px;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    font-size: 2.5rem;
-  }
-  .addButtonDiv {
-    .plusIcon {
-      color: white;
-    }
-  }
+  // .addButton {
+  //   bottom: 30px;
+  //   right: 30px;
+  //   border-radius: 100%;
+  //   position: fixed;
+  //   width: 70px;
+  //   height: 70px;
+  //   display: flex;
+  //   align-items: center;
+  //   font-size: 2.5rem;
+  // }
+  // .addButtonDiv {
+  //   .plusIcon {
+  //     color: white;
+  //   }
+  // }
   
