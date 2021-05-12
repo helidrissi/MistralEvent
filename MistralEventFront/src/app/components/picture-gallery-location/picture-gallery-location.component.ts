@@ -1,5 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
+import {NgbModal, ModalDismissReasons, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+
+// Components
+import { PictureLocationComponent } from '../picture-location/picture-location.component';
+
 // Modèle
 import { File } from 'src/app/models/file';
 
@@ -23,11 +28,16 @@ export class PictureGalleryLocationComponent implements OnInit {
   
   base64: String;
 
-  constructor(public editedLocation: EditedLocationService) {
+  constructor(public editedLocation: EditedLocationService, private modalService: NgbModal) {
     
   }
 
   ngOnInit(): void {
     this.base64 = "data:image/png;base64," + this.file.picByte;
+  }
+
+  displayImage() {
+    const modalRef = this.modalService.open(PictureLocationComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.picByte = this.file.picByte;
   }
 }

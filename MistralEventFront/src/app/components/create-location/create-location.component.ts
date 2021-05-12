@@ -63,6 +63,7 @@ export class CreateLocationComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.editedLocation.location != null) {
+      alert(JSON.stringify(this.editedLocation.location));
       this.name.setValue(this.editedLocation.location.name);
       this.streetAddress.setValue(this.editedLocation.location.adress);
       this.city.setValue(this.editedLocation.location.city);

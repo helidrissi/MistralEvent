@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import {  Router } from '@angular/router';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faUserAltSlash } from '@fortawesome/free-solid-svg-icons';
 import { AppComponent } from '../../../../app.component';
 //import { UsersService } from '../../services/users.service';
 //import { EnvService } from '../../env.service';
@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
   errorMessage: any;
 
   connexionIcon = faCheck;
+  inscriptionIcon = faUserAltSlash;
 
   env: any;
   class: any;

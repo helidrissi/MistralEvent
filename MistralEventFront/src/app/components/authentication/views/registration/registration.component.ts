@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 
@@ -18,6 +19,9 @@ export class RegistrationComponent implements OnInit {
   });
 
   errorMessage: string;
+
+  saveIcon = faSave;
+  cancelIcon = faTimes;
 
   constructor(private authService: AuthService, private router: Router) {}
 
