@@ -119,18 +119,21 @@ export class CreateEventComponent implements OnInit {
       this.allGroups.forEach(group => this.isChecked.push(
         this.evenement.groups.some(
           eventGroup => eventGroup.id === group.id)
-          )
-        );
+      )
+      );
     })
   }
 
   ngOnInit(): void {
     this.locationService.getAllLocations().subscribe()
     this.disableLocationControls()
+    if (this.isEditing) {
+      this.locationControl.setValue(this.evenement.location.id)
+    }
   }
 
 
-  onLocationChange(){
+  onLocationChange() {
     if (this.locationControl.value === 'new') {
       this.evenement.location = {
         name: "",
@@ -163,13 +166,11 @@ export class CreateEventComponent implements OnInit {
 
   toggleGroup(groupIndex: number, group: Group) {
     this.isChecked[groupIndex] = !this.isChecked[groupIndex]
-    if(this.evenement.groups.some(g => g.id === group.id))
-    {
-      this.evenement.groups.push(group)
-    }
-    else
-    {
+    if (this.evenement.groups.some(g => g.id === group.id)) {
       this.evenement.groups = this.evenement.groups.filter(g => g.id !== group.id)
+    }
+    else {
+      this.evenement.groups.push(group)
     }
   }
 
@@ -181,7 +182,7 @@ export class CreateEventComponent implements OnInit {
   addEvenement() {
     const groups: Group[] = this.allGroups.filter((group, index) => this.isChecked[index])
     this.evenement.groups = groups;
-    
+
     if (this.editedEvenement.evenement == null) {
       this.evenement.author = this.author;
       this.evenementService.addEvenement(this.evenement).subscribe(result => {
@@ -192,7 +193,7 @@ export class CreateEventComponent implements OnInit {
       this.evenementService.updateEvenementById(this.evenement).subscribe(result => {
         this.editedEvenement.loadEvenement(null)
         this.cancel()
-      })     
+      })
     }
   }
 
@@ -215,7 +216,7 @@ export class CreateEventComponent implements OnInit {
   }
 
   supprimer() {
-    const ref = this.customModalService.open(this.editedEvenement.evenement.name,"Etes vous sûr de supprimer cet évènement ?");
+    const ref = this.customModalService.open(this.editedEvenement.evenement.name, "Etes vous sûr de supprimer cet évènement ?");
     ref.result.then(res => {
       if (res) {
         this.evenementService.deleteEvenementById(this.editedEvenement.evenement).subscribe(then => {
