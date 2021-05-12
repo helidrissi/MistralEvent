@@ -51,5 +51,7 @@ public class Event {
     @ManyToOne
     private Location location;
 
+    private boolean canceled;
+
 
 }

@@ -68,6 +68,12 @@ public class LocationServiceImpl implements LocationService {
                 loc.setCity(location.getCity());
             }
 
+            for (ImageModel image : location.getImages()) {
+                image.setLocation(loc);
+            }
+
+            loc.setImages(location.getImages());
+
             Location locationUpdated = locationRepository.save(loc);
 
             return locationUpdated;

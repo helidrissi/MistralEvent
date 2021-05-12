@@ -128,6 +128,9 @@ public class EventServiceImpl implements EventService {
             if (event.getUsers() != null) {
                 ev.setUsers(event.getUsers());
             }
+
+            ev.setCanceled(event.isCanceled());
+
             Event eventUpdated = eventRepository.save(ev);
 
 
