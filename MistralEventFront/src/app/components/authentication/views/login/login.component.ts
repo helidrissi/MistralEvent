@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {  Router } from '@angular/router';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { AppComponent } from '../../../../app.component';
 //import { UsersService } from '../../services/users.service';
 //import { EnvService } from '../../env.service';
-import { AccountService } from '../../services/account.service';
-import { TokenService } from '../../services/token.service';
-import { AuthService } from '../../services/auth.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms'
-import { Router } from '@angular/router';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { AccountService } from '../../../../services/account.service';
+import { AuthService } from '../../../../services/auth.service';
+import { TokenService } from '../../../../services/token.service';
 
-import { AppComponent } from '../../app.component';
-import { typeofExpr } from '@angular/compiler/src/output/output_ast';
-import { FormsModule, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-login',

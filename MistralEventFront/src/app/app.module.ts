@@ -10,7 +10,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DetailEventComponent } from './components/detail-event/detail-event.component';
 import { LocationsComponent } from './components/locations/locations.component';
-import { LoginComponent } from './components/login/login.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { JwtInterceptor } from './services/jwt.interceptor';
 import { DatePipe } from '@angular/common';
@@ -18,7 +17,6 @@ import { DatePipe } from '@angular/common';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     PageNotFoundComponent,
     LocationsComponent,
   ],
