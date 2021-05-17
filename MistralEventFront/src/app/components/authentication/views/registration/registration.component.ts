@@ -39,7 +39,7 @@ export class RegistrationComponent implements OnInit {
           })
         )
         .subscribe(() => {
-            this.router.navigateByUrl("/home/agenda");
+            this.router.navigateByUrl("/home/account");
         },
         error => {
           console.log('error', error);
