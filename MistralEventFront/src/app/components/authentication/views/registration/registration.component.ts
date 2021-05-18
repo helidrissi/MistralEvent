@@ -91,6 +91,6 @@ export class RegistrationComponent implements OnInit {
     this.token.handle(res);
     this.account.changeStatus(true);
     this.account.loadUser();
-    this.router.navigateByUrl("/home/agenda");
+    this.router.navigateByUrl("/home/account");
   }
 }
