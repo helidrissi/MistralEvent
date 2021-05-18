@@ -83,7 +83,9 @@ export class AgendaComponent implements OnInit {
     mois.setSeconds(59);
     mois.setMonth(mois.getMonth() + 1);
     var moisInt: number = +this.datepipe.transform(mois, 'yyyyMMddHHmm');
-
+    this.eventsSemaine = []; 
+    this.eventsMois = [];
+    this.eventsApres = [];
     for (let event of this.listEvents) {
       var dateInt: number = +this.datepipe.transform(event.date, 'yyyyMMddHHmm');
 
@@ -111,6 +113,7 @@ export class AgendaComponent implements OnInit {
         const index = this.listEvents.findIndex(row => row.id == evenement.id);
         if (index !== -1) {
           this.listEvents.splice(index, 1);
+          this.refreshLists();
         }
 
         this.imComingService.removeUser(evenement, this.user);
