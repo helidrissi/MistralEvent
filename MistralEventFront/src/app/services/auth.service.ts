@@ -15,5 +15,9 @@ export class AuthService {
 
   login(email:string,password:string) {
     return this.http.post(`${this.baseUrl}`,{email,password},{headers:{skip:"true"}})
-  } 
+  }
+
+  registration(newUser) {
+    return this.http.post(BASE_URL_API.url_api_v+'users', newUser, {headers:{skip:"true"}})
+  }
 }

@@ -3,12 +3,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { CreditComponent } from './components/credit/credit.component';
 import { AuthGuard } from './guards/auth.guard';
 import { AfterAuthGuard } from './guards/after-auth.guard';
-import { LoginComponent } from './components/login/login.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home/agenda', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent , canActivate: [AfterAuthGuard]  },
+  // { path: 'login', component: LoginComponent , canActivate: [AfterAuthGuard]  },
+  {
+    path:'login',
+    canActivate: [AfterAuthGuard],
+    loadChildren: () => import('./components/authentication/authentication.module').then((m) => m.AuthenticationModule)
+  },
   {
     path: 'home',
     canActivate: [AuthGuard],
@@ -20,8 +24,13 @@ const routes: Routes = [
   { path: '**', component: PageNotFoundComponent},
 ];
 
-@NgModule({
+/*@NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
+})*/
+@NgModule({
+  imports: [RouterModule.forRoot(routes, { useHash: true, relativeLinkResolution: 'legacy' })],
+  exports: [RouterModule]
 })
+
 export class AppRoutingModule { }

@@ -18,6 +18,7 @@
             </div>
             <div class="event-date"><fa-icon [icon]="clockIcon" class="icon"></fa-icon>{{ evenement?.date | date: "dd/MM/yyyy H:mm" }}</div>
             <div class="event-address"><fa-icon [icon]="positionIcon" class="icon"></fa-icon><a [href]="'http://maps.google.com/?q=' + evenement.location.adress + evenement.location.city">{{ evenement?.location.adress }} à {{ evenement?.location.city }}</a></div>
+
             <div id="participantsPhotos">
                 <div class="participantsListe">
                     <div class="participantCaches">+8</div>
@@ -80,7 +81,7 @@
             <h1>{{ evenement?.name }}</h1>
             <h3>{{ evenement?.date | date: "dd/MM/yyyy H:mm" }}</h3>
         </div>
-        <h3 class="ml-4 mb-0 mt-0"><a [href]="'http://maps.google.com/?q=' + evenement.location.adress + evenement.location.city">{{ evenement?.location.adress }}</a></h3>
+        <h3 class="ml-4 mb-0 mt-0"><a target="_blank" [href]="'http://maps.google.com/?q=' + evenement.location.adress + evenement.location.city">{{ evenement?.location.adress }}</a></h3>
     </div>
     <div class="modal-body">
         <div class="details">
