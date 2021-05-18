@@ -133,7 +133,7 @@
       img {
         border-radius: 3px;
         width: 100%;
-        height: 350px;
+        height: 300px;
         object-fit: cover;
       }
     }
@@ -163,11 +163,12 @@
 
           .author-name {
             font-weight: bold;
-            font-size: 25px;
-            margin-bottom: 3px;
+            font-size: 30px;
+            margin-bottom: 6px;
           }
           .author-group {
-            margin-top: 3px;
+            margin-top: 6px;
+            font-size: 17px;
             color: grey;
           }
         }
@@ -230,9 +231,10 @@
       }
     }
 
-    .placesRestantes{
-      margin-top: 10px;
-    }
+  }
+
+  .placesRestantes{
+    margin-top: 10px !important;
   }
 
   p {
