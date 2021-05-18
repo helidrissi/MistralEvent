@@ -17,4 +17,8 @@ export class ToasterService {
     this.toasts = this.toasts.filter(t => t !== toast);
   }
 
+  resetToast() {
+    this.toasts = [];
+  }
+
 }

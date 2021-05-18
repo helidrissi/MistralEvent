@@ -8,6 +8,7 @@
   list-style: none;
   text-align: center;
 }
+
 .header-accueil,
 .header-accueil a {
   background-color: #154194;
@@ -42,8 +43,21 @@ a:hover {
     display: flex;
     flex-direction: row-reverse;
     margin-bottom: 20px;
+    position: fixed;
+    z-index: 1;
   }
 }
+
+@media screen and (max-width: 576px) {
+  .navbar {
+    visibility: collapse;
+    height: 0px;
+  }
+  a {
+    font-size: 1rem;
+  }
+}
+
 @media screen and (max-width: 768px) {
   a {
     font-size: 1rem;

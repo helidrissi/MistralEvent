@@ -3,9 +3,6 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import {NgbModal, ModalDismissReasons, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
-// Components
-import { PictureLocationComponent } from '../picture-location/picture-location.component';
-
 // Services
 import { EditedLocationService } from 'src/app/services/edited-location.service';
 
@@ -24,10 +21,6 @@ export class GalleryLocationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  }
-
-  displayImage() {
-    const modalRef = this.modalService.open(PictureLocationComponent, { size: 'lg', backdrop: 'static' });
   }
 
   // If the user clicks the cancel button a.k.a. the go back button, then\

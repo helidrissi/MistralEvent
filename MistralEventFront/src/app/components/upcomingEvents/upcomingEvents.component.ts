@@ -48,6 +48,7 @@ export class UpcomingEventsComponent implements OnInit {
 
   ngOnInit() {
     this.refreshList();
+    this.toasterService.resetToast();
   }
 
   refreshList() {

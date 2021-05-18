@@ -7,9 +7,13 @@ export const environment = {
 };
 
 
-export const BASE_URL_API = {
+/*export const BASE_URL_API = {
   url_api: "http://localhost:8080/",
   url_api_v: "http://localhost:8080/api/v1/"
+}*/
+export const BASE_URL_API = {
+  url_api: "https://events.mistral.fr/back/",
+  url_api_v: "https://events.mistral.fr/back/api/v1/"
 }
 
 export const DEFAULT_IMG = {
