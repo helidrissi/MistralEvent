@@ -31,45 +31,6 @@
 
 }
 
-//Button add event
-@media screen and (max-width: 576px) {
-  .addButton {
-    bottom: 50px;
-    right: 30px;
-    border-radius: 100%;
-    position: fixed;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    font-size: 1.5rem;
-  }
-  .addButtonDiv {
-    .plusIcon {
-      color: white;
-    }
-  }
-}
-
-@media screen and (min-width: 576px) {
-  .addButton {
-    bottom: 30px;
-    right: 30px;
-    border-radius: 100%;
-    position: fixed;
-    width: 70px;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    font-size: 2.5rem;
-  }
-  .addButtonDiv {
-    .plusIcon {
-      color: white;
-    }
-  }
-}
-
 
 
 // ElseDIV

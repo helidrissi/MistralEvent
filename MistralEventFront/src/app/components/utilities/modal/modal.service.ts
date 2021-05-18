@@ -48,9 +48,10 @@ export class ModalService {
     return modalRef;
   }
 
-  openModalEventDetail(event: Evenement) {
+  openModalEventDetail(event: Evenement, customClass?:string) {
     const modalRefDetailEvent = this.NgbModal.open(DetailEventComponent, {
-      size: 'lg'
+      size: 'lg',
+      windowClass: customClass,
     })
     modalRefDetailEvent.componentInstance.evenement = event;
     return modalRefDetailEvent;
