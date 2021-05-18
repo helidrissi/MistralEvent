@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/services/auth.service';
+import { AccountService } from '../../../../services/account.service';
+
 import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-registration',
@@ -24,7 +27,7 @@ export class RegistrationComponent implements OnInit {
   saveIcon = faSave;
   cancelIcon = faTimes;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private account: AccountService, private token: TokenService,) {}
 
   ngOnInit(): void {}
 
@@ -34,12 +37,13 @@ export class RegistrationComponent implements OnInit {
        console.log(this.convertFormToNewUser());
       //  TODO ajouter une vérif si le compte existe
         this.authService.registration(this.convertFormToNewUser()).pipe(          
-          switchMap(() => {
-            return this.authService.login(this.formRegistration.value.email, this.formRegistration.value.password);
+          switchMap((res) => {
+             console.log(res)
+             return this.authService.login(this.formRegistration.value.email, this.formRegistration.value.password);
           })
         )
-        .subscribe(() => {
-            this.router.navigateByUrl("/home/account");
+        .subscribe((res) => {
+          this.handleResponse(res)
         },
         error => {
           console.log('error', error);
@@ -59,11 +63,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   checkEmailMistral() {
-    const nameForEmail = this.formRegistration.value.lastName.toLowerCase();
-    const firstNameForEmail = this.formRegistration.value.firstName.toLowerCase();
-    const endsEmail = "@mistral.fr";
-    const emailExpected = firstNameForEmail + '.' + nameForEmail + endsEmail;
-    if (this.formRegistration.value.email !== emailExpected ) {
+    if (!this.formRegistration.value.email.endsWith('@mistral.fr')) {
       this.errorMessage = "Vous devez avoir une adresse email Mistral ! "
       return false;
     }
@@ -71,13 +71,12 @@ export class RegistrationComponent implements OnInit {
   }
 
   convertFormToNewUser() {
-    const newUser = {
+    return {
       firstName: this.formRegistration.value.firstName,
       lastName: this.formRegistration.value.lastName,
       email: this.formRegistration.value.email,
       password: this.formRegistration.value.password,
     }
-    return newUser;
   }
 
   checkLengthMdp(event) {
@@ -86,5 +85,12 @@ export class RegistrationComponent implements OnInit {
     } else {
       this.errorMessage = null
     }
+  }
+
+  handleResponse(res:{}) {
+    this.token.handle(res);
+    this.account.changeStatus(true);
+    this.account.loadUser();
+    this.router.navigateByUrl("/home/agenda");
   }
 }
