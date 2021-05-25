@@ -9,20 +9,26 @@ import { HomeComponent } from './home.component';
 import { UpcomingEventsComponent } from '../upcomingEvents/upcomingEvents.component';
 import { LocationsComponent } from '../locations/locations.component';
 import { DetailEventComponent } from '../detail-event/detail-event.component';
+import { UserResolver } from '../../resolvers/user.resolver';
+import { AgendaEventResolver } from '../../resolvers/agendaEvent.resolver';
 
 const routes: Routes = [
   {
-    path: '', redirectTo: '',
+    path: '',
+    redirectTo: '',
     component: HomeComponent,
+    resolve: {
+      user: UserResolver,
+    },
     children: [
       { path: 'account', component: AccountComponent },
       { path: 'credit', component: CreditComponent },
-      { path: 'agenda', component: AgendaComponent },
+      { path: 'agenda', component: AgendaComponent, resolve: {events: AgendaEventResolver} },
       { path: 'locations', component: LocationsComponent },
       { path: 'upcommingEvent', component: UpcomingEventsComponent },
       { path: 'create-location', component: CreateLocationComponent },
-      { path: 'create-event', component: CreateEventComponent},
-      { path: 'detail-event', component: DetailEventComponent},
+      { path: 'create-event', component: CreateEventComponent },
+      { path: 'detail-event', component: DetailEventComponent },
     ],
   },
 ];
@@ -32,4 +38,4 @@ const routes: Routes = [
   exports: [RouterModule],
   declarations: [],
 })
-export class HomeRoutingModule { }
+export class HomeRoutingModule {}
