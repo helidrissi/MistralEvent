@@ -30,6 +30,7 @@ public class Location {
     private String adress;
     private String city;
     private String phone;
+    @JsonIgnore
     @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
     @Fetch(FetchMode.JOIN)
     private Set<ImageModel> images = new HashSet<>();
