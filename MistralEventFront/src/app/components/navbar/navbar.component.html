@@ -1,5 +1,6 @@
 <header class="header-accueil navbar">
     <div class="row menu-accueil header-accueil">
-            <a [routerLink]="['/home', 'agenda']" class="mr-5">Accueil </a>
+
+            <button type="button" class="btn btn-danger mr-5" (click)="logout()" style="border:1px solid white;">&nbsp;&nbsp;<fa-icon [icon]="logoutIcon"></fa-icon>&nbsp;&nbsp;</button>
     </div>
 </header>

@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean  { 
       
-      if(!this.token.loggedIn()){
+      if(!this.token.loggedIn() || this.account.user == null){
 
       this.token.remove();
       this.account.changeStatus(false);
