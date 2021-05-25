@@ -1,6 +1,7 @@
 package fr.mistral.controllers.v1;
 
 import fr.mistral.domain.Group;
+import fr.mistral.domain.ImageModel;
 import fr.mistral.domain.Location;
 import fr.mistral.repositories.ImageRepository;
 import fr.mistral.services.LocationService;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by hel on 12/03/21.
@@ -37,6 +39,11 @@ public class LocationController {
         return locationService.getLocationById(id);
     }
 
+    @GetMapping({"/images/{id}"})
+    @ResponseStatus(HttpStatus.OK)
+    public Set<ImageModel> getLocationImagesById(@PathVariable Long id) {
+        return locationService.getLocationById(id).getImages();
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -54,6 +61,12 @@ public class LocationController {
     @ResponseStatus(HttpStatus.OK)
     public Location patchLocation(@PathVariable Long id, @RequestBody Location location) {
         return locationService.patchLocation(id, location);
+    }
+
+    @PostMapping({"/image/{id}"})
+    @ResponseStatus(HttpStatus.OK)
+    public void postLocationImage(@PathVariable Long id, @RequestBody ImageModel image) {
+        locationService.postLocationImage(id, image);
     }
 
     @DeleteMapping({"/{id}"})

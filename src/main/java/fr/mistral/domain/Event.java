@@ -32,16 +32,18 @@ public class Event {
     private LocalDateTime date;
     private String type;
     private String comment;
+    private boolean canceled;
 
-    //@JsonIgnore
     @ManyToOne
     private User author;
+
     @ManyToMany
     @JoinTable(name = "users_event",
             joinColumns = @JoinColumn(name = "users_id"),
             inverseJoinColumns = @JoinColumn(name = "event_id"))
              //@JsonIgnoreProperties("events")
     private Set<User> users=new HashSet<>();
+
     @ManyToMany
     @JoinTable(name = "event_groups",
             joinColumns = @JoinColumn(name = "event_id"),
@@ -50,8 +52,6 @@ public class Event {
 
     @ManyToOne
     private Location location;
-
-    private boolean canceled;
 
 
 }

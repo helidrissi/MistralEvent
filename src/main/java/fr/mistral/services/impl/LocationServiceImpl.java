@@ -7,7 +7,7 @@ import fr.mistral.repositories.LocationRepository;
 import fr.mistral.services.LocationService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -77,14 +77,22 @@ public class LocationServiceImpl implements LocationService {
             Location locationUpdated = locationRepository.save(loc);
 
             return locationUpdated;
-
         }).orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override
+    public void postLocationImage(Long id, ImageModel image) {
+        Location location = locationRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+
+        if (location != null) {
+            image.setLocation(location);
+            location.getImages().add(image);
+            locationRepository.save(location);
+        }
+    }
+
+    @Override
     public void deleteLocationById(Long id) {
-
         locationRepository.deleteById(id);
-
     }
 }
