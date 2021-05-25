@@ -4,6 +4,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import {NgbModal, ModalDismissReasons, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 // Services
+import { LocationService } from 'src/app/services/location.service';
 import { EditedLocationService } from 'src/app/services/edited-location.service';
 
 @Component({
@@ -16,8 +17,15 @@ export class GalleryLocationComponent implements OnInit {
   
   closeIcon = faTimes;
 
-  constructor(private activeModal: NgbActiveModal, private modalService: NgbModal, public editedLocation: EditedLocationService) {
- 
+  constructor(private activeModal: NgbActiveModal,
+    private modalService: NgbModal, 
+    public locationService: LocationService,
+    public editedLocation: EditedLocationService) {
+
+    this.locationService.getImagesLocationById(this.editedLocation.location.id).subscribe((result2) => {
+      this.editedLocation.location.images = result2;
+      this.editedLocation.listFile  = result2;
+    })
   }
 
   ngOnInit(): void {
