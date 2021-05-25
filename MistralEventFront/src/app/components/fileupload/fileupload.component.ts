@@ -70,13 +70,13 @@ export class FileUploadComponent implements OnInit {
           this.closeModal();
 
         } else if (this.uploadService.type_file == this.uploadService.TYPE_ATTACHED_PICTURE_LOCATION) {
-          alert(JSON.stringify(retour));
           this.filesService.getFile(this.fileName).subscribe((fileLoaded:File) => {
             if (fileLoaded.name != null) {
+              if(this.editedLocation.location.images === undefined) {
+                this.editedLocation.location.images = [];
+              }
               this.editedLocation.location.images.push(fileLoaded);
-
-              alert(JSON.stringify(this.editedLocation.location));
-              this.locationService.updateLocationById(this.editedLocation.location).subscribe(result => {
+              this.locationService.addImageToLocation(this.editedLocation.location, fileLoaded).subscribe(result => {
                 this.closeModal();
               })
             }

@@ -14,7 +14,7 @@ import { DetailEventComponent } from '../detail-event/detail-event.component';
 import { ModalService } from '../utilities/modal/modal.service';
 import { ToasterService } from '../utilities/toaster/toaster.service';
 import { DatePipe } from '@angular/common'
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { EditedEvenementService } from 'src/app/services/edited-evenement.service';
 @Component({
   selector: 'app-agenda',
@@ -42,11 +42,15 @@ export class AgendaComponent implements OnInit {
     private toasterService: ToasterService,
     private customModalService: ModalService,
     private editedEvenement: EditedEvenementService,
-    public datepipe: DatePipe
+    public datepipe: DatePipe,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.refreshList();
+    this.route.data.subscribe((data: {events: Evenement[]}) => {
+      this.listEvents = data.events;
+      this.refreshLists();
+    })
   }
 
   refreshList() {
@@ -102,7 +106,7 @@ export class AgendaComponent implements OnInit {
   openDetailEvent() {
     const modalRef = this.modalService.open(DetailEventComponent, {
       size: 'lg',
-      backdrop: true,
+      backdrop: true
     });
   }
   

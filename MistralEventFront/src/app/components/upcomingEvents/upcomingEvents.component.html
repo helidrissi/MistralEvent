@@ -1,5 +1,5 @@
 <div class="main-screen">
-  <h3>Aujourd'hui et les prochains jours</h3>
+  <h2>Aujourd'hui et les prochains jours</h2>
   <div *ngIf="eventsSemaine?.length > 0; else noEvent">
     <div class="card-list row">
       <div class="col col-md-4" *ngFor="let event of eventsSemaine">
@@ -9,13 +9,13 @@
   </div>
   <ng-template #noEvent>
     <div class="noEvent">
-      <h3 class="alert alert-danger">Vous n'avez pas d'événement aujourd'hui et les prochains jours</h3>
+      <div class="alert alert-danger">Vous n'avez pas d'événement aujourd'hui et les prochains jours</div>
     </div>
   </ng-template>
 
   <div style="height: 20px;"></div>
 
-  <h3>Dans le mois qui vient</h3>
+  <h2>Dans le mois qui vient</h2>
   <div *ngIf="eventsMois?.length > 0; else noEvent2">
     <div class="card-list row">
       <div class="col col-md-4" *ngFor="let event of eventsMois">
@@ -25,13 +25,13 @@
   </div>
   <ng-template #noEvent2>
     <div class="noEvent">
-      <h3 class="alert alert-danger">Vous n'avez pas d'événement à venir dans le mois qui vient</h3>
+      <div class="alert alert-danger">Vous n'avez pas d'événement à venir dans le mois qui vient</div>
     </div>
   </ng-template>
 
   <div style="height: 20px;"></div>
 
-  <h3>Autres évènements</h3>
+  <h2>Autres évènements</h2>
   <div *ngIf="eventsApres?.length > 0; else noEvent3">
     <div class="card-list row">
       <div class="col col-md-4" *ngFor="let event of eventsApres">
@@ -41,7 +41,7 @@
   </div>
   <ng-template #noEvent3>
     <div class="noEvent">
-      <h3 class="alert alert-danger">Vous n'avez pas d'autres événement à venir</h3>
+      <div class="alert alert-danger">Vous n'avez pas d'autres événement à venir</div>
     </div>
   </ng-template>
   

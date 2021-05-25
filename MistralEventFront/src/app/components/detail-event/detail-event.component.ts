@@ -46,8 +46,10 @@ export class DetailEventComponent implements OnInit {
 
   grinIcon = faGrin;
   tearIcon = faSadTear;
-
+  clockIcon = faClock;
+  positionIcon = faMapMarked;
   picturesIcon = faImages;
+  
   listLocations: Location[] = [];
   location: Location;
   evenementId: number;

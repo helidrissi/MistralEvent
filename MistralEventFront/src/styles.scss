@@ -1,5 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 
+
+/* Importing Bootstrap SCSS file. */
+@import "~bootstrap/scss/bootstrap";
+
+/* Importing Bootstrap SCSS file. */
+@import "~bootstrap/scss/bootstrap";
+
+
 /* 
  * Main screen
  */
@@ -52,6 +60,10 @@
   .modalEvent .modal-dialog {
     max-width: 1000px;
   }
+
+  .detail-event-modal .modal-content{
+    min-width: 1000px;
+  }
 }
 
 /* 
@@ -76,13 +88,43 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+/* Css AddButton*/ 
+
+.addButtonDiv {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+  .addButton{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1BD063;
+
+    .plusIcon {
+      color: white;
+      font-size: 25px;
+    }
+  }
+}
+
+
+/* Remove focus outline default style*/
+a:focus{
+  outline: none;
+}
+
 .row {
   margin-left: 0px !important;
   margin-right: 0px !important;
 }
-
-/* Importing Bootstrap SCSS file. */
-@import "~bootstrap/scss/bootstrap";
-
-/* Importing Bootstrap SCSS file. */
-@import "~bootstrap/scss/bootstrap";
