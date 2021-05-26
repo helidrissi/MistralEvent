@@ -3,6 +3,7 @@ package fr.mistral.controllers.v1;
 import fr.mistral.domain.ImageModel;
 import fr.mistral.domain.Location;
 import fr.mistral.repositories.ImageRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ import java.util.zip.Inflater;
 /**
  * Created by hel on 12/03/21.
  */
+@Slf4j
 @RestController
 @Transactional
 @RequestMapping(ImageUploadController.BASE_URL)
@@ -31,25 +33,30 @@ public class ImageUploadController {
     @Autowired
     ImageRepository imageRepository;
 
-    public static byte[] compressBytes(byte[] data) {
-
+    static byte[] compress(byte[] bytesIn) {
         Deflater deflater = new Deflater();
-        deflater.setInput(data);
-        deflater.finish();
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
+        deflater.setInput(bytesIn);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream(bytesIn.length);
+        log.debug(stream.toString());
         byte[] buffer = new byte[1024];
+
+        deflater.finish();
         while (!deflater.finished()) {
-
             int count = deflater.deflate(buffer);
-            outputStream.write(buffer, 0, count);
+            stream.write(buffer, 0, count);
         }
-        try {
-            outputStream.close();
-        } catch (IOException e) {
-        }
-        System.out.println("Compressed Image Byte Size - " + outputStream.toByteArray().length);
-        return outputStream.toByteArray();
 
+        try {
+            stream.close();
+        } catch (IOException ex) {
+            return bytesIn;
+        }
+
+        byte[] bytesOut = stream.toByteArray();
+        log.debug(bytesOut.toString());
+        deflater.end();
+
+        return bytesOut;
     }
 
     public static byte[] decompressBytes(byte[] data) {
@@ -84,7 +91,7 @@ public class ImageUploadController {
 
         System.out.println("Original Image Byte Size - " + file.getBytes().length);
         ImageModel img = new ImageModel(file.getOriginalFilename(), file.getContentType(),
-                compressBytes(file.getBytes()));
+                compress(file.getBytes()));
 
         return new ResponseEntity<>(imageRepository.save(img),
                 HttpStatus.OK);
