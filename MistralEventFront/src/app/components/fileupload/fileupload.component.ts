@@ -61,22 +61,27 @@ export class FileUploadComponent implements OnInit {
   actionFunction() {
     const formData = new FormData();
     formData.append('imageFile', this.uploadForm.get('fileSource').value, this.fileName);
+
     this.uploadService.upload(formData).subscribe((retour: any) => {
       if (retour != null && retour.body != null && retour.body.id != 0) {
+        // Avatar
         if (this.uploadService.type_file == this.uploadService.TYPE_AVATAR) {
           this.accountService.loadAvatar();
           this.closeModal();
+
         } else if (this.uploadService.type_file == this.uploadService.TYPE_ATTACHED_PICTURE_LOCATION) {
-          alert(JSON.stringify(retour));
           this.filesService.getFile(this.fileName).subscribe((fileLoaded:File) => {
             if (fileLoaded.name != null) {
+              if(this.editedLocation.location.images === undefined) {
+                this.editedLocation.location.images = [];
+              }
               this.editedLocation.location.images.push(fileLoaded);
-
-              this.locationService.updateLocationById(this.editedLocation.location).subscribe(result => {
+              this.locationService.addImageToLocation(this.editedLocation.location, fileLoaded).subscribe(result => {
                 this.closeModal();
               })
             }
           })
+        // Avatar de la location
         } else if (this.uploadService.type_file == this.uploadService.TYPE_LOCATION) {
           this.editedLocation.loadImage();
           this.closeModal();

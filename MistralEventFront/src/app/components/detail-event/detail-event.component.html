@@ -4,28 +4,33 @@
     </div>
     <div class="modal-body">
         <div class="div-img-location">
-            <img class="img-location" src="https://www.justacote.com/photos_entreprises/cafe-de-l-univers-clermont-ferrand-146505929057.jpg" alt="" />
+            <img class="img-location" src="https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg" alt="" />
         </div>
         <div class="details">
             <div class="image-organisateur-groupes">
-                <img [src]="account.avatar64" alt="photo de profil" />
-                <div>
-                    <h1> {{ evenement?.author?.firstName}}  {{ evenement?.author?.lastName}}</h1>
+                <!-- <img [src]="account.avatar64" alt="photo de profil" /> -->
+                <img src="https://i.pinimg.com/564x/97/89/0d/97890dfad655a59dbf7d4466336ca49e.jpg" alt="photo de profil" />
+                <div class="author-detail">
+                    <div class="author-name">{{evenement?.author?.firstName}}  {{ evenement?.author?.lastName}}</div>
 
-                    <h3 *ngFor="let group of evenement.groups">{{ group.name }}</h3>
+                    <div class="author-group" *ngFor="let group of evenement.groups">{{ group.name }}</div>
                 </div>
             </div>
-            <h3>{{ evenement?.date | date: "dd/MM/yyyy H:mm" }}</h3>
-            <h3><a [href]="'http://maps.google.com/?q=' + evenement.location.adress + evenement.location.city">{{ evenement?.location.adress }} à {{ evenement?.location.city }}</a></h3>
+            <div class="event-date"><fa-icon [icon]="clockIcon" class="icon"></fa-icon>{{ evenement?.date | date: "dd/MM/yyyy H:mm" }}</div>
+            <div class="event-address"><fa-icon [icon]="positionIcon" class="icon"></fa-icon><a [href]="'http://maps.google.com/?q=' + evenement.location.adress + evenement.location.city">{{ evenement?.location.adress }} à {{ evenement?.location.city }}</a></div>
+
             <div id="participantsPhotos">
-                <img [src]="account.avatar64" alt="photo de profil" />
-                <img [src]="account.avatar64" alt="photo de profil" />
-                <img [src]="account.avatar64" alt="photo de profil" />
-                <h2 *ngFor="let user of evenement.users">
-                        {{ user?.firstName }} {{ user?.lastName }}
-                </h2>
+                <div class="participantsListe">
+                    <div class="participantCaches">+8</div>
+                    <div *ngFor="let user of evenement.users">
+                        <div class="participant" placement="top" ngbTooltip="user?.firstName user?.lastName">
+                            <img [src]="account.avatar64" alt="photo de profil"/>
+                            <!-- {{ user?.firstName }} {{ user?.lastName }} -->
+                        </div>
+                    </div>
+                </div>
             </div>
-            <h4>X places restantes</h4>
+            <h4 class="placesRestantes">X places restantes</h4>
         </div>
     </div>
     <div class="eventSiteLink">
@@ -64,7 +69,7 @@
 <div class="phoneModalDiv">
     <div class="header">
         <div class="imageEvent">
-            <img src="https://www.justacote.com/photos_entreprises/cafe-de-l-univers-clermont-ferrand-146505929057.jpg" alt="" />
+            <img src="https://i.pinimg.com/564x/97/89/0d/97890dfad655a59dbf7d4466336ca49e.jpg" alt="" />
             <h4 id="places-restantes">X places restantes</h4>
             <div id="participantsPhotos">
                 <img [src]="account.avatar64" alt="photo de profil" />
@@ -76,7 +81,7 @@
             <h1>{{ evenement?.name }}</h1>
             <h3>{{ evenement?.date | date: "dd/MM/yyyy H:mm" }}</h3>
         </div>
-        <h3 class="ml-4 mb-0 mt-0"><a [href]="'http://maps.google.com/?q=' + evenement.location.adress + evenement.location.city">{{ evenement?.location.adress }}</a></h3>
+        <h3 class="ml-4 mb-0 mt-0"><a target="_blank" [href]="'http://maps.google.com/?q=' + evenement.location.adress + evenement.location.city">{{ evenement?.location.adress }}</a></h3>
     </div>
     <div class="modal-body">
         <div class="details">

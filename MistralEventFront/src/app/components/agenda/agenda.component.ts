@@ -14,7 +14,7 @@ import { DetailEventComponent } from '../detail-event/detail-event.component';
 import { ModalService } from '../utilities/modal/modal.service';
 import { ToasterService } from '../utilities/toaster/toaster.service';
 import { DatePipe } from '@angular/common'
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { EditedEvenementService } from 'src/app/services/edited-evenement.service';
 @Component({
   selector: 'app-agenda',
@@ -42,11 +42,15 @@ export class AgendaComponent implements OnInit {
     private toasterService: ToasterService,
     private customModalService: ModalService,
     private editedEvenement: EditedEvenementService,
-    public datepipe: DatePipe
+    public datepipe: DatePipe,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.refreshList();
+    this.route.data.subscribe((data: {events: Evenement[]}) => {
+      this.listEvents = data.events;
+      this.refreshLists();
+    })
   }
 
   refreshList() {
@@ -83,7 +87,9 @@ export class AgendaComponent implements OnInit {
     mois.setSeconds(59);
     mois.setMonth(mois.getMonth() + 1);
     var moisInt: number = +this.datepipe.transform(mois, 'yyyyMMddHHmm');
-
+    this.eventsSemaine = []; 
+    this.eventsMois = [];
+    this.eventsApres = [];
     for (let event of this.listEvents) {
       var dateInt: number = +this.datepipe.transform(event.date, 'yyyyMMddHHmm');
 
@@ -100,7 +106,7 @@ export class AgendaComponent implements OnInit {
   openDetailEvent() {
     const modalRef = this.modalService.open(DetailEventComponent, {
       size: 'lg',
-      backdrop: true,
+      backdrop: true
     });
   }
   
@@ -111,6 +117,7 @@ export class AgendaComponent implements OnInit {
         const index = this.listEvents.findIndex(row => row.id == evenement.id);
         if (index !== -1) {
           this.listEvents.splice(index, 1);
+          this.refreshLists();
         }
 
         this.imComingService.removeUser(evenement, this.user);

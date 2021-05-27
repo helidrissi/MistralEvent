@@ -17,13 +17,14 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): boolean  { 
       
       if(!this.token.loggedIn()){
-
-      this.token.remove();
-      this.account.changeStatus(false);
-      this.router.navigateByUrl("/login");
-      return false;
-    }
-  return true;
+        this.token.remove();
+        this.account.changeStatus(false);
+        this.router.navigateByUrl("/login");
+        return false;
+      } else if (this.account.user == null) {
+        this.account.loadUser();
+      }
+    return true;
   }
   
 }

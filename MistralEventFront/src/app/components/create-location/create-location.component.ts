@@ -25,6 +25,7 @@ import { File } from '../../models/file';
 // Components
 import { FileUploadComponent } from '../fileupload/fileupload.component';
 import { ToasterService } from '../utilities/toaster/toaster.service';
+import { stringify } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-create-location',
@@ -67,6 +68,11 @@ export class CreateLocationComponent implements OnInit {
       this.streetAddress.setValue(this.editedLocation.location.adress);
       this.city.setValue(this.editedLocation.location.city);
       this.phone.setValue(this.editedLocation.location.phone);
+
+      this.locationService.getImagesLocationById(this.editedLocation.location.id).subscribe((result2) => {
+        this.editedLocation.location.images = result2;
+        this.editedLocation.listFile  = result2;
+      })
     }
   }
 
@@ -86,8 +92,11 @@ export class CreateLocationComponent implements OnInit {
     }
 
     this.locationService.addLocation(location).subscribe(result => {
-      console.log(JSON.stringify(result))
-      this.router.navigate(['home/locations'])
+      this.locationService.getImagesLocationById(location.id).subscribe((result2) => {
+        this.editedLocation.location.images = result2;
+        this.editedLocation.listFile  = result2;
+        this.router.navigate(['home/locations'])
+      })
     }
     )
   }
@@ -109,8 +118,12 @@ export class CreateLocationComponent implements OnInit {
 
     this.locationService.addLocation(location).subscribe((result) => {
       this.editedLocation.loadLocation(result);
-      this.uploadService.type_file = this.uploadService.TYPE_LOCATION;
-      const modalRef = this.modalService.open(FileUploadComponent);
+      this.locationService.getImagesLocationById(location.id).subscribe((result2) => {
+        this.editedLocation.location.images = result2;
+        this.editedLocation.listFile  = result2;
+        this.uploadService.type_file = this.uploadService.TYPE_LOCATION;
+        const modalRef = this.modalService.open(FileUploadComponent);
+      })
     })
 
   }
@@ -132,8 +145,12 @@ export class CreateLocationComponent implements OnInit {
 
     this.locationService.addLocation(location).subscribe((result) => {
       this.editedLocation.loadLocation(result);
-      this.uploadService.type_file = this.uploadService.TYPE_ATTACHED_PICTURE_LOCATION;
-      const modalRef = this.modalService.open(FileUploadComponent);
+      this.locationService.getImagesLocationById(location.id).subscribe((result2) => {
+        this.editedLocation.location.images = result2;
+        this.editedLocation.listFile  = result2;
+        this.uploadService.type_file = this.uploadService.TYPE_ATTACHED_PICTURE_LOCATION;
+        const modalRef = this.modalService.open(FileUploadComponent);
+      })
     })
 
   }

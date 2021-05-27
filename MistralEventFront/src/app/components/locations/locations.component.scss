@@ -1,4 +1,10 @@
 @import '../../../assets/styles/variables.scss';
+
+h3 {
+  margin-left: 20px;
+  font-size: 2rem;
+}
+
 .tableDiv {
   display: flex;
   flex-direction: column;
@@ -12,7 +18,7 @@
     border-collapse: collapse;
     border-radius: 5px 5px 0 0;
     overflow: hidden;
-    box-shadow: 0 0 20px rgb(0, 0, 0, 0.2);
+    //box-shadow: 0 0 20px rgb(0, 0, 0, 0.2);
     thead {
       background-color: rgb(92, 198, 242);
       color: white;
@@ -40,16 +46,22 @@
   }
 }
 
-.addButton {
-  bottom: 30px;
-  right: 30px;
-  border-radius: 100%;
-  position: fixed;
-  width: 70px;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  font-size: 2.5rem;
+@media screen and (max-width: 767px) {
+  .tableDiv {
+    visibility: collapse;
+  }
+  .cardDiv {
+    visibility: visible;
+  }
+}
+
+@media screen and (min-width: 767px) {
+  .tableDiv {
+    visibility: visible;
+  }
+  .cardDiv {
+    visibility: collapse;
+  }
 }
 
 .deleteLocation{
