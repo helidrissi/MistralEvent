@@ -8,8 +8,7 @@
         </div>
         <div class="details">
             <div class="image-organisateur-groupes">
-                <!-- <img [src]="account.avatar64" alt="photo de profil" /> -->
-                <img src="https://i.pinimg.com/564x/97/89/0d/97890dfad655a59dbf7d4466336ca49e.jpg" alt="photo de profil" />
+                <img [src]="account.avatar64" id="photo-profil" alt="photo de profil" />
                 <div class="author-detail">
                     <div class="author-name">{{evenement?.author?.firstName}}  {{ evenement?.author?.lastName}}</div>
 
@@ -17,31 +16,26 @@
                 </div>
             </div>
             <div class="event-date"><fa-icon [icon]="clockIcon" class="icon"></fa-icon>{{ evenement?.date | date: "dd/MM/yyyy H:mm" }}</div>
-            <div class="event-address"><fa-icon [icon]="positionIcon" class="icon"></fa-icon><a [href]="'http://maps.google.com/?q=' + evenement.location.adress + evenement.location.city">{{ evenement?.location.adress }} à {{ evenement?.location.city }}</a></div>
+            <div class="event-address"><fa-icon [icon]="positionIcon" class="icon"></fa-icon><a target="_blank" [href]="'http://maps.google.com/?q=' + evenement.location.adress + evenement.location.city">{{ evenement?.location.adress }} à {{ evenement?.location.city }}</a></div>
 
             <div id="participantsPhotos">
                 <div class="participantsListe">
-                    <div class="participantCaches">+8</div>
+<!--                     <div class="participantCaches">+8</div> -->
                     <div *ngFor="let user of evenement.users">
                         <div class="participant" placement="top" ngbTooltip="user?.firstName user?.lastName">
-                            <img [src]="account.avatar64" alt="photo de profil"/>
+                            <img [src]="account.avatar64" [title]="user?.firstName" alt="photo de profil"/>
                             <!-- {{ user?.firstName }} {{ user?.lastName }} -->
                         </div>
                     </div>
                 </div>
             </div>
-            <h4 class="placesRestantes">X places restantes</h4>
+<!--             <h4 class="placesRestantes">X places restantes</h4> -->
         </div>
     </div>
     <div class="eventSiteLink">
-        <a href="https://www.tripadvisor.fr/Restaurant_Review-g187091-d9795059-Reviews-Brasserie_L_univers-Clermont_Ferrand_Puy_de_Dome_Auvergne_Rhone_Alpes.html">
-      https://www.tripadvisor.fr/Restaurant_Review-g187091-d9795059-Reviews-Brasserie_L_univers-Clermont_Ferrand_Puy_de_Dome_Auvergne_Rhone_Alpes.html
-    </a>
     </div>
     <p>
-        {{ evenement?.comment }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque voluptates ex, nisi corrupti facilis voluptate magni placeat consequatur provident voluptatem dolorem, voluptas, rerum inventore reprehenderit nesciunt ratione consectetur
-        repellat dignissimos!Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque voluptates ex, nisi corrupti facilis voluptate magni placeat consequatur provident voluptatem dolorem, voluptas, rerum inventore reprehenderit nesciunt ratione consectetur
-
+        {{ evenement.comment }}
     </p>
     <div class="modale-footer">
         <div class="left-side-modal-footer">
@@ -49,16 +43,16 @@
                 <button class="btn btn-primary">
                     <fa-icon [icon]="picturesIcon"></fa-icon>
                 </button>
-                </a>
+            </a>
                 <button class="btn btn-primary btn-update" (click)="modify()" *ngIf="userIsAuthor">
                      Modifier
                 </button>
         </div>
         <div class="right-side-modal-footer">
-            <button  class="btn btn-success" [disabled]="imComing" (click)="sendResponseEvent(true)">
+            <button *ngIf="type === 'upCommingCard'"  class="btn btn-success" [disabled]="imComing" (click)="sendResponseEvent(true)">
                 <fa-icon [icon]="grinIcon"></fa-icon>&nbsp;Je viens
             </button>
-            <button type="button"  class="btn btn-danger">
+            <button class="btn btn-danger" [disabled]="imComing" (click)="sendResponseEvent(false)">
                 <fa-icon [icon]="tearIcon"></fa-icon>&nbsp;Je viens pas
             </button>
         </div>
@@ -70,11 +64,14 @@
     <div class="header">
         <div class="imageEvent">
             <img src="https://i.pinimg.com/564x/97/89/0d/97890dfad655a59dbf7d4466336ca49e.jpg" alt="" />
-            <h4 id="places-restantes">X places restantes</h4>
+<!--             <h4 id="places-restantes">X places restantes</h4> -->
             <div id="participantsPhotos">
-                <img [src]="account.avatar64" alt="photo de profil" />
-                <img [src]="account.avatar64" alt="photo de profil" />
-                <img [src]="account.avatar64" alt="photo de profil" />
+                <div *ngFor="let user of evenement.users">
+                    <div class="participant" placement="top" ngbTooltip="user?.firstName user?.lastName">
+                        <img [src]="account.avatar64" [title]="user?.firstName" alt="photo de profil"/>
+                        <!-- {{ user?.firstName }} {{ user?.lastName }} -->
+                    </div>
+                </div>
             </div>
         </div>
         <div id="nom-date-event">
@@ -97,16 +94,10 @@
         </div>
     </div>
     <div class="eventSiteLink">
-        <a href="https://www.tripadvisor.fr/Restaurant_Review-g187091-d9795059-Reviews-Brasserie_L_univers-Clermont_Ferrand_Puy_de_Dome_Auvergne_Rhone_Alpes.html">
-      https://www.tripadvisor.fr/Restaurant_Review-g187091-d9795059-Reviews-Brasserie_L_univers-Clermont_Ferrand_Puy_de_Dome_Auvergne_Rhone_Alpes.html
-    </a>
+
     </div>
     <p>
-        {{ evenement?.comment }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque voluptates ex, nisi corrupti facilis voluptate magni placeat consequatur provident voluptatem dolorem, voluptas, rerum inventore reprehenderit nesciunt ratione consectetur
-        repelrem ipsum dolor sit amet consectetur adipisicing elit. Neque voluptates ex, nisi corrupti facilis voluptate magni placeat consequatur provident voluptatem dolorem, voluptas, rerum inventore reprehenderit nesciunt ratione consectetur repellat
-        dilat dignissimos!Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque voluptates ex, nisi corrupti facilis voluptate magni placeat consequatur provident voluptatem dolorem, voluptas, rerum inventore reprehenderit nesciunt ratione consectetur
-        repelrem ipsum dolor sit amet consectetur adipisicing elit. Neque voluptates ex, nisi corrupti facilis voluptate magni placeat consequatur provident voluptatem dolorem, voluptas, rerum inventore reprehenderit nesciunt ratione consectetur repellat
-        dilat dign test
+        {{ evenement?.comment }}
     </p>
     <div class="modale-footer">
         <div class="left-side-modal-footer">

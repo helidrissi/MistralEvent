@@ -7,6 +7,12 @@
   .phoneModalDiv {
     overflow: auto !important;
     max-height: 80vh;
+    .header {
+      a {
+        text-decoration: none;
+        color: dimgray;
+      }
+    }
     .imageEvent {
       position: relative;
       img {
@@ -44,6 +50,7 @@
           margin-left: 20px;
         }
       }
+
       h2 {
         font-size: 2rem;
       }
@@ -106,7 +113,6 @@
     }
   }
 }
-
 
 @media screen and (min-width: 993px) {
   .phoneModalDiv {
@@ -172,7 +178,7 @@
             color: grey;
           }
         }
-      }   
+      }
 
       .event-date {
         margin-top: 15px;
@@ -180,20 +186,20 @@
         font-size: 25px;
       }
 
-      .event-address{
+      .event-address {
         margin-top: 15px;
         font-size: 18px;
 
-        a{
+        a {
           text-decoration: none;
           color: dimgray;
         }
       }
 
-      .icon{
+      .icon {
         margin-right: 10px;
-        
-        svg{
+
+        svg {
           width: 25px !important;
         }
       }
@@ -203,14 +209,14 @@
     margin-top: 15px;
     display: flex;
 
-    .participantsListe{
+    .participantsListe {
       display: flex;
       flex-direction: row-reverse;
 
-      .participant{
+      .participant {
         width: 40px;
 
-        img{
+        img {
           width: 50px;
           height: 50px;
           border-radius: 50px;
@@ -218,7 +224,7 @@
         }
       }
 
-      .participantCaches{
+      .participantCaches {
         width: 50px;
         height: 50px;
         border-radius: 50px;
@@ -230,10 +236,9 @@
         z-index: 1000;
       }
     }
-
   }
 
-  .placesRestantes{
+  .placesRestantes {
     margin-top: 10px !important;
   }
 
@@ -279,4 +284,3 @@
     margin-right: 30px;
   }
 }
-
