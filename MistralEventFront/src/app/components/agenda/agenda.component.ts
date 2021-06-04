@@ -49,7 +49,7 @@ export class AgendaComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.subscribe((data: {events: Evenement[]}) => {
       this.listEvents = data.events;
-      this.refreshLists();
+      this.refreshList();
     })
   }
 

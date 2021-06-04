@@ -4,11 +4,11 @@
     </div>
     <div class="modal-body">
         <div class="div-img-location">
-            <img class="img-location" src="https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg" alt="" />
+            <img class="img-location" src="{{ base64 }}" alt="" />
         </div>
         <div class="details">
             <div class="image-organisateur-groupes">
-                <img [src]="account.avatar64" id="photo-profil" alt="photo de profil" />
+                <img src="{{ authorBase64 }}" id="photo-profil" alt="photo de profil" />
                 <div class="author-detail">
                     <div class="author-name">{{evenement?.author?.firstName}}  {{ evenement?.author?.lastName}}</div>
 
@@ -23,7 +23,7 @@
 <!--                     <div class="participantCaches">+8</div> -->
                     <div *ngFor="let user of evenement.users">
                         <div class="participant" placement="top" ngbTooltip="user?.firstName user?.lastName">
-                            <img [src]="account.avatar64" [title]="user?.firstName" alt="photo de profil"/>
+                            <img [src]="user?.base64" [title]="user?.firstName" alt="photo de profil"/>
                             <!-- {{ user?.firstName }} {{ user?.lastName }} -->
                         </div>
                     </div>

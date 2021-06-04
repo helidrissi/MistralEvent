@@ -9,5 +9,6 @@ export interface User {
     email: string,
     password: string,
     groups: Group[],
-    events: any
+    events: any,
+    base64 ?: string
 }
