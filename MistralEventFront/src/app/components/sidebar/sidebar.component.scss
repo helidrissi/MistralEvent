@@ -27,6 +27,16 @@
     width: 100px;
     position: fixed;
     z-index: 2;
+    .profilSidebar {
+      img {
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        margin-bottom: 20px;
+        align-self: center;
+        object-fit: cover;
+      }
+    }
   }
   .webNavbar {
     display: none;
@@ -79,6 +89,7 @@
     max-width: 30px;
     max-height: 30px;
     align-items: center;
+    object-fit: cover;
   }
 }
 
@@ -89,9 +100,11 @@
   flex-direction: column;
   img {
     border-radius: 50%;
-    max-width: 80%;
+    width: 170px;
+    height: 170px;
     margin-bottom: 20px;
     align-self: center;
+    object-fit: cover;
   }
   h3 {
     text-align: center;

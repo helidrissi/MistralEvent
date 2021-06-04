@@ -35,7 +35,7 @@ export class DetailEventComponent implements OnInit {
   @Input() user: User;
   @Input() author: User;
   @Input() imComing: boolean;
-
+  @Input() type: string;
   @Output() IRefuse = new EventEmitter<Evenement>();
   @Output() IAccept = new EventEmitter<Evenement>();
 
@@ -65,16 +65,14 @@ export class DetailEventComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.evenement)
+/*     this.locationService.getAllLocations().subscribe((data: Location[]) => {
+            this.listLocations = data;
+          }) */
   }
   
   showGallery(location: Location) {
     this.editedLocation.loadLocation(location);
-    this.router.navigate(['/home/upcommingEvent']);
-    const modalRef = this.modalService.open(GalleryLocationComponent, {
-      size: 'lg',
-      backdrop: true,
-    });
+    const modalRef = this.modalService.open(GalleryLocationComponent, { size: 'lg', backdrop: true });
   }
 
   async modify() {
