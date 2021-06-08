@@ -1,21 +1,18 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { faCalendarAlt } from '@fortawesome/free-regular-svg-icons';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { take } from 'rxjs/operators';
 import { Evenement } from 'src/app/models/evenement';
 import { User } from 'src/app/models/user';
+import { EditedEvenementService } from 'src/app/services/edited-evenement.service';
 import { UsersService } from 'src/app/services/users.service';
-import { ImComingService } from '../../services/im-coming.service';
-import { EvenementService } from '../../services/evenement.service';
 import { AccountService } from '../../services/account.service';
+import { EvenementService } from '../../services/evenement.service';
+import { ImComingService } from '../../services/im-coming.service';
 import { TokenService } from '../../services/token.service';
-import { DetailEventComponent } from '../detail-event/detail-event.component';
 import { ModalService } from '../utilities/modal/modal.service';
 import { ToasterService } from '../utilities/toaster/toaster.service';
-import { DatePipe } from '@angular/common'
-import { Router, ActivatedRoute } from '@angular/router';
-import { EditedEvenementService } from 'src/app/services/edited-evenement.service';
 @Component({
   selector: 'app-agenda',
   templateUrl: './agenda.component.html',
@@ -36,7 +33,6 @@ export class AgendaComponent implements OnInit {
     private accountService: AccountService,
     private tokenservice: TokenService,
     private usersService: UsersService,
-    private modalService: NgbModal,
     private imComingService: ImComingService,
     private router: Router,
     private toasterService: ToasterService,
@@ -47,29 +43,35 @@ export class AgendaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.data.subscribe((data: {events: Evenement[]}) => {
+    this.route.data.subscribe((data: { events: Evenement[] }) => {
       this.listEvents = data.events;
       this.refreshList();
-    })
+    });
   }
 
   refreshList() {
     if (this.accountService.user != null) {
       this.user = this.accountService.user;
-      this.evenementService.getAgendaEvenements(false, this.user.userId).subscribe((res: Evenement[]) => {
-        this.listEvents = res;
-        this.refreshLists();
-      });
-    } else {
-      // On passe par là quand le code est rechargé suite à une modif dans le code dans Visual Studio, cas de figure propre au dév
-      this.usersService.getUser(this.tokenservice.getId()).subscribe((userLoaded:User) => {
-        this.user = userLoaded;
-        this.accountService.refreshUser(userLoaded);
-        this.evenementService.getAgendaEvenements(false, userLoaded.userId).subscribe((res: Evenement[]) => {
+      this.evenementService
+        .getAgendaEvenements(false, this.user.userId)
+        .subscribe((res: Evenement[]) => {
           this.listEvents = res;
           this.refreshLists();
         });
-      }); 
+    } else {
+      // On passe par là quand le code est rechargé suite à une modif dans le code dans Visual Studio, cas de figure propre au dév
+      this.usersService
+        .getUser(this.tokenservice.getId())
+        .subscribe((userLoaded: User) => {
+          this.user = userLoaded;
+          this.accountService.refreshUser(userLoaded);
+          this.evenementService
+            .getAgendaEvenements(false, userLoaded.userId)
+            .subscribe((res: Evenement[]) => {
+              this.listEvents = res;
+              this.refreshLists();
+            });
+        });
     }
   }
 
@@ -87,11 +89,14 @@ export class AgendaComponent implements OnInit {
     mois.setSeconds(59);
     mois.setMonth(mois.getMonth() + 1);
     var moisInt: number = +this.datepipe.transform(mois, 'yyyyMMddHHmm');
-    this.eventsSemaine = []; 
+    this.eventsSemaine = [];
     this.eventsMois = [];
     this.eventsApres = [];
     for (let event of this.listEvents) {
-      var dateInt: number = +this.datepipe.transform(event.date, 'yyyyMMddHHmm');
+      var dateInt: number = +this.datepipe.transform(
+        event.date,
+        'yyyyMMddHHmm'
+      );
 
       if (dateInt <= semaineInt) {
         this.eventsSemaine.push(event);
@@ -102,34 +107,34 @@ export class AgendaComponent implements OnInit {
       }
     }
   }
-  
-  openDetailEvent() {
-    const modalRef = this.modalService.open(DetailEventComponent, {
-      size: 'lg',
-      backdrop: true
-    });
-  }
-  
+
   IRefuse(evenement: Evenement) {
-    const ref = this.customModalService.open(evenement.name, 'Etes-vous sûr de ne pas venir le ' + this.datepipe.transform(evenement.date, 'dd/MM/yyyy à H:mm') + ' ?');
-    ref.result.then(res =>{
+    const ref = this.customModalService.open(
+      evenement.name,
+      'Etes-vous sûr de ne pas venir le ' +
+        this.datepipe.transform(evenement.date, 'dd/MM/yyyy à H:mm') +
+        ' ?'
+    );
+    ref.result.then((res) => {
       if (res) {
-        const index = this.listEvents.findIndex(row => row.id == evenement.id);
+        const index = this.listEvents.findIndex(
+          (row) => row.id == evenement.id
+        );
         if (index !== -1) {
           this.listEvents.splice(index, 1);
           this.refreshLists();
         }
 
         this.imComingService.removeUser(evenement, this.user);
-        this.toasterService.showError("Vous ne venez pas =(")
+        this.toasterService.showError('Vous ne venez pas =(');
       } else {
-        return
+        return;
       }
-    })
+    });
   }
 
   async add() {
-    this.editedEvenement.loadEvenement(undefined)
-    await this.router.navigate(['/home/create-event'])
+    this.editedEvenement.loadEvenement(undefined);
+    await this.router.navigate(['/home/create-event']);
   }
 }

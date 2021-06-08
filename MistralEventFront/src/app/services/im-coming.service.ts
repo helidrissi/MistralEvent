@@ -23,9 +23,7 @@ import { User } from 'src/app/models/user';
 
     addUser(event: Evenement, user: User) {
         event.users.push(user);
-        this.evenementService.updateEvenementById(event).subscribe(result => {
-            console.log(JSON.stringify(result))
-          })
+        this.evenementService.updateEvenementById(event).subscribe()
     }
 
     removeUser(event: Evenement, user: User) {
@@ -33,8 +31,6 @@ import { User } from 'src/app/models/user';
         if (index !== -1) {
           event.users.splice(index, 1);
         }
-        this.evenementService.updateEvenementById(event).subscribe(result => {
-            console.log(JSON.stringify(result))
-          })  
+        this.evenementService.updateEvenementById(event).subscribe()  
       }
   }

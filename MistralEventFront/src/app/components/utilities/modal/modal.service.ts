@@ -29,7 +29,6 @@ export class ModalService {
   constructor(private NgbModal: NgbModal) { }
 
   open(title: string ,  question: string ,  typeButtons?: string, size?:string,) {
-    console.log(typeButtons)
     if (size) {
       this.modalOption.size = size;
     }

@@ -49,10 +49,10 @@
                 </button>
         </div>
         <div class="right-side-modal-footer">
-            <button *ngIf="type === 'upCommingCard'"  class="btn btn-success" [disabled]="imComing" (click)="sendResponseEvent(true)">
+            <button *ngIf="userComming === false"  class="btn btn-success" [disabled]="imComing" (click)="activeModal.close(true)">
                 <fa-icon [icon]="grinIcon"></fa-icon>&nbsp;Je viens
             </button>
-            <button class="btn btn-danger" [disabled]="imComing" (click)="sendResponseEvent(false)">
+            <button *ngIf="userComming" class="btn btn-danger" [disabled]="imComing" (click)="activeModal.close(false)">
                 <fa-icon [icon]="tearIcon"></fa-icon>&nbsp;Je viens pas
             </button>
         </div>
@@ -111,10 +111,10 @@
                 </button>
         </div>
         <div class="right-side-modal-footer">
-            <button  class="btn btn-success" [disabled]="imComing" (click)="sendResponseEvent(true)">
+            <button *ngIf="userComming === false"   class="btn btn-success" [disabled]="imComing" (click)="activeModal.close(true)">
                 <fa-icon [icon]="grinIcon"></fa-icon>&nbsp;Je viens
             </button>
-            <button type="button"  class="btn btn-danger">
+            <button *ngIf="userComming" type="button"  class="btn btn-danger" (click)="activeModal.close(false)">
                 <fa-icon [icon]="tearIcon"></fa-icon>&nbsp;Je viens pas
             </button>
         </div>

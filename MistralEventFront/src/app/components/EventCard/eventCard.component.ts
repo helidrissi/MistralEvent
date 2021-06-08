@@ -5,7 +5,7 @@ import {
   faMapMarked,
   faGrin,
   faSadTear,
-  faInfoCircle
+  faInfoCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { take } from 'rxjs/operators';
@@ -21,11 +21,9 @@ import { Location } from 'src/app/models/location';
 
 // Services
 import { FilesService } from '../../services/files.service';
-import { DetailEventComponent } from '../detail-event/detail-event.component';
 import { GalleryLocationComponent } from '../gallery-location/gallery-location.component';
 import { ModalService } from '../utilities/modal/modal.service';
 import { ImComingService } from '../../services/im-coming.service';
-import { AccountService } from '../../services/account.service';
 import { EditedLocationService } from 'src/app/services/edited-location.service';
 
 @Component({
@@ -60,7 +58,7 @@ export class EventCardComponent implements OnInit {
 
   listLocations: Location[] = [];
   location: Location;
-  base64: String = DEFAULT_IMG.image_location_default;
+  base64: string = DEFAULT_IMG.image_location_default;
 
   constructor(
     private modalService: NgbModal,
@@ -68,7 +66,6 @@ export class EventCardComponent implements OnInit {
     private filesService: FilesService,
     private customModalService: ModalService,
     private imComingService: ImComingService,
-    private accountService: AccountService,
   ) {}
 
   ngOnInit() {
@@ -91,28 +88,25 @@ export class EventCardComponent implements OnInit {
   }
 
   openDetailEvent() {
-      console.log("coucou12");
-      const modalEventRef = this.customModalService.openModalEventDetail(this.evenement, "detail-event-modal");
-      modalEventRef.result.then(res => {
-          /*console.log("Listen modal");
-          if (res) {
-              console.log("AddUserResponse");
-              console.log(JSON.stringify(this.user));
-              this.imComingService.addUser(this.evenement, this.user);
-              this.imComing = true;
-          } else {
-              console.log("RemoveUserResponse");
-              console.log(JSON.stringify(this.user));
-              this.imComingService.removeUser(this.evenement, this.user);
-              this.imComing = false;
-          }*/
+    const modalEventRef = this.customModalService.openModalEventDetail(
+      this.evenement,
+      'detail-event-modal'
+    );
+    modalEventRef.result
+      .then((res) => {
+        if (res) {
+          this.sendResponseEvent(true)
+        } else {
+          this.sendResponseEvent(false)
+        }
       })
+      .catch((error) => console.log(error));
   }
 
   showGallery(location: Location) {
     if (location != null) {
       this.editedLocation.loadLocation(location);
-      const modaleRef = this.modalService.open(GalleryLocationComponent, {
+      this.modalService.open(GalleryLocationComponent, {
         size: 'lg',
         backdrop: true,
       });
